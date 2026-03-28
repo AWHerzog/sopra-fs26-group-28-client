@@ -30,12 +30,12 @@ reason).
 
 ---
 
-## Contributions Week 1 - [Begin Date] to [End Date]
+## Contributions Week 1 - [23.03.26] to [1.04.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[@githubUser1]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+|  **[EneasKe]** | 28.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ed23750563cfc7be9c1d2464e964936a79fd67f1] | [Implemented User entity and changed Tests to work with this new Entity] | [User Entity is important because we will Use this entity for a lot of things like login, points etc.] |
+|                    | 28.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/29dcadeb0f602d199d0b67b2b1c4ab0d3ab756f7] | [implemented createUsers endpoint and created helper function for password hashing] | [This is necessary for the client to create an account] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
@@ -45,7 +45,7 @@ reason).
 
 ---
 
-## Contributions Week 2 - [Begin Date] to [End Date]
+## Contributions Week 2 - [1.04.26] to [8.04.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
