@@ -5,12 +5,13 @@ import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user";
 import { Button, Form, Input } from "antd";
+import styles from "@/styles/auth.module.css";
 // Optionally, you can import a CSS module or file for additional styling:
 // import styles from "@/styles/page.module.css";
 
 interface FormFieldProps {
-  label: string;
-  value: string;
+  username: string;
+  name: string;
 }
 
 const Login: React.FC = () => {
@@ -49,35 +50,48 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <Form
-        form={form}
-        name="login"
-        size="large"
-        variant="outlined"
-        onFinish={handleLogin}
-        layout="vertical"
-      >
-        <Form.Item
-          name="username"
-          label="Username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+    <div className={styles.pageBackground}>
+      <div className={styles.authCard}>
+        <div className={styles.brandBlock}>
+          <div className={styles.badge}>D</div>
+          <h1 className={styles.title}>Drigleit</h1>
+          <p className={styles.subtitle}>Multiplayer Quiz Game</p>
+        </div>
+
+        <Form
+          form={form}
+          name="login"
+          size="large"
+          variant="outlined"
+          onFinish={handleLogin}
+          layout="vertical"
+          className={styles.form}
         >
-          <Input placeholder="Enter username" />
-        </Form.Item>
-        <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true, message: "Please input your name!" }]}
-        >
-          <Input placeholder="Enter name" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-button">
-            Login
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            name="username"
+            label="Username"
+            rules={[{ required: true, message: "Please input your username!" }]}
+          >
+            <Input placeholder="Enter username" className={styles.inputField} />
+          </Form.Item>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please input your name!" }]}
+          >
+            <Input placeholder="Enter name" className={styles.inputField} />
+          </Form.Item>
+          <Form.Item className={styles.submitRow}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={styles.primaryButton}
+            >
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

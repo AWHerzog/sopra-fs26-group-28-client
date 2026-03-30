@@ -1,0 +1,129 @@
+.pageBackground {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(244, 248, 253, 0.92);
+  border: 1px solid #b8cae0;
+  border-radius: 20px;
+  padding: 26px 24px 18px;
+  box-shadow: 0 18px 34px rgba(59, 87, 122, 0.18);
+}
+
+.brandBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.badge {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2f6da8;
+  background: linear-gradient(180deg, #f7fbff 0%, #e8f2fd 100%);
+  border: 1px solid #a6c2dd;
+  box-shadow: 0 8px 16px rgba(53, 99, 147, 0.2);
+}
+
+.title {
+  margin: 0;
+  color: #2b2f35;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  color: #4f77a1;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.form {
+  margin-top: 16px;
+}
+
+.form :global(.ant-form-item-label > label) {
+  color: #365777;
+  font-weight: 600;
+}
+
+.inputField {
+  border-radius: 10px;
+  border-color: #b2c6db;
+  min-height: 44px;
+}
+
+.textAreaField {
+  border-radius: 10px;
+  border-color: #b2c6db;
+}
+
+.inputField:hover,
+.inputField:focus,
+.inputField:focus-within,
+.textAreaField:hover,
+.textAreaField:focus,
+.textAreaField:focus-within {
+  border-color: #2f74b5;
+  box-shadow: 0 0 0 2px rgba(47, 116, 181, 0.18);
+}
+
+.submitRow {
+  margin-bottom: 0;
+  margin-top: 6px;
+}
+
+.primaryButton {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2e84cc 0%, #2e66af 100%);
+  box-shadow: 0 8px 16px rgba(39, 91, 145, 0.22);
+}
+
+.primaryButton:hover,
+.primaryButton:focus {
+  background: linear-gradient(90deg, #2d78bd 0%, #2a5c9b 100%) !important;
+}
+
+.switchRow {
+  margin-top: 12px;
+  text-align: center;
+  color: #4f77a1;
+  font-size: 14px;
+}
+
+.switchButton {
+  margin-left: 6px;
+  padding: 0;
+  color: #2f74b5;
+  height: auto;
+}
+
+@media (max-width: 520px) {
+  .authCard {
+    border-radius: 16px;
+    padding: 22px 16px 14px;
+  }
+
+  .title {
+    font-size: clamp(28px, 10vw, 36px);
+  }
+}
