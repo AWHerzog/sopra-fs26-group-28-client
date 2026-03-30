@@ -32,28 +32,28 @@ export default function RootLayout({
             algorithm: theme.defaultAlgorithm,
             token: {
               // general theme options are set in token, meaning all primary elements (button, menu, ...) will have this color
-              colorPrimary: "#22426b", // selected input field boarder will have this color as well
-              borderRadius: 8,
-              colorText: "#fff",
+              colorPrimary: "#2f74b5", // selected input field border will have this color as well
+              borderRadius: 10,
+              colorText: "#2b2f35",
               fontSize: 16,
 
               // Alias Token
-              colorBgContainer: "#16181D",
+              colorBgContainer: "#f4f8fd",
             },
             // if a component type needs special styling, setting here will override default options set in token
             components: {
               Button: {
-                colorPrimary: "#75bd9d", // this will color all buttons in #75bd9d, overriding the default primaryColor #22426b set in token line 35
+                colorPrimary: "#2f74b5", // this will color all buttons in the new shared blue theme
                 algorithm: true, // enable algorithm (redundant with line 33 but here for demo purposes)
-                controlHeight: 38,
+                controlHeight: 42,
               },
               Input: {
-                colorBorder: "gray", // color boarder selected is not overridden but instead is set by primary color in line 35
-                colorTextPlaceholder: "#888888",
+                colorBorder: "#b2c6db",
+                colorTextPlaceholder: "#6f86a0",
                 algorithm: false, // disable algorithm (line 32)
               },
               Form: {
-                labelColor: "#fff",
+                labelColor: "#365777",
                 algorithm: theme.defaultAlgorithm, // specify a specifc algorithm instead of true/false
               },
               Card: {},
@@ -61,7 +61,9 @@ export default function RootLayout({
           }}
         >
           <AntdRegistry>
-            <AntdApp>{children}</AntdApp>
+            <AntdApp>
+              <div className="app-shell">{children}</div>
+            </AntdApp>
           </AntdRegistry>
         </ConfigProvider>
       </body>
