@@ -36,7 +36,7 @@ reason).
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 |  **[EneasKe]** | 28.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ed23750563cfc7be9c1d2464e964936a79fd67f1] | [Implemented User entity and changed Tests to work with this new Entity] | [User Entity is important because we will Use this entity for a lot of things like login, points etc.] |
 |                    | 28.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/29dcadeb0f602d199d0b67b2b1c4ab0d3ab756f7] | [implemented createUsers endpoint and created helper function for password hashing] | [This is necessary for the client to create an account] |
-| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344**] | 30.03.2026   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/45daf654e5ddb1c0e2252420c12eab6f0e27e423] | [2 Contributions in 1 commit: Implementation of Login and Registration Frontend (3h), conntected to API (0.5 h), global and local .css file for styling (4h)] | [global and local styling files allow for less code dublication and fewer inconsistencies, frontend pages allow user to interact with the application] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
