@@ -33,6 +33,7 @@ const Registration: React.FC = () => {
 			}
 
 			router.push("/users");
+			
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(`Something went wrong during registration:\n${error.message}`);

@@ -11,7 +11,7 @@ import styles from "@/styles/auth.module.css";
 
 interface FormFieldProps {
   username: string;
-  name: string;
+  password: string;
 }
 
 const Login: React.FC = () => {
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
   const handleLogin = async (values: FormFieldProps) => {
     try {
       // Call the API service and let it handle JSON serialization and error handling
-      const response = await apiService.post<User>("/users", values);
+      const response = await apiService.post<User>("/users/login", values);
 
       // Use the useLocalStorage hook that returned a setter function (setToken in line 41) to store the token if available
       if (response.token) {
@@ -75,11 +75,11 @@ const Login: React.FC = () => {
             <Input placeholder="Enter username" className={styles.inputField} />
           </Form.Item>
           <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Please input your name!" }]}
+            name="password"
+            label="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input placeholder="Enter name" className={styles.inputField} />
+            <Input placeholder="Enter Password" className={styles.inputField} />
           </Form.Item>
           <Form.Item className={styles.submitRow}>
             <Button
