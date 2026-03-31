@@ -6,7 +6,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function Home() {
   const router = useRouter();
-  const { value: token } = useLocalStorage<string>("token", "");
+  const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
 
   if (token) {
     // Main overview page for logged-in users
@@ -22,6 +22,9 @@ export default function Home() {
         <h1 style={{ color: "#fff" }}>Main Overview</h1>
         <Button type="primary" size="large">
           Create Session
+        </Button>
+        <Button type="default" onClick={() => { clearToken(); router.push("/"); }}>
+          Logout
         </Button>
       </div>
     );
