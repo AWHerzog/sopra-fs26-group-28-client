@@ -38,8 +38,8 @@ reason).
 |                    | 28.03.26 & 30.03.26  | [https://github.com/AWHerzog/sopra-fs26-group-28-server/issues/1] | [Multiple commits, commit #19, #20, #21 and User Story 1 completed. Implemented endpoints for login and registration and created helper function for password hashing, also made sure frontend created by Ruven and backend work together (Additionally made sure token logic works) 6h] | [This is necessary for the client to create an account and login] |
 | **[Ruven3344**] | 30.03.2026   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/45daf654e5ddb1c0e2252420c12eab6f0e27e423] | [2 Contributions in 1 commit: Implementation of Login and Registration Frontend (3h), conntected to API (0.5 h), global and local .css file for styling (4h)] | [global and local styling files allow for less code dublication and fewer inconsistencies, frontend pages allow user to interact with the application] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | 31.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/20/changes/b93e25ac78b68d7375247f291ef7872b1c2f0aa7] | [Create main overview page with create session button] | [central entry point] |
+|                    | [31.03.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/21/changes/e1c0c9bcb1e2b08bee8afeb75e5725aa2bac60c6)] | [add logout button] | [logout functionality for switching accounts] |
 | **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 
