@@ -40,8 +40,8 @@ reason).
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[Luizcodes02]** | 31.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/20/changes/b93e25ac78b68d7375247f291ef7872b1c2f0aa7] | [Create main overview page with create session button] | [central entry point] |
 |                    | [31.03.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/21/changes/e1c0c9bcb1e2b08bee8afeb75e5725aa2bac60c6)] | [add logout button] | [logout functionality for switching accounts] |
-| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWHerzog]** | [31.3.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/65] | Created backend rest implenetation to get/edit user by their assigned id | So Users/id can be parsed |
+|                    | [27/30.3.26]   | - | Redid the entire Scrum setup, created new tasks and managed the old ones. 5/6 hours | So we could begin working and have a better overview of how we wanted to approach this project |
 
 ---
 
