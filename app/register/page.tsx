@@ -32,7 +32,7 @@ const Registration: React.FC = () => {
 				setToken(response.token);
 			}
 
-			router.push("/users");
+			router.push("/index");
 			
 		} catch (error) {
 			if (error instanceof Error) {
