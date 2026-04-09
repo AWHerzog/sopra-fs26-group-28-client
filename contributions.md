@@ -50,8 +50,8 @@ reason).
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[EneasKe]** | [05.04.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/3b5f3183343229b739a6e41385bd4e7299624f51)] | [Finished WebSocket setup and setting up a Lobby 8h] | [WebSockets allow us to "subscribe" to a certain topic and then get information everytime something changes to all subscribed players, very important for a game relying on real time inputs] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Players can join game session and validate validity of session] |
+| **[AWHerzog]** | [09.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/70] | [Game code validation, error handling, and unit tests (5h)] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
