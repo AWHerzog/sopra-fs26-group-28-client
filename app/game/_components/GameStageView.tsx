@@ -103,7 +103,7 @@ export default function GameStageView({
                     ? "Voting"
                     : "Solution"}
             </span>
-
+{/* answer */}
             {stage === "answer" ? (
               <>
                 <Typography.Title level={2} className={styles.questionTitle}>
@@ -138,7 +138,7 @@ export default function GameStageView({
                 </div>
               </>
             ) : null}
-
+{/* waiting */}
             {stage === "waiting" ? (
               <div className={styles.progressBlock}>
                 <Typography.Title level={2} className={styles.questionTitle}>
@@ -183,7 +183,7 @@ export default function GameStageView({
                 </div>
               </div>
             ) : null}
-
+{/* voting */}
             {stage === "voting" ? (
               <>
                 <Typography.Title level={2} className={styles.questionTitle}>
@@ -236,7 +236,7 @@ export default function GameStageView({
                 </div>
               </>
             ) : null}
-
+{/* solution */}
             {stage === "solution" ? (
               <>
                 <Typography.Title level={2} className={styles.questionTitle}>
