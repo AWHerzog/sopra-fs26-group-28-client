@@ -11,10 +11,10 @@ declare module 'sockjs-client' {
   class SockJS {
     constructor(url: string, _reserved?: string, options?: SockJSOptions);
 
-    onopen: ((ev?: Event) => any) | null;
-    onclose: ((ev?: CloseEvent) => any) | null;
-    onmessage: ((ev?: { data: any }) => any) | null;
-    onerror: ((ev?: Event) => any) | null;
+    onopen: ((ev?: Event) => void) | null;
+    onclose: ((ev?: CloseEvent) => void) | null;
+    onmessage: ((ev?: { data: unknown }) => void) | null;
+    onerror: ((ev?: Event) => void) | null;
 
     close(code?: number, reason?: string): void;
     send(data: string | ArrayBuffer | Blob): void;

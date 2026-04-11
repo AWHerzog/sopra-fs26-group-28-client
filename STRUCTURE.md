@@ -1,10 +1,10 @@
 # App Structure and Route Flow
 
-This file documents the important frontend files inside `app/` and how the current game flow routes are connected.
+This file documents the important frontend files inside `app/` and how the current/future game flow routes are connected.
 
 ## Route Flow (Game)
 
-Current user flow:
+User flow:
 
 1. `/game`
 2. `/game/answer`
