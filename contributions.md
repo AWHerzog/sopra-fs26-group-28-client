@@ -50,8 +50,8 @@ reason).
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[EneasKe]** | [05.04.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/3b5f3183343229b739a6e41385bd4e7299624f51)] | [Finished WebSocket setup and setting up a Lobby 8h] | [WebSockets allow us to "subscribe" to a certain topic and then get information everytime something changes to all subscribed players, very important for a game relying on real time inputs] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Players can join game session and validate validity of session] |
-| **[AWHerzog]** | [09.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/70] | [Game code validation, error handling, and unit tests (5h)] | [Why this contribution is relevant] |
+|                    | [13.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/eee4ff79e6ddcdd24e6bbf1d6f30ad81e75228bd + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/63758317ad5b65e57b0259d8919e0fc952205892] | [Implemented frontend and backend auth guard, currently session taken based, with localStorage and Authorization header sent in REST calls 4h] | [Makes sure users cannot access content they are not supposed to] |
+| **[AWHerzog]** | [09.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/70] | [Game code validation, error handling, and unit tests (5h)] | [Players can join game session and validate validity of session] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
