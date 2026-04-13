@@ -48,14 +48,14 @@ const Dashboard: React.FC = () => {
   } = useLocalStorage<string>("token", "");
 
   const handleLogout = async (): Promise<void> => {
-    await apiService.post<void>("/users/logout", { token });
+    await apiService.post<void>("/users/logout", {}, { Authorization: token ?? "" });
     clearToken();
     router.push("/login");
   };
 
   const createGame = async (): Promise<void> => {
     try {
-      const createdGame: Game = await apiService.post<Game>("/games", { token });
+      const createdGame: Game = await apiService.post<Game>("/games", {}, { Authorization: token ?? "" });
       setGame(createdGame);
 
       if (createdGame.code) {
@@ -74,7 +74,7 @@ const Dashboard: React.FC = () => {
 
   const joinGame = async (): Promise<void> => {
     try {
-      const joinedGame: Game = await apiService.post<Game>("/join", { code, token });
+      const joinedGame: Game = await apiService.post<Game>("/games/join", { code}, { Authorization: token ?? "" });
       setGame(joinedGame);
 
       if (joinedGame.code) {

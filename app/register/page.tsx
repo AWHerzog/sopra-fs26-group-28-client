@@ -10,7 +10,6 @@ import styles from "@/styles/auth.module.css";
 interface RegistrationFormProps {
 	username: string;
 	password: string;
-	bio: string;
 }
 
 const Registration: React.FC = () => {
@@ -77,20 +76,6 @@ const Registration: React.FC = () => {
 						<Input.Password
 							placeholder="Choose a password"
 							className={styles.inputField}
-						/>
-					</Form.Item>
-
-					<Form.Item
-						name="bio"
-						label="Bio"
-						rules={[{ required: true, message: "Please write a short bio!" }]}
-					>
-						<Input.TextArea
-							placeholder="Tell other players something about you"
-							rows={4}
-							maxLength={220}
-							showCount
-							className={styles.textAreaField}
 						/>
 					</Form.Item>
 
