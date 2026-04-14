@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
 
   const handleLogout = async (): Promise<void> => {
-    await apiService.post<void>("/users/logout", { token });
+    await apiService.post<void>("/users/logout", { authorization: token });
     clearToken();
     router.push("/login");
   };
