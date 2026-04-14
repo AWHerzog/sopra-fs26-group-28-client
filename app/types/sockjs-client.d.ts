@@ -11,9 +11,13 @@ declare module 'sockjs-client' {
   class SockJS {
     constructor(url: string, _reserved?: string, options?: SockJSOptions);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onopen: ((ev?: Event) => any) | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onclose: ((ev?: CloseEvent) => any) | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onmessage: ((ev?: { data: any }) => any) | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onerror: ((ev?: Event) => any) | null;
 
     close(code?: number, reason?: string): void;
