@@ -13,8 +13,12 @@ import {
   UserOutlined,
   SettingOutlined,
   LogoutOutlined,
+  CopyOutlined,
+  CaretRightOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Tag } from "antd";
+import { Button, Input, message } from "antd";
+
+const avatarColors = ["#c7d9f0", "#f0c7c7", "#c7f0d4", "#f0e6c7", "#e0c7f0"];
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
@@ -63,44 +67,87 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const copyCode = (gameCode: string): void => {
+    navigator.clipboard.writeText(gameCode);
+    message.success("Code copied!");
+  };
+
   // ── Lobby view ───────────────────────────────────────────────────────────────
   if (game) {
+    const players = game.players ? Object.entries(game.players) : [];
+    const totalPlayers = players.length;
+
     return (
       <div style={s.page}>
         <div style={s.container}>
+
+          {/* Header */}
           <div style={s.header}>
             <div>
               <h1 style={s.title}>Game Lobby</h1>
               <p style={s.subtitle}>Waiting for players…</p>
             </div>
             <div style={s.iconRow}>
-              <button style={s.iconBtn} onClick={handleLogout} title="Logout">
-                <LogoutOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+              <button style={s.iconBtn} title="Settings">
+                <SettingOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
               </button>
             </div>
           </div>
 
-          <div style={{ ...s.card, flexDirection: "column", alignItems: "flex-start", cursor: "default" }}>
-            <h2 style={{ margin: 0, color: "#1a2a3a", fontSize: "1.1rem" }}>
-              Game Code: <Tag color="blue">{game.code}</Tag>
-            </h2>
-            <div style={{ marginTop: "1rem", width: "100%" }}>
-              {game?.players &&
-                Object.entries(game.players).map(([username, points]) => (
-                  <div
-                    key={username}
-                    style={{ display: "flex", justifyContent: "space-between", padding: "0.4rem 0", borderBottom: "1px solid #e8f0f8", color: "#223042" }}
-                  >
-                    <span>{username}</span>
-                    <span style={{ color: "#2f74b5", fontWeight: 600 }}>{points as number} pts</span>
-                  </div>
-                ))}
-            </div>
-            <div style={{ marginTop: "1.5rem", display: "flex", gap: "0.75rem" }}>
-              {game.hostname === token && <Button type="primary">Start Game</Button>}
-              <Button onClick={leaveGame}>Leave</Button>
+          {/* Game code card */}
+          <div style={s.codeCard}>
+            <p style={s.codeLabel}>Share this code with friends</p>
+            <div style={s.codeRow}>
+              <span style={s.codeText}>{game.code}</span>
+              <button style={s.copyBtn} onClick={() => copyCode(game.code ?? "")} title="Copy code">
+                <CopyOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+              </button>
             </div>
           </div>
+
+          {/* Players card */}
+          <div style={s.playersCard}>
+            <div style={s.playersHeader}>
+              <TeamOutlined style={{ fontSize: 18, color: "#1a2a3a" }} />
+              <span style={s.playersTitle}>Players ({totalPlayers}/{totalPlayers})</span>
+            </div>
+            <div style={s.playersList}>
+              {players.map(([username], index) => {
+                const isReady = index < 2; // placeholder: first two shown as ready
+                const isYou = username === token;
+                return (
+                  <div key={username} style={s.playerRow}>
+                    <div style={{ ...s.avatar, background: avatarColors[index % avatarColors.length] }}>
+                      <span style={s.avatarText}>{username.charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div style={s.playerInfo}>
+                      <span style={s.playerName}>{username}{isYou ? " (You)" : ""}</span>
+                      <span style={{ fontSize: "0.82rem", color: isReady ? "#2f74b5" : "#8aa4bf" }}>
+                        {isReady ? "Ready" : "Waiting..."}
+                      </span>
+                    </div>
+                    {isReady && (
+                      <span style={s.readyBadge}>Ready</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Start Game button (host only) */}
+          {game.hostname === token && (
+            <button style={s.startBtn} onClick={() => {}}>
+              <CaretRightOutlined style={{ fontSize: 18 }} />
+              Start Game
+            </button>
+          )}
+
+          {/* Leave Lobby button */}
+          <button style={s.leaveBtn} onClick={leaveGame}>
+            Leave Lobby
+          </button>
+
         </div>
       </div>
     );
@@ -129,7 +176,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ ...s.card, flexDirection: "column", alignItems: "flex-start", cursor: "default" }}>
+          <div style={{ ...s.codeCard, alignItems: "flex-start" }}>
             <Input
               size="large"
               placeholder="Enter Game Code"
@@ -170,7 +217,6 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Join Game card */}
         <button style={s.card} onClick={() => setJoinMode(true)}>
           <div style={s.cardIcon("#2f74b5")}>
             <TeamOutlined style={{ fontSize: 26, color: "#fff" }} />
@@ -182,7 +228,6 @@ const Dashboard: React.FC = () => {
           <ArrowRightOutlined style={{ fontSize: 18, color: "#223042", marginLeft: "auto" }} />
         </button>
 
-        {/* Host Game card */}
         <button style={s.card} onClick={createGame}>
           <div style={s.cardIcon("#3a3a3a")}>
             <PlusCircleOutlined style={{ fontSize: 26, color: "#fff" }} />
@@ -194,7 +239,6 @@ const Dashboard: React.FC = () => {
           <ArrowRightOutlined style={{ fontSize: 18, color: "#223042", marginLeft: "auto" }} />
         </button>
 
-        {/* Hint bar */}
         <div style={s.hint}>
           Host a game to create a private room or join an existing game to play with others
         </div>
@@ -210,7 +254,7 @@ const s = {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingTop: "6rem",
+    paddingTop: "4rem",
     paddingBottom: "4rem",
     paddingLeft: "1rem",
     paddingRight: "1rem",
@@ -218,7 +262,7 @@ const s = {
 
   container: {
     width: "100%",
-    maxWidth: 780,
+    maxWidth: 680,
     display: "flex",
     flexDirection: "column" as const,
     gap: "1rem",
@@ -265,6 +309,160 @@ const s = {
     boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
   } as React.CSSProperties,
 
+  // Code card
+  codeCard: {
+    background: "#fff",
+    borderRadius: 18,
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    padding: "1.5rem 2rem",
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    gap: "0.75rem",
+  } as React.CSSProperties,
+
+  codeLabel: {
+    color: "#2f74b5",
+    fontSize: "0.95rem",
+    fontWeight: 500,
+    margin: 0,
+  } as React.CSSProperties,
+
+  codeRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem",
+  } as React.CSSProperties,
+
+  codeText: {
+    fontSize: "2.5rem",
+    fontWeight: 900,
+    color: "#1a2a3a",
+    letterSpacing: "0.08em",
+  } as React.CSSProperties,
+
+  copyBtn: {
+    width: 42,
+    height: 42,
+    borderRadius: 10,
+    border: "1.5px solid #c8d9ec",
+    background: "#f0f6fc",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+  } as React.CSSProperties,
+
+  // Players card
+  playersCard: {
+    background: "#fff",
+    borderRadius: 18,
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    padding: "1.25rem 1.5rem",
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.75rem",
+  } as React.CSSProperties,
+
+  playersHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    marginBottom: "0.25rem",
+  } as React.CSSProperties,
+
+  playersTitle: {
+    fontSize: "1.05rem",
+    fontWeight: 700,
+    color: "#1a2a3a",
+  } as React.CSSProperties,
+
+  playersList: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.5rem",
+  } as React.CSSProperties,
+
+  playerRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.85rem",
+    background: "#f4f8fd",
+    borderRadius: 14,
+    padding: "0.75rem 1rem",
+    border: "1px solid #dce9f5",
+  } as React.CSSProperties,
+
+  avatar: {
+    width: 42,
+    height: 42,
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  } as React.CSSProperties,
+
+  avatarText: {
+    fontSize: "1rem",
+    fontWeight: 700,
+    color: "#2f74b5",
+  } as React.CSSProperties,
+
+  playerInfo: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.1rem",
+    flex: 1,
+  } as React.CSSProperties,
+
+  playerName: {
+    fontSize: "0.95rem",
+    fontWeight: 600,
+    color: "#1a2a3a",
+  } as React.CSSProperties,
+
+  readyBadge: {
+    background: "#22a06b",
+    color: "#fff",
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    borderRadius: 20,
+    padding: "0.2rem 0.85rem",
+    marginLeft: "auto",
+  } as React.CSSProperties,
+
+  // Buttons
+  startBtn: {
+    width: "100%",
+    background: "#2f74b5",
+    color: "#fff",
+    border: "none",
+    borderRadius: 16,
+    padding: "1rem",
+    fontSize: "1.05rem",
+    fontWeight: 700,
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.5rem",
+  } as React.CSSProperties,
+
+  leaveBtn: {
+    width: "100%",
+    background: "#fff",
+    color: "#1a2a3a",
+    border: "1.5px solid #dce9f5",
+    borderRadius: 16,
+    padding: "1rem",
+    fontSize: "1.05rem",
+    fontWeight: 600,
+    cursor: "pointer",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+  } as React.CSSProperties,
+
+  // Choose game mode
   card: {
     width: "100%",
     background: "#fff",
