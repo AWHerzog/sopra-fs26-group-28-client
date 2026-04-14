@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
 
   const createGame = async (): Promise<void> => {
     try {
-      const createdGame: Game = await apiService.post<Game>("/games", { token });
+      const createdGame: Game = await apiService.post<Game>("/games", { authorization: token });
       setGame(createdGame);
       if (createdGame.code) {
         connectToGame(createdGame.code, (update) => setGame(update));
@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
 
   const joinGame = async (): Promise<void> => {
     try {
-      const joinedGame: Game = await apiService.post<Game>("/join", { code, token });
+      const joinedGame: Game = await apiService.post<Game>("/join", { code, authorization: token });
       setGame(joinedGame);
       if (joinedGame.code) {
         connectToGame(joinedGame.code, (update) => setGame(update));
