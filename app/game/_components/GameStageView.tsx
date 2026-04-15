@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Progress, Tag, Typography } from "antd";
-import type { GameAnswer, GameQuestion, WaitingProgress } from "../_data";
+import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
 import { demoPlayerList } from "../_data";
 import styles from "../game.module.css";
 
-type Stage = "answer" | "waiting" | "voting" | "solution"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
+type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
 
 // This component is designed as a shared view shell for the answer, waiting, voting, and solution pages. Each page route renders the same layout but with different active blocks and data to keep the flow consistent while wiring in the backend logic later.
 interface GameStageViewProps {
@@ -15,10 +15,11 @@ interface GameStageViewProps {
   question: GameQuestion;
   answers: GameAnswer[];
   waitingProgress?: WaitingProgress;
+  leaderboard?: LeaderboardEntry[];
   primaryActionLabel: string; // The main call to action on each page
   primaryActionHref: string; // The href to navigate to on primary action
   secondaryActionLabel?: string; // Optional secondary action, not sure if needed currently, my thought was maybe two different action for in-round action vs last-round action
-  secondaryActionHref?: string; 
+  secondaryActionHref?: string;
 }
 
 function shuffleAnswers(items: GameAnswer[]): GameAnswer[] {
@@ -41,11 +42,12 @@ function answerTagColor(answer: GameAnswer): string {
   return "blue";
 }
 
-export default function GameStageView({ 
+export default function GameStageView({
   stage,
   question,
   answers,
   waitingProgress,
+  leaderboard = [],
   primaryActionLabel,
   primaryActionHref,
   secondaryActionLabel,
@@ -101,7 +103,11 @@ export default function GameStageView({
                   ? "Waiting room"
                   : stage === "voting"
                     ? "Voting"
-                    : "Solution"}
+                    : stage === "solution"
+                      ? "Solution"
+                      : stage === "leaderboard"
+                        ? "Leaderboard"
+                        : "Final results"}
             </span>
 {/* answer */}
             {stage === "answer" ? (
@@ -236,6 +242,57 @@ export default function GameStageView({
                 </div>
               </>
             ) : null}
+{/* leaderboard / final */}
+            {(stage === "leaderboard" || stage === "final") ? (
+              <>
+                <Typography.Title level={2} className={styles.questionTitle}>
+                  {stage === "leaderboard" ? "Round standings" : "Final standings"}
+                </Typography.Title>
+                <p className={styles.questionSubtitle}>
+                  {stage === "leaderboard" ? "Scores after this round." : "Game over. Here are the final results."}
+                </p>
+
+                <div className={styles.leaderboardList}>
+                  {leaderboard.map((entry) => {
+                    const isTop3 = entry.rank <= 3;
+                    const medalColor = entry.rank === 1 ? styles.rankGold : entry.rank === 2 ? styles.rankSilver : styles.rankBronze;
+
+                    return (
+                      <div
+                        key={entry.name}
+                        className={`${styles.leaderboardRow} ${isTop3 ? styles.leaderboardRowTop : ""}`}
+                      >
+                        <span className={`${styles.rankBadge} ${isTop3 ? medalColor : ""}`}>
+                          {entry.rank}
+                        </span>
+                        <span className={styles.leaderboardName}>{entry.name}</span>
+                        <div className={styles.leaderboardScores}>
+                          {entry.roundGain > 0 ? (
+                            <span className={styles.roundGain}>+{entry.roundGain}</span>
+                          ) : null}
+                          <span className={styles.totalScore}>{entry.score.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {stage === "final" && leaderboard[0] ? (
+                  <div className={styles.winnerBanner}>
+                    Winner: <strong>{leaderboard[0].name}</strong> with {leaderboard[0].score.toLocaleString()} points
+                  </div>
+                ) : null}
+
+                <div className={styles.actions}>
+                  <Button type="primary" onClick={handlePrimaryAction}>
+                    {primaryActionLabel}
+                  </Button>
+                  {secondaryActionLabel && secondaryActionHref ? (
+                    <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
+                  ) : null}
+                </div>
+              </>
+            ) : null}
 {/* solution */}
             {stage === "solution" ? (
               <>
@@ -319,7 +376,7 @@ export default function GameStageView({
               </div>
               <div className={styles.listItem}>
                 <span>Stage</span>
-                <Tag color={stage === "solution" ? "green" : "blue"}>{stage}</Tag>
+                <Tag color={stage === "solution" || stage === "final" ? "green" : "blue"}>{stage}</Tag>
               </div>
             </div>
 
