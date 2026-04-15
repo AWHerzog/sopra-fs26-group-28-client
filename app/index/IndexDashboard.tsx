@@ -16,13 +16,14 @@ import {
   CopyOutlined,
   CaretRightOutlined,
 } from "@ant-design/icons";
-import { Button, Input, message } from "antd";
+import { App, Button, Input } from "antd";
 
 const avatarColors = ["#c7d9f0", "#f0c7c7", "#c7f0d4", "#f0e6c7", "#e0c7f0"];
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
   const apiService = useApi();
+  const { message } = App.useApp();
   const [game, setGame] = useState<Game | null>(null);
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
