@@ -30,9 +30,14 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
 
   const handleLogout = async (): Promise<void> => {
-    await apiService.post<void>("/users/logout", {}, { Authorization: token ?? "" });
-    clearToken();
-    router.push("/login");
+    try {
+      await apiService.post<void>("/users/logout", {}, { Authorization: token ?? "" });
+    } catch {
+      // token already invalid (server restart), ignore
+    } finally {
+      clearToken();
+      router.push("/login");
+    }
   };
 
   const createGame = async (): Promise<void> => {
