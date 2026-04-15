@@ -65,7 +65,7 @@ reason).
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[@AWHerzog]**   |   [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/2e2d0b0792549e8c0b6808d8cc7a70a38f1adb02] | [Created the core logic of the game in the backend] | [Important so the frontend can implement the design aspect of the game. Otherwise quite self explanatory] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6ae809b152e203ff14e72db5305a45bb356175ca] | [Created a Json file with questions and handler] | [To display questions and avoid duplicates in a game] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
