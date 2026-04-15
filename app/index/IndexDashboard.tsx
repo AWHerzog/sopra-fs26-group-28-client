@@ -28,6 +28,7 @@ const Dashboard: React.FC = () => {
   const [joinMode, setJoinMode] = useState(false);
   const [copied, setCopied] = useState(false);
   const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
+  const { value: username } = useLocalStorage<string>("username", "");
 
   const handleLogout = async (): Promise<void> => {
     try {
@@ -59,6 +60,15 @@ const Dashboard: React.FC = () => {
       if (joinedGame.code) {
         connectToGame(joinedGame.code, (update) => setGame(update));
       }
+    } catch (error) {
+      if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
+    }
+  };
+
+  const startGame = async (): Promise<void> => {
+    try {
+      await apiService.post(`/games/${game?.code}/start`, {}, { Authorization: token ?? "" });
+      router.push("/game/answer");
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
     }
@@ -145,8 +155,8 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Start Game button (host only) */}
-          {game.hostname === token && (
-            <button style={s.startBtn} onClick={() => {}}>
+          {game.hostname === username && (
+            <button style={s.startBtn} onClick={startGame}>
               <CaretRightOutlined style={{ fontSize: 18 }} />
               Start Game
             </button>
