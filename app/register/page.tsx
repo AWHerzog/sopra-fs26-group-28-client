@@ -17,6 +17,7 @@ const Registration: React.FC = () => {
 	const apiService = useApi();
 	const [form] = Form.useForm();
 	const { set: setToken } = useLocalStorage<string>("token", "");
+	const { set: setUsername } = useLocalStorage<string>("username", "");
 
 	const handleRegistration = async (values: RegistrationFormProps) => {
 		try {
@@ -29,6 +30,9 @@ const Registration: React.FC = () => {
 
 			if (response.token) {
 				setToken(response.token);
+			}
+			if (response.username) {
+				setUsername(response.username);
 			}
 
 			router.push("/index");

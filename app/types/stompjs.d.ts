@@ -1,28 +1,13 @@
 declare module '@stomp/stompjs' {
-  export interface SocketLike {
-    close(): void;
-    send?(data: string | ArrayBuffer | Blob): void;
-  }
-
-  export interface Frame {
-    command?: string;
-    headers?: Record<string, string>;
-    body?: string;
-  }
-
-  export interface ClientConfig {
-    webSocketFactory?: () => SocketLike;
-    reconnectDelay?: number;
-    onConnect?: (frame: Frame) => void;
-    onDisconnect?: (frame: Frame) => void;
-  }
-
   export class Client {
-    constructor(config?: ClientConfig);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(config?: any);
     activate(): void;
     deactivate(): void;
-    onConnect?: (frame: Frame) => void;
-    onDisconnect?: (frame: Frame) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onConnect?: (frame: any) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onDisconnect?: (frame: any) => void;
     subscribe(destination: string, callback: (message: { body: string }) => void): void;
     publish(options: { destination: string; body: string }): void;
   }
