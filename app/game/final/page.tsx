@@ -9,7 +9,7 @@ export default function FinalPage() {
       answers={demoAnswers}
       leaderboard={demoLeaderboard}
       primaryActionLabel="Back to lobby"
-      primaryActionHref="/game"
+      primaryActionHref="/index"
       secondaryActionLabel="Back to leaderboard"
       secondaryActionHref="/game/leaderboard"
     />

@@ -29,6 +29,18 @@ const stages = [
     href: "/game/solution",
     tag: "Reveal",
   },
+  {
+    title: "Leaderboard",
+    text: "Show the round standings with scores and points gained this round.",
+    href: "/game/leaderboard",
+    tag: "Scores",
+  },
+  {
+    title: "Final results",
+    text: "End-of-game screen with the final rankings and winner.",
+    href: "/game/final",
+    tag: "Final",
+  },
 ];
 
 export default function GameDemoHub() {
