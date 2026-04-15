@@ -16,17 +16,17 @@ import {
   CopyOutlined,
   CaretRightOutlined,
 } from "@ant-design/icons";
-import { App, Button, Input } from "antd";
+import { Button, Input, Tooltip } from "antd";
 
 const avatarColors = ["#c7d9f0", "#f0c7c7", "#c7f0d4", "#f0e6c7", "#e0c7f0"];
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
   const apiService = useApi();
-  const { message } = App.useApp();
   const [game, setGame] = useState<Game | null>(null);
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
+  const [copied, setCopied] = useState(false);
   const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
 
   const handleLogout = async (): Promise<void> => {
@@ -70,7 +70,8 @@ const Dashboard: React.FC = () => {
 
   const copyCode = (gameCode: string): void => {
     navigator.clipboard.writeText(gameCode);
-    message.success("Code copied!");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   // ── Lobby view ───────────────────────────────────────────────────────────────
@@ -100,9 +101,11 @@ const Dashboard: React.FC = () => {
             <p style={s.codeLabel}>Share this code with friends</p>
             <div style={s.codeRow}>
               <span style={s.codeText}>{game.code}</span>
-              <button style={s.copyBtn} onClick={() => copyCode(game.code ?? "")} title="Copy code">
-                <CopyOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
-              </button>
+              <Tooltip title={copied ? "Copied!" : "Copy code"} open={copied || undefined}>
+                <button style={s.copyBtn} onClick={() => copyCode(game.code ?? "")}>
+                  <CopyOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+                </button>
+              </Tooltip>
             </div>
           </div>
 
