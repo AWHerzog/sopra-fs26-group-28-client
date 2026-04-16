@@ -17,6 +17,7 @@ export const connectToGame = (gameCode: string, onUpdate: (game: Game) => void) 
       stompClient?.subscribe(`/topic/game/${gameCode}`, (message) => {
         const game: Game = JSON.parse(message.body);
         onUpdate(game);
+        console.log("Updated through websocket")
       });
     },
   });

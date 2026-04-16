@@ -6,4 +6,6 @@ export interface Game {
   code: string | null;
   status: string | null;
   players: { [username: string]: number } | null;
+  currentQuestionId: number | null;
+  currentRound: number | null;
 }
