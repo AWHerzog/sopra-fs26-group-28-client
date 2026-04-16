@@ -66,7 +66,7 @@ reason).
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[@AWHerzog]**   |   [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/2e2d0b0792549e8c0b6808d8cc7a70a38f1adb02] | [Created the core logic of the game in the backend] | [Important so the frontend can implement the design aspect of the game. Otherwise quite self explanatory] |
 |                    | [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6ae809b152e203ff14e72db5305a45bb356175ca] | [Created a Json file with questions and handler] | [To display questions and avoid duplicates in a game] |
-| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [16.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/7915e16a90c9b6a9608bb71d64d6dc3af7f7a304 + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9242e6ef919fd8d7b97bb05a0c115403b3e14b27] | [Exposed REST endpoints for gameflow and started working on the flow itself 5h] | [The game is the core of our app, important that it works] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
