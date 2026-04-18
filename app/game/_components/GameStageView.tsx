@@ -16,10 +16,14 @@ interface GameStageViewProps {
   answers: GameAnswer[];
   waitingProgress?: WaitingProgress;
   leaderboard?: LeaderboardEntry[];
-  primaryActionLabel: string; // The main call to action on each page
-  primaryActionHref: string; // The href to navigate to on primary action
-  secondaryActionLabel?: string; // Optional secondary action, not sure if needed currently, my thought was maybe two different action for in-round action vs last-round action
+  primaryActionLabel: string;
+  primaryActionHref: string;
+  secondaryActionLabel?: string;
   secondaryActionHref?: string;
+  onAnswerSubmit?: (text: string) => Promise<void>;
+  onVoteSubmit?: (answerId: string) => Promise<void>;
+  playerList?: string[];
+  submittedUsernames?: string[];
 }
 
 function shuffleAnswers(items: GameAnswer[]): GameAnswer[] {
@@ -52,6 +56,10 @@ export default function GameStageView({
   primaryActionHref,
   secondaryActionLabel,
   secondaryActionHref,
+  onAnswerSubmit,
+  onVoteSubmit,
+  playerList,
+  submittedUsernames = [],
 }: GameStageViewProps) {
   const router = useRouter();
   const [answerText, setAnswerText] = useState("");
@@ -130,17 +138,19 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction} disabled={!answerText.trim()}>
+                  <Button
+                    type="primary"
+                    disabled={!answerText.trim()}
+                    onClick={async () => {
+                      if (onAnswerSubmit) await onAnswerSubmit(answerText);
+                      handlePrimaryAction();
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
                     <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
                   ) : null}
-                </div>
-
-                <div className={styles.hintBox}>
-                  {/* Placeholder behavior until the answer submit API is wired in. */}
-                  The answer value stays local for now, so you can later replace the submit handler with the API call that posts the player response.
                 </div>
               </>
             ) : null}
@@ -167,14 +177,17 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.list}>
-                  {demoPlayerList.map((player, index) => (
-                    <div key={player} className={styles.listItem}>
-                      <span>{player}</span>
-                      <Tag color={index < (waitingProgress?.submitted ?? 0) ? "green" : "default"}>
-                        {index < (waitingProgress?.submitted ?? 0) ? "Ready" : "Pending"}
-                      </Tag>
-                    </div>
-                  ))}
+                  {(playerList ?? demoPlayerList).map((player) => {
+                    const ready = submittedUsernames.includes(player);
+                    return (
+                      <div key={player} className={styles.listItem}>
+                        <span>{player}</span>
+                        <Tag color={ready ? "green" : "default"}>
+                          {ready ? "Ready" : "Pending"}
+                        </Tag>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className={styles.hintBox}>{waitingProgress?.note}</div>
@@ -228,17 +241,19 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction} disabled={!selectedAnswerId}>
+                  <Button
+                    type="primary"
+                    disabled={!selectedAnswerId}
+                    onClick={async () => {
+                      if (onVoteSubmit && selectedAnswerId) await onVoteSubmit(selectedAnswerId);
+                      handlePrimaryAction();
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
                     <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
                   ) : null}
-                </div>
-
-                <div className={styles.hintBox}>
-                  {/* This action is designed to be replaced by a backend vote submit call later. */}
-                  Later, the submit action can publish the chosen answer through WebSocket or REST without changing the page structure.
                 </div>
               </>
             ) : null}
