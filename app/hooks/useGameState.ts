@@ -23,6 +23,13 @@ export function useGameState() {
 
   const prevStatus = useRef<string | null>(null);
 
+  // Save scores when a new round starts so leaderboard can show per-round gain
+  useEffect(() => {
+    if (game?.status === "ANSWERING" && game.players) {
+      sessionStorage.setItem("previousScores", JSON.stringify(game.players));
+    }
+  }, [game?.status, game?.players]);
+
   // Auto-navigate when game status changes
   useEffect(() => {
     if (!game?.status || !gameCode) return;
