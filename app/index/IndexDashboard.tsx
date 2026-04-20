@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useSessionStorage from "@/hooks/useSessionStorage";
 import { Game } from "@/types/game";
 import { connectToGame, disconnectFromGame } from "@/api/websocket";
 import { getApiDomain } from "@/utils/domain";
@@ -28,8 +29,8 @@ const Dashboard: React.FC = () => {
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
   const [copied, setCopied] = useState(false);
-  const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
-  const { value: currentUsername } = useLocalStorage<string>("username", "");
+  const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
+  const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
 
   // Navigate when game starts (WebSocket update)

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { connectToGame, disconnectFromGame } from "@/api/websocket";
 import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useSessionStorage from "@/hooks/useSessionStorage";
 import { Game } from "@/types/game";
 
 
@@ -13,8 +14,8 @@ export function useGameState() {
   const apiService = useApi();
 
   const { value: gameCode } = useLocalStorage<string>("gameCode", "");
-  const { value: token } = useLocalStorage<string>("token", "");
-  const { value: username } = useLocalStorage<string>("username", "");
+  const { value: token } = useSessionStorage<string>("token", "");
+  const { value: username } = useSessionStorage<string>("username", "");
 
   const [game, setGame] = useState<Game | null>(null);
   const [loading, setLoading] = useState(true);
