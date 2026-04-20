@@ -1,14 +1,12 @@
 "use client";
 
-import { useApi } from "@/hooks/useApi";
 import { useGameState } from "@/hooks/useGameState";
 import type { GameAnswer, GameQuestion } from "../_data";
 import { demoAnswers, demoQuestion } from "../_data";
 import GameStageView from "../_components/GameStageView";
 
 export default function SolutionPage() {
-  const { game, gameCode, token } = useGameState();
-  const apiService = useApi();
+  const { game, gameCode } = useGameState();
 
   const question: GameQuestion = game?.question
     ? {
@@ -28,21 +26,13 @@ export default function SolutionPage() {
       isCorrect: a.isCorrect ?? false,
     })) ?? demoAnswers;
 
-  const isLastRound = game?.currentRound != null && game.maxRounds != null && game.currentRound >= game.maxRounds;
-
-  const handleAdvance = async () => {
-    await apiService.post(`/games/${gameCode}/advance`, {}, { Authorization: token });
-    // Navigation handled automatically by useGameState WebSocket update
-  };
-
   return (
     <GameStageView
       stage="solution"
       question={question}
       answers={answers}
-      primaryActionLabel={isLastRound ? "See final results" : "Next round"}
-      primaryActionHref={isLastRound ? "/game/final" : ""}
-      onAdvance={game ? handleAdvance : undefined}
+      primaryActionLabel="See leaderboard"
+      primaryActionHref={`/game/${gameCode}/leaderboard`}
     />
   );
 }

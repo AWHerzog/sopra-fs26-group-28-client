@@ -1,10 +1,10 @@
 "use client";
 
 import { useGameState } from "@/hooks/useGameState";
-import type { LeaderboardEntry } from "../_data";
-import { demoAnswers, demoLeaderboard, demoQuestion } from "../_data";
-import type { GameQuestion } from "../_data";
-import GameStageView from "../_components/GameStageView";
+import type { LeaderboardEntry } from "@/game/[code]/_data";
+import type { GameQuestion } from "@/game/[code]/_data";
+import { demoLeaderboard, demoQuestion } from "@/game/[code]/_data";
+import GameStageView from "@/game/[code]/_components/GameStageView";
 
 function buildLeaderboard(players: { [username: string]: number } | null): LeaderboardEntry[] {
   if (!players) return demoLeaderboard;
@@ -32,12 +32,10 @@ export default function FinalPage() {
     <GameStageView
       stage="final"
       question={question}
-      answers={demoAnswers}
+      answers={[]}
       leaderboard={leaderboard}
       primaryActionLabel="Back to lobby"
       primaryActionHref="/index"
-      secondaryActionLabel="Back to leaderboard"
-      secondaryActionHref="/game/leaderboard"
     />
   );
 }

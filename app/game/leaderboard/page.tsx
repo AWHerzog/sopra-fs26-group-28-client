@@ -1,10 +1,9 @@
 "use client";
 
 import { useGameState } from "@/hooks/useGameState";
-import type { LeaderboardEntry } from "../_data";
-import { demoAnswers, demoLeaderboard, demoQuestion } from "../_data";
-import type { GameQuestion } from "../_data";
-import GameStageView from "../_components/GameStageView";
+import type { LeaderboardEntry, GameQuestion } from "@/game/[code]/_data";
+import { demoLeaderboard, demoQuestion } from "@/game/[code]/_data";
+import GameStageView from "@/game/[code]/_components/GameStageView";
 
 function buildLeaderboard(players: { [username: string]: number } | null): LeaderboardEntry[] {
   if (!players) return demoLeaderboard;
@@ -27,18 +26,15 @@ export default function LeaderboardPage() {
     : demoQuestion;
 
   const leaderboard = buildLeaderboard(game?.players ?? null);
-  const isLastRound = game?.currentRound != null && game.maxRounds != null && game.currentRound >= game.maxRounds;
 
   return (
     <GameStageView
       stage="leaderboard"
       question={question}
-      answers={demoAnswers}
+      answers={[]}
       leaderboard={leaderboard}
-      primaryActionLabel={isLastRound ? "See final results" : "Next round"}
-      primaryActionHref={isLastRound ? "/game/final" : "/game/answer"}
-      secondaryActionLabel="Back to solution"
-      secondaryActionHref="/game/solution"
+      primaryActionLabel="Back to lobby"
+      primaryActionHref="/index"
     />
   );
 }

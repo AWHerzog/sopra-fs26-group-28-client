@@ -325,7 +325,13 @@ export default function GameStageView({
                 ) : null}
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction}>
+                  <Button
+                    type="primary"
+                    onClick={async () => {
+                      if (onAdvance) await onAdvance();
+                      else handlePrimaryAction();
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
