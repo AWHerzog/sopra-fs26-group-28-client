@@ -166,8 +166,12 @@ export default function GameStageView({
                     type="primary"
                     disabled={!answerText.trim()}
                     onClick={async () => {
-                      if (onAnswerSubmit) await onAnswerSubmit(answerText);
-                      handlePrimaryAction();
+                      try {
+                        if (onAnswerSubmit) await onAnswerSubmit(answerText);
+                        handlePrimaryAction();
+                      } catch (err) {
+                        alert(`Failed to submit answer: ${err instanceof Error ? err.message : String(err)}`);
+                      }
                     }}
                   >
                     {primaryActionLabel}

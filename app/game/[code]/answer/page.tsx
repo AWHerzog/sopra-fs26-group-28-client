@@ -25,6 +25,7 @@ export default function AnswerPage() {
 
   const handleAnswerSubmit = async (text: string) => {
     const token = localStorage.getItem("token")?.replace(/^"|"$/g, "") ?? "";
+    console.log("[answer] submitting for gameCode:", gameCode, "username:", username);
     await apiService.post(`/games/${gameCode}/answers`, { answerText: text }, { Authorization: token });
   };
 
