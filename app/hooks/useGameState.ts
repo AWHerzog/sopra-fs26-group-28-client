@@ -25,17 +25,28 @@ export function useGameState() {
   // Auto-navigate when game status changes
   useEffect(() => {
     if (!game?.status || !gameCode) return;
+
+    const prev = prevStatus.current;
+    prevStatus.current = game.status;
+
+    // Only navigate to ANSWERING when coming from ROUND_RESULT (new round starting),
+    // not on initial load or after manually navigating to waiting.
+    if (game.status === "ANSWERING") {
+      if (prev === "ROUND_RESULT") {
+        window.location.href = `/game/${gameCode}/answer`;
+      }
+      return;
+    }
+
     const routes: Partial<Record<string, string>> = {
-      ANSWERING: `/game/${gameCode}/answer`,
       VOTING: `/game/${gameCode}/voting`,
       ROUND_RESULT: `/game/${gameCode}/solution`,
       FINISHED: "/game/final",
     };
     const target = routes[game.status];
-    if (target && target !== pathname && game.status !== prevStatus.current) {
+    if (target && target !== pathname) {
       window.location.href = target;
     }
-    prevStatus.current = game.status;
   }, [game?.status, gameCode, pathname]);
 
   useEffect(() => {
