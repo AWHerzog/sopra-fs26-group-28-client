@@ -30,8 +30,7 @@ export function useGameState() {
     const prev = prevStatus.current;
     prevStatus.current = game.status;
 
-    // Only navigate to ANSWERING when coming from ROUND_RESULT (new round starting),
-    // not on initial load or after manually navigating to waiting.
+    // Only navigate to ANSWERING when a new round starts (coming from ROUND_RESULT)
     if (game.status === "ANSWERING") {
       if (prev === "ROUND_RESULT") {
         window.location.href = `/game/${gameCode}/answer`;
@@ -39,9 +38,23 @@ export function useGameState() {
       return;
     }
 
+    // Only navigate to VOTING when transitioning from ANSWERING (not when already voted and waiting)
+    if (game.status === "VOTING") {
+      if (prev === "ANSWERING") {
+        window.location.href = `/game/${gameCode}/voting`;
+      }
+      return;
+    }
+
+    // Only navigate to solution when coming from VOTING (not when already on leaderboard)
+    if (game.status === "ROUND_RESULT") {
+      if (prev === "VOTING") {
+        window.location.href = `/game/${gameCode}/solution`;
+      }
+      return;
+    }
+
     const routes: Partial<Record<string, string>> = {
-      VOTING: `/game/${gameCode}/voting`,
-      ROUND_RESULT: `/game/${gameCode}/solution`,
       FINISHED: "/game/final",
     };
     const target = routes[game.status];
