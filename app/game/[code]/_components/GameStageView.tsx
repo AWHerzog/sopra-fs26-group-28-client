@@ -193,7 +193,7 @@ export default function GameStageView({
                     percent={Math.round(((waitingProgress?.submitted ?? 0) / (waitingProgress?.total ?? 1)) * 100)}
                     status="active"
                     strokeColor="#2f74b5"
-                    trailColor="#dbe6f2"
+                    railColor="#dbe6f2"
                   />
                   <p className={styles.questionSubtitle} style={{ marginTop: 12 }}>
                     {waitingProgress?.submitted ?? 0} of {waitingProgress?.total ?? 0} players have submitted.
