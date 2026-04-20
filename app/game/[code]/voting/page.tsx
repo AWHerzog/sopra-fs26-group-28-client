@@ -7,7 +7,7 @@ import { demoAnswers, demoQuestion } from "../_data";
 import GameStageView from "../_components/GameStageView";
 
 export default function VotingPage() {
-  const { game, username, gameCode } = useGameState();
+  const { game, username, gameCode, token } = useGameState();
   const apiService = useApi();
 
   const question: GameQuestion = game?.question
@@ -24,7 +24,6 @@ export default function VotingPage() {
     game?.answers?.map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
 
   const handleVoteSubmit = async (answerId: string) => {
-    const token = localStorage.getItem("token")?.replace(/^"|"$/g, "") ?? "";
     await apiService.post(`/games/${gameCode}/votes`, { answerId: Number(answerId) }, { Authorization: token });
   };
 

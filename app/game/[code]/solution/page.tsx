@@ -7,7 +7,7 @@ import { demoAnswers, demoQuestion } from "../_data";
 import GameStageView from "../_components/GameStageView";
 
 export default function SolutionPage() {
-  const { game, gameCode } = useGameState();
+  const { game, gameCode, token } = useGameState();
   const apiService = useApi();
 
   const question: GameQuestion = game?.question
@@ -31,7 +31,6 @@ export default function SolutionPage() {
   const isLastRound = game?.currentRound != null && game.maxRounds != null && game.currentRound >= game.maxRounds;
 
   const handleAdvance = async () => {
-    const token = localStorage.getItem("token")?.replace(/^"|"$/g, "") ?? "";
     await apiService.post(`/games/${gameCode}/advance`, {}, { Authorization: token });
     // Navigation handled automatically by useGameState WebSocket update
   };

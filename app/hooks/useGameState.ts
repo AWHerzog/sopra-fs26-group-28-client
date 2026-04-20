@@ -81,5 +81,5 @@ export function useGameState() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameCode, token]);
 
-  return { game, loading, error, username, gameCode };
+  return { game, loading, error, username, gameCode, token };
 }
