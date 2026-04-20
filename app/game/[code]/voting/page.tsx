@@ -25,7 +25,7 @@ export default function VotingPage() {
 
   const handleVoteSubmit = async (answerId: string) => {
     const token = localStorage.getItem("token")?.replace(/^"|"$/g, "") ?? "";
-    await apiService.post(`/games/${gameCode}/votes`, { answerId, username }, { Authorization: token });
+    await apiService.post(`/games/${gameCode}/votes`, { answerId: Number(answerId) }, { Authorization: token });
   };
 
   return (

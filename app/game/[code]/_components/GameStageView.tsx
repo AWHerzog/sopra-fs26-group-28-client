@@ -26,6 +26,7 @@ interface GameStageViewProps {
   secondaryActionHref?: string;
   onAnswerSubmit?: (text: string) => Promise<void>;
   onVoteSubmit?: (answerId: string) => Promise<void>;
+  onAdvance?: () => Promise<void>;
   playerList?: string[];
   submittedUsernames?: string[];
 }
@@ -62,6 +63,7 @@ export default function GameStageView({
   secondaryActionHref,
   onAnswerSubmit,
   onVoteSubmit,
+  onAdvance,
   playerList,
   submittedUsernames = [],
 }: GameStageViewProps) {
@@ -377,7 +379,13 @@ export default function GameStageView({
                 ) : null}
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction}>
+                  <Button
+                    type="primary"
+                    onClick={async () => {
+                      if (onAdvance) await onAdvance();
+                      else handlePrimaryAction();
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
