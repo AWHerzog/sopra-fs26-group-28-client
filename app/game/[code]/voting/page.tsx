@@ -20,8 +20,11 @@ export default function VotingPage() {
       }
     : demoQuestion;
 
+  // Filter out the current player's own answer — backend rejects self-votes
   const answers: GameAnswer[] =
-    game?.answers?.map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
+    game?.answers
+      ?.filter((a) => a.authorUsername !== username)
+      .map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
 
   const handleVoteSubmit = async (answerId: string) => {
     await apiService.post(`/games/${gameCode}/votes`, { answerId: Number(answerId) }, { Authorization: token });
