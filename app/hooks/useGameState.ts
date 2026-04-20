@@ -7,13 +7,6 @@ import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Game } from "@/types/game";
 
-// Which page each backend status maps to.
-const STATUS_ROUTE: Partial<Record<string, string>> = {
-  ANSWERING: "/game/answer",
-  VOTING: "/game/voting",
-  ROUND_RESULT: "/game/solution",
-  FINISHED: "/game/final",
-};
 
 export function useGameState() {
   const pathname = usePathname();
@@ -31,13 +24,19 @@ export function useGameState() {
 
   // Auto-navigate when game status changes
   useEffect(() => {
-    if (!game?.status) return;
-    const target = STATUS_ROUTE[game.status];
+    if (!game?.status || !gameCode) return;
+    const routes: Partial<Record<string, string>> = {
+      ANSWERING: `/game/${gameCode}/answer`,
+      VOTING: `/game/${gameCode}/voting`,
+      ROUND_RESULT: `/game/${gameCode}/solution`,
+      FINISHED: "/game/final",
+    };
+    const target = routes[game.status];
     if (target && target !== pathname && game.status !== prevStatus.current) {
       window.location.href = target;
     }
     prevStatus.current = game.status;
-  }, [game?.status, pathname]);
+  }, [game?.status, gameCode, pathname]);
 
   useEffect(() => {
     if (!gameCode || !token) {

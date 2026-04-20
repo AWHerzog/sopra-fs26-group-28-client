@@ -34,10 +34,10 @@ const Dashboard: React.FC = () => {
 
   // Navigate when game starts (WebSocket update)
   useEffect(() => {
-    if (game?.status === "ANSWERING") {
-      window.location.href = "/game/answer";
+    if (game?.status === "ANSWERING" && game.code) {
+      window.location.href = `/game/${game.code}/answer`;
     }
-  }, [game?.status]);
+  }, [game?.status, game?.code]);
 
   // Polling fallback: check state every 2s while waiting in lobby
   useEffect(() => {
@@ -60,7 +60,7 @@ const Dashboard: React.FC = () => {
         setGame(state);
         if (state.status === "ANSWERING") {
           clearInterval(intervalId);
-          window.location.href = "/game/answer";
+          window.location.href = `/game/${gameCode}/answer`;
         }
       } catch (e) {
         console.error("Polling error:", e);

@@ -38,7 +38,7 @@ export default function WaitingPage() {
       playerList={playerList}
       submittedUsernames={game?.submittedUsernames ?? []}
       primaryActionLabel="Continue to voting"
-      primaryActionHref="/game/voting"
+      primaryActionHref={`/game/${game?.code}/voting`}
     />
   );
 }

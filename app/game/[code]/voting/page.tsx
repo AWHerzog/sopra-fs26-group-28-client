@@ -34,7 +34,7 @@ export default function VotingPage() {
       question={question}
       answers={answers}
       primaryActionLabel="Submit vote"
-      primaryActionHref="/game/waiting"
+      primaryActionHref={`/game/${gameCode}/waiting`}
       onVoteSubmit={game ? handleVoteSubmit : undefined}
     />
   );
