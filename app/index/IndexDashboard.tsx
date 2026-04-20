@@ -86,8 +86,17 @@ const Dashboard: React.FC = () => {
       const createdGame: Game = await apiService.post<Game>("/games", {}, { Authorization: token ?? "" });
       setGame(createdGame);
       if (createdGame.code) {
+<<<<<<< HEAD
         setGameCode(createdGame.code);
         connectToGame(createdGame.code, (update) => setGame(update));
+=======
+        connectToGame(createdGame.code, (update) => {
+        setGame(update);
+        if (update.status === "ANSWERING") {
+          router.push(`/game/${createdGame?.code}/answer`);
+      }
+      });
+>>>>>>> origin/dev
       }
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
@@ -99,8 +108,17 @@ const Dashboard: React.FC = () => {
       const joinedGame: Game = await apiService.post<Game>("/games/join", { code }, { Authorization: token ?? "" });
       setGame(joinedGame);
       if (joinedGame.code) {
+<<<<<<< HEAD
         setGameCode(joinedGame.code);
         connectToGame(joinedGame.code, (update) => setGame(update));
+=======
+        connectToGame(joinedGame.code, (update) => {
+        setGame(update);
+        if (update.status === "ANSWERING") {
+          router.push(`/game/${joinedGame?.code}/answer`);
+      }
+      });
+>>>>>>> origin/dev
       }
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
@@ -109,8 +127,7 @@ const Dashboard: React.FC = () => {
 
   const startGame = async (): Promise<void> => {
     try {
-      await apiService.post(`/games/${game?.code}/start`, {}, { Authorization: token ?? "" });
-      router.push("/game/answer");
+      await apiService.post(`/games/${game?.code}/start`, {"maxRounds": 5, "stageDurationSeconds": 100}, { Authorization: token ?? "" }); //have default 5 rounds 100 secs
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
     }

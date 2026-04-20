@@ -20,10 +20,15 @@ export interface Game {
   code: string | null;
   status: GameStatus | null;
   players: { [username: string]: number } | null;
+<<<<<<< HEAD
   currentRound: number | null;
   maxRounds: number | null;
   question: GameStateQuestion | null;
   stageDeadline: string | null;
   answers: GameStateAnswer[] | null;
   submittedUsernames: string[] | null;
+=======
+  currentQuestionId: number | null;
+  currentRound: number | null;
+>>>>>>> origin/dev
 }

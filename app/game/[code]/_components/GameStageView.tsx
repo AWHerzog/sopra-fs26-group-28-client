@@ -6,6 +6,10 @@ import { Button, Input, Progress, Tag, Typography } from "antd";
 import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
 import { demoPlayerList } from "../_data";
 import styles from "../game.module.css";
+import { Game } from "@/types/game";
+import { connectToGame, disconnectFromGame } from "@/api/websocket";
+import { useApi } from "@/hooks/useApi";
+import { useParams } from "next/navigation";
 
 type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
 
@@ -62,15 +66,33 @@ export default function GameStageView({
   submittedUsernames = [],
 }: GameStageViewProps) {
   const router = useRouter();
+  const apiService = useApi();
+  const { code } = useParams();
   const [answerText, setAnswerText] = useState("");
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
   const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>(() => shuffleAnswers(answers));
+  const [game, setGame] = useState<Game | null>(null);
 
   useEffect(() => {
+    if (!code) return;
+    fetchGameState();
     // Reset option order and selected vote whenever a new stage/data set is shown.
     setOrderedAnswers(shuffleAnswers(answers));
     setSelectedAnswerId(null);
-  }, [answers, stage]);
+  }, [answers, stage, code]);
+
+  const fetchGameState = async () => {
+      try {
+        const stored = localStorage.getItem("token") ?? "";
+        const cleanToken = stored.replace(/^"|"$/g, "");
+        const res = await apiService.get<Game>(`/games/${code}/state`, { Authorization: cleanToken }); //"f7120e82-f7c2-4afc-8842-d58c5df9ab80" Authorization: token ?? ""
+        setGame(res);
+        console.log("successfully set game state")
+      } catch (err) {
+        console.error("Failed to load game state:", err);
+      }
+    };
+
 
   const handlePrimaryAction = (): void => {
     router.push(primaryActionHref);
