@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Progress, Tag, Typography } from "antd";
 import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
-import { demoPlayerList } from "../_data";
+import { demoPlayerList, demoWaitingProgress} from "../_data";
 import styles from "../game.module.css";
+import { useGameState } from "@/hooks/useGameState";
 
 type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
 
@@ -69,6 +70,7 @@ export default function GameStageView({
   // Start with empty array to avoid SSR/client hydration mismatch, shuffle on mount
   const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>([]);
   const shuffledForStage = useRef<string | null>(null);
+  const { game } = useGameState();
 
   // Shuffle once per stage (not on every answers update)
   useEffect(() => {
@@ -114,7 +116,6 @@ export default function GameStageView({
           <p className={styles.subtitle}>{question.subtitle}</p>
           <div className={styles.metaRow}>
             <Tag color="blue">Game code: {question.code}</Tag>
-            <Tag color="geekblue">Backend-ready mock flow</Tag>
             {stage === "solution" ? <Tag color="green">Reveal complete</Tag> : null}
           </div>
         </section>
@@ -142,7 +143,7 @@ export default function GameStageView({
                   Enter your answer
                 </Typography.Title>
                 <p className={styles.questionSubtitle}>
-                  The text field is ready for backend wiring later. For now it keeps the round flow and navigation in place.
+                  Write an answer that seems true to fool your friends.
                 </p>
 
                 <div className={styles.answerInput}>
@@ -182,9 +183,6 @@ export default function GameStageView({
                 <Typography.Title level={2} className={styles.questionTitle}>
                   Waiting for everyone
                 </Typography.Title>
-                <p className={styles.questionSubtitle}>
-                  Keep the lobby visible while the rest of the room submits an answer.
-                </p>
 
                 <div className={styles.progressCard}>
                   <Progress
@@ -244,7 +242,6 @@ export default function GameStageView({
                 <div className={styles.answerGrid}>
                   {orderedAnswers.map((answer) => {
                     const isSelected = selectedAnswerId === answer.id;
-
                     return (
                       <button
                         key={answer.id}
@@ -347,7 +344,7 @@ export default function GameStageView({
                   Review the reveal
                 </Typography.Title>
                 <p className={styles.questionSubtitle}>
-                  The correct answer is highlighted in green. Voter names are shown under each option so the reveal can be reused once the backend is ready.
+                  The correct answer is highlighted in green. Voter names are shown under each option.
                 </p>
 
                 <div className={styles.answerGrid}>
@@ -407,12 +404,7 @@ export default function GameStageView({
           <aside className={styles.sideCard}>
             {/* Static integration notes to keep frontend/backend responsibilities explicit. */}
             <span className={styles.sectionLabel}>Round context</span>
-            <Typography.Title level={4} style={{ marginTop: 0, color: "#223042" }}>
-              Plug-in points for the backend
-            </Typography.Title>
-            <p className={styles.questionSubtitle}>
-              These pages keep the visual flow separate from data fetching so later you can bind them to the round state, question payload, and live updates.
-            </p>
+            
 
             <div className={styles.list}>
               <div className={styles.listItem}>
@@ -425,7 +417,7 @@ export default function GameStageView({
               </div>
               <div className={styles.listItem}>
                 <span>Players</span>
-                <Tag color="default">{demoPlayerList.length}</Tag>
+                <Tag color="default">{game?.players ? Object.keys(game.players).length : demoWaitingProgress.total}</Tag>
               </div>
               <div className={styles.listItem}>
                 <span>Stage</span>
@@ -433,17 +425,7 @@ export default function GameStageView({
               </div>
             </div>
 
-            {stage === "voting" ? (
-              <div className={styles.hintBox}>
-                The answer order is randomized on mount to avoid a fixed pattern while the real round data is still being wired in.
-              </div>
-            ) : null}
-
-            {stage === "solution" ? (
-              <div className={styles.hintBox}>
-                Each answer can later be populated with the real voter list from the backend response, without changing the view layout.
-              </div>
-            ) : null}
+            
           </aside>
         </div>
       </div>
