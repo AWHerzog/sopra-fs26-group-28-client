@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { Button, Tag, Typography } from "antd";
-import styles from "./game.module.css";
-
 const stages = [
   {
     title: "Type answer",
@@ -29,36 +27,35 @@ const stages = [
     href: "/game/solution",
     tag: "Reveal",
   },
+  {
+    title: "Leaderboard",
+    text: "Show the round standings with scores and points gained this round.",
+    href: "/game/leaderboard",
+    tag: "Scores",
+  },
+  {
+    title: "Final results",
+    text: "End-of-game screen with the final rankings and winner.",
+    href: "/game/final",
+    tag: "Final",
+  },
 ];
 
 export default function GameDemoHub() {
   return (
-    <div className={styles.page}>
-      <div className={styles.shell}>
-        <section className={styles.hero}>
-          <span className={styles.eyebrow}>Game flow</span>
-          <Typography.Title level={1} className={styles.title}>
-            Frontend game screens ready for backend wiring
-          </Typography.Title>
-          <p className={styles.subtitle}>
-            Use these routes as a drop-in shell for the answer, waiting, voting, and solution phases. The layout is designed so live round data can be plugged in later without changing the page structure.
-          </p>
-        </section>
-
-        <div className={styles.overviewGrid}>
-          {stages.map((stage) => (
-            <article key={stage.href} className={styles.overviewCard}>
-              <Tag color="blue">{stage.tag}</Tag>
-              <div className={styles.overviewCardTitle}>{stage.title}</div>
-              <p className={styles.overviewCardText}>{stage.text}</p>
-              <div className={styles.overviewCardActions}>
-                <Button type="primary">
-                  <Link href={stage.href}>Open screen</Link>
-                </Button>
-              </div>
-            </article>
-          ))}
-        </div>
+    <div style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>
+      <Typography.Title level={1}>Game flow — dev hub</Typography.Title>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
+        {stages.map((stage) => (
+          <article key={stage.href} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: 16 }}>
+            <Tag color="blue">{stage.tag}</Tag>
+            <div style={{ fontWeight: 600, margin: "8px 0 4px" }}>{stage.title}</div>
+            <p style={{ color: "#555", fontSize: 14 }}>{stage.text}</p>
+            <Button type="primary" size="small">
+              <Link href={stage.href}>Open screen</Link>
+            </Button>
+          </article>
+        ))}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import useSessionStorage from "@/hooks/useSessionStorage";
 import { User } from "@/types/user";
 import { Button, Form, Input } from "antd";
 import styles from "@/styles/auth.module.css";
@@ -16,8 +16,8 @@ const Registration: React.FC = () => {
 	const router = useRouter();
 	const apiService = useApi();
 	const [form] = Form.useForm();
-	const { set: setToken } = useLocalStorage<string>("token", "");
-	const { set: setUsername } = useLocalStorage<string>("username", "");
+	const { set: setToken } = useSessionStorage<string>("token", "");
+	const { set: setUsername } = useSessionStorage<string>("username", "");
 
 	const handleRegistration = async (values: RegistrationFormProps) => {
 		try {

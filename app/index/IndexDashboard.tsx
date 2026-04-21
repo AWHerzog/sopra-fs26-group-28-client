@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useSessionStorage from "@/hooks/useSessionStorage";
 import { Game } from "@/types/game";
 import { connectToGame, disconnectFromGame } from "@/api/websocket";
+import { getApiDomain } from "@/utils/domain";
 import {
   TeamOutlined,
   PlusCircleOutlined,
@@ -27,8 +29,47 @@ const Dashboard: React.FC = () => {
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
   const [copied, setCopied] = useState(false);
-  const { value: token, clear: clearToken } = useLocalStorage<string>("token", "");
-  const { value: username } = useLocalStorage<string>("username", "");
+  const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
+  const { value: currentUsername } = useSessionStorage<string>("username", "");
+  const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
+
+  // Navigate when game starts (WebSocket update)
+  useEffect(() => {
+    if (game?.status === "ANSWERING" && game.code) {
+      window.location.href = `/game/${game.code}/answer`;
+    }
+  }, [game?.status, game?.code]);
+
+  // Polling fallback: check state every 2s while waiting in lobby
+  useEffect(() => {
+    if (!game || game.status !== "WAITING") return;
+    const gameCode = game.code;
+    if (!gameCode) return;
+
+    const intervalId = setInterval(async () => {
+      const rawToken = localStorage.getItem("token");
+      const tok = rawToken ? JSON.parse(rawToken) : "";
+      if (!tok) return;
+      try {
+        const res = await fetch(`${getApiDomain()}/games/${gameCode}/state`, {
+          method: "GET",
+          headers: { Authorization: tok, "Content-Type": "application/json" },
+        });
+        if (!res.ok) { console.error("Poll failed:", res.status); return; }
+        const state: Game = await res.json();
+        console.log("Poll state:", state.status);
+        setGame(state);
+        if (state.status === "ANSWERING") {
+          clearInterval(intervalId);
+          window.location.href = `/game/${gameCode}/answer`;
+        }
+      } catch (e) {
+        console.error("Polling error:", e);
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, [game?.status, game?.code]);
 
   const handleLogout = async (): Promise<void> => {
     try {
@@ -46,12 +87,8 @@ const Dashboard: React.FC = () => {
       const createdGame: Game = await apiService.post<Game>("/games", {}, { Authorization: token ?? "" });
       setGame(createdGame);
       if (createdGame.code) {
-        connectToGame(createdGame.code, (update) => {
-        setGame(update);
-        if (update.status === "ANSWERING") {
-          router.push(`/game/${createdGame?.code}/answer`);
-      }
-      });
+        setGameCode(createdGame.code);
+        connectToGame(createdGame.code, (update) => setGame(update));
       }
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
@@ -63,12 +100,8 @@ const Dashboard: React.FC = () => {
       const joinedGame: Game = await apiService.post<Game>("/games/join", { code }, { Authorization: token ?? "" });
       setGame(joinedGame);
       if (joinedGame.code) {
-        connectToGame(joinedGame.code, (update) => {
-        setGame(update);
-        if (update.status === "ANSWERING") {
-          router.push(`/game/${joinedGame?.code}/answer`);
-      }
-      });
+        setGameCode(joinedGame.code);
+        connectToGame(joinedGame.code, (update) => setGame(update));
       }
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
@@ -142,7 +175,7 @@ const Dashboard: React.FC = () => {
             <div style={s.playersList}>
               {players.map(([username], index) => {
                 const isReady = index < 2; // placeholder: first two shown as ready
-                const isYou = username === token;
+                const isYou = username === currentUsername;
                 return (
                   <div key={username} style={s.playerRow}>
                     <div style={{ ...s.avatar, background: avatarColors[index % avatarColors.length] }}>
@@ -164,7 +197,7 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Start Game button (host only) */}
-          {game.hostname === username && (
+          {game.hostname === currentUsername && (
             <button style={s.startBtn} onClick={startGame}>
               <CaretRightOutlined style={{ fontSize: 18 }} />
               Start Game

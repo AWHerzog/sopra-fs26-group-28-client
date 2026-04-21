@@ -1,17 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Progress, Tag, Typography } from "antd";
-import type { GameAnswer, GameQuestion, WaitingProgress } from "../_data";
+import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
 import { demoPlayerList } from "../_data";
 import styles from "../game.module.css";
-import { Game } from "@/types/game";
-import { connectToGame, disconnectFromGame } from "@/api/websocket";
-import { useApi } from "@/hooks/useApi";
-import { useParams } from "next/navigation";
 
-type Stage = "answer" | "waiting" | "voting" | "solution"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
+type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
 
 // This component is designed as a shared view shell for the answer, waiting, voting, and solution pages. Each page route renders the same layout but with different active blocks and data to keep the flow consistent while wiring in the backend logic later.
 interface GameStageViewProps {
@@ -19,10 +15,16 @@ interface GameStageViewProps {
   question: GameQuestion;
   answers: GameAnswer[];
   waitingProgress?: WaitingProgress;
-  primaryActionLabel: string; // The main call to action on each page
-  primaryActionHref: string; // The href to navigate to on primary action
-  secondaryActionLabel?: string; // Optional secondary action, not sure if needed currently, my thought was maybe two different action for in-round action vs last-round action
-  secondaryActionHref?: string; 
+  leaderboard?: LeaderboardEntry[];
+  primaryActionLabel: string;
+  primaryActionHref: string;
+  secondaryActionLabel?: string;
+  secondaryActionHref?: string;
+  onAnswerSubmit?: (text: string) => Promise<void>;
+  onVoteSubmit?: (answerId: string) => Promise<void>;
+  onAdvance?: () => Promise<void>;
+  playerList?: string[];
+  submittedUsernames?: string[];
 }
 
 function shuffleAnswers(items: GameAnswer[]): GameAnswer[] {
@@ -45,43 +47,47 @@ function answerTagColor(answer: GameAnswer): string {
   return "blue";
 }
 
-export default function GameStageView({ 
+export default function GameStageView({
   stage,
   question,
   answers,
   waitingProgress,
+  leaderboard = [],
   primaryActionLabel,
   primaryActionHref,
   secondaryActionLabel,
   secondaryActionHref,
+  onAnswerSubmit,
+  onVoteSubmit,
+  onAdvance,
+  playerList,
+  submittedUsernames = [],
 }: GameStageViewProps) {
   const router = useRouter();
-  const apiService = useApi();
-  const { code } = useParams();
   const [answerText, setAnswerText] = useState("");
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
-  const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>(() => shuffleAnswers(answers));
-  const [game, setGame] = useState<Game | null>(null);
+  // Start with empty array to avoid SSR/client hydration mismatch, shuffle on mount
+  const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>([]);
+  const shuffledForStage = useRef<string | null>(null);
 
+  // Shuffle once per stage (not on every answers update)
   useEffect(() => {
-    if (!code) return;
-    fetchGameState();
-    // Reset option order and selected vote whenever a new stage/data set is shown.
-    setOrderedAnswers(shuffleAnswers(answers));
-    setSelectedAnswerId(null);
-  }, [answers, stage, code]);
-
-  const fetchGameState = async () => {
-      try {
-        const stored = localStorage.getItem("token") ?? "";
-        const cleanToken = stored.replace(/^"|"$/g, "");
-        const res = await apiService.get<Game>(`/games/${code}/state`, { Authorization: cleanToken }); //"f7120e82-f7c2-4afc-8842-d58c5df9ab80" Authorization: token ?? ""
-        setGame(res);
-        console.log("successfully set game state")
-      } catch (err) {
-        console.error("Failed to load game state:", err);
-      }
-    };
+    const key = stage;
+    if (shuffledForStage.current !== key) {
+      shuffledForStage.current = key;
+      setOrderedAnswers(shuffleAnswers(answers));
+      setSelectedAnswerId(null);
+    } else {
+      // Update content (voters, isCorrect) while preserving order
+      setOrderedAnswers(prev => {
+        const map = new Map(answers.map(a => [a.id, a]));
+        const updated = prev.map(a => map.get(a.id) ?? a).filter(a => map.has(a.id));
+        const added = answers.filter(a => !prev.some(p => p.id === a.id));
+        return [...updated, ...added];
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answers, stage]);
 
 
   const handlePrimaryAction = (): void => {
@@ -123,7 +129,11 @@ export default function GameStageView({
                   ? "Waiting room"
                   : stage === "voting"
                     ? "Voting"
-                    : "Solution"}
+                    : stage === "solution"
+                      ? "Solution"
+                      : stage === "leaderboard"
+                        ? "Leaderboard"
+                        : "Final results"}
             </span>
 {/* answer */}
             {stage === "answer" ? (
@@ -146,17 +156,23 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction} disabled={!answerText.trim()}>
+                  <Button
+                    type="primary"
+                    disabled={!answerText.trim()}
+                    onClick={async () => {
+                      try {
+                        if (onAnswerSubmit) await onAnswerSubmit(answerText);
+                        handlePrimaryAction();
+                      } catch (err) {
+                        alert(`Failed to submit answer: ${err instanceof Error ? err.message : String(err)}`);
+                      }
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
                     <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
                   ) : null}
-                </div>
-
-                <div className={styles.hintBox}>
-                  {/* Placeholder behavior until the answer submit API is wired in. */}
-                  The answer value stays local for now, so you can later replace the submit handler with the API call that posts the player response.
                 </div>
               </>
             ) : null}
@@ -175,7 +191,7 @@ export default function GameStageView({
                     percent={Math.round(((waitingProgress?.submitted ?? 0) / (waitingProgress?.total ?? 1)) * 100)}
                     status="active"
                     strokeColor="#2f74b5"
-                    trailColor="#dbe6f2"
+                    railColor="#dbe6f2"
                   />
                   <p className={styles.questionSubtitle} style={{ marginTop: 12 }}>
                     {waitingProgress?.submitted ?? 0} of {waitingProgress?.total ?? 0} players have submitted.
@@ -183,14 +199,17 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.list}>
-                  {demoPlayerList.map((player, index) => (
-                    <div key={player} className={styles.listItem}>
-                      <span>{player}</span>
-                      <Tag color={index < (waitingProgress?.submitted ?? 0) ? "green" : "default"}>
-                        {index < (waitingProgress?.submitted ?? 0) ? "Ready" : "Pending"}
-                      </Tag>
-                    </div>
-                  ))}
+                  {(playerList ?? demoPlayerList).map((player) => {
+                    const ready = submittedUsernames.includes(player);
+                    return (
+                      <div key={player} className={styles.listItem}>
+                        <span>{player}</span>
+                        <Tag color={ready ? "green" : "default"}>
+                          {ready ? "Ready" : "Pending"}
+                        </Tag>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className={styles.hintBox}>{waitingProgress?.note}</div>
@@ -244,17 +263,80 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction} disabled={!selectedAnswerId}>
+                  <Button
+                    type="primary"
+                    disabled={!selectedAnswerId}
+                    onClick={async () => {
+                      try {
+                        if (onVoteSubmit && selectedAnswerId) await onVoteSubmit(selectedAnswerId);
+                        handlePrimaryAction();
+                      } catch (err) {
+                        alert(`Failed to submit vote: ${err instanceof Error ? err.message : String(err)}`);
+                      }
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
                     <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
                   ) : null}
                 </div>
+              </>
+            ) : null}
+{/* leaderboard / final */}
+            {(stage === "leaderboard" || stage === "final") ? (
+              <>
+                <Typography.Title level={2} className={styles.questionTitle}>
+                  {stage === "leaderboard" ? "Round standings" : "Final standings"}
+                </Typography.Title>
+                <p className={styles.questionSubtitle}>
+                  {stage === "leaderboard" ? "Scores after this round." : "Game over. Here are the final results."}
+                </p>
 
-                <div className={styles.hintBox}>
-                  {/* This action is designed to be replaced by a backend vote submit call later. */}
-                  Later, the submit action can publish the chosen answer through WebSocket or REST without changing the page structure.
+                <div className={styles.leaderboardList}>
+                  {leaderboard.map((entry) => {
+                    const isTop3 = entry.rank <= 3;
+                    const medalColor = entry.rank === 1 ? styles.rankGold : entry.rank === 2 ? styles.rankSilver : styles.rankBronze;
+
+                    return (
+                      <div
+                        key={entry.name}
+                        className={`${styles.leaderboardRow} ${isTop3 ? styles.leaderboardRowTop : ""}`}
+                      >
+                        <span className={`${styles.rankBadge} ${isTop3 ? medalColor : ""}`}>
+                          {entry.rank}
+                        </span>
+                        <span className={styles.leaderboardName}>{entry.name}</span>
+                        <div className={styles.leaderboardScores}>
+                          {entry.roundGain > 0 ? (
+                            <span className={styles.roundGain}>+{entry.roundGain}</span>
+                          ) : null}
+                          <span className={styles.totalScore}>{entry.score.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {stage === "final" && leaderboard[0] ? (
+                  <div className={styles.winnerBanner}>
+                    Winner: <strong>{leaderboard[0].name}</strong> with {leaderboard[0].score.toLocaleString()} points
+                  </div>
+                ) : null}
+
+                <div className={styles.actions}>
+                  <Button
+                    type="primary"
+                    onClick={async () => {
+                      if (onAdvance) await onAdvance();
+                      else handlePrimaryAction();
+                    }}
+                  >
+                    {primaryActionLabel}
+                  </Button>
+                  {secondaryActionLabel && secondaryActionHref ? (
+                    <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
+                  ) : null}
                 </div>
               </>
             ) : null}
@@ -305,7 +387,13 @@ export default function GameStageView({
                 ) : null}
 
                 <div className={styles.actions}>
-                  <Button type="primary" onClick={handlePrimaryAction}>
+                  <Button
+                    type="primary"
+                    onClick={async () => {
+                      if (onAdvance) await onAdvance();
+                      else handlePrimaryAction();
+                    }}
+                  >
                     {primaryActionLabel}
                   </Button>
                   {secondaryActionLabel && secondaryActionHref ? (
@@ -341,7 +429,7 @@ export default function GameStageView({
               </div>
               <div className={styles.listItem}>
                 <span>Stage</span>
-                <Tag color={stage === "solution" ? "green" : "blue"}>{stage}</Tag>
+                <Tag color={stage === "solution" || stage === "final" ? "green" : "blue"}>{stage}</Tag>
               </div>
             </div>
 
@@ -356,15 +444,6 @@ export default function GameStageView({
                 Each answer can later be populated with the real voter list from the backend response, without changing the view layout.
               </div>
             ) : null}
-
-            <div className={styles.actions}>
-              <Button type="primary" onClick={handlePrimaryAction}>
-                {primaryActionLabel}
-              </Button>
-              {secondaryActionLabel && secondaryActionHref ? (
-                <Button onClick={handleSecondaryAction}>{secondaryActionLabel}</Button>
-              ) : null}
-            </div>
           </aside>
         </div>
       </div>
