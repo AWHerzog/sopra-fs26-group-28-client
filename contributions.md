@@ -70,8 +70,8 @@ reason).
 |                    | [21.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/1850b1651e8a3c7b6178d627b6d3ca90abe143e8 + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/5cb79fa6adc61f7907b59194b7af495b1cfd9f5d] | [Fixed Bugs especially showing waiting correct, hosting more than one game, leaving etc. clean up frontend 4h] | [Make Sure game does not break easily, clean up frontend to make game appear finished] |
 | **[Luizcodes02]** | [19.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6a5802d9ee5b806f16007c215850ba152a556921] | [Fix QuestionService import, add question/answers to game state, add advance endpoint] | [Game state receives questions/answers from backend] |
 |                    | [20.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/7487cabb8ec76f46915098ecb83d8ae9220d6b9d] | [Fix race condition with pessimistic lock, add correct answer as voting option] | [race condition fix and correct answer gets shown] |
-| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [16.04.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a1165bbbe83d8da757c8d8e5dc6106b7a7cac1bb)] | [create all files. add short comment with purpose and implementation parts (2 hours)] | [Base for Game Implementation] |
+|                    | [18.04.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/f05e73598d4ba0b8f6c9d990da4b592e92eafc8d)] | [Implemented game state model, added round level persistance in repositories, DTOs and Mapper updates, preparation ready for game logic implementation in service layer] | [First Part of Game Implementation] |
 
 ---
 
