@@ -39,7 +39,7 @@ const Registration: React.FC = () => {
         		setUsername(response.username);
      		}
 
-			router.push("/index");
+			router.push("/home");
 			
 		} catch (error) {
 			if (error instanceof Error) {

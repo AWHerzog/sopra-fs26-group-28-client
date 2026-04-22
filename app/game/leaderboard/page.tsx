@@ -34,7 +34,7 @@ export default function LeaderboardPage() {
       answers={[]}
       leaderboard={leaderboard}
       primaryActionLabel="Back to lobby"
-      primaryActionHref="/index"
+      primaryActionHref="/home"
     />
   );
 }
