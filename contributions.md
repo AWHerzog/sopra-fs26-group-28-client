@@ -3,7 +3,7 @@
 Every member has to complete at least 2 meaningful tasks per week, where a
 single development task should have a granularity of 0.5-1 day. The completed
 tasks have to be shown in the weekly TA meetings. You have one "Joker" to miss
-one weekly TA meeting and another "Joker" to once skip continuous progress over
+one weekly TA meeting and another "Joker" to once skip continuous progress over 
 the remaining weeks of the course. Please note that you cannot make up for
 "missed" continuous progress, but you can "work ahead" by completing twice the
 amount of work in one week to skip progress on a subsequent week without using
@@ -45,7 +45,7 @@ reason).
 
 ---
 
-## Contributions Week 2 - [1.04.26] to [15.04.26]
+## Contributions Week 2 - [1.04.26] to [15.04.26]..
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
