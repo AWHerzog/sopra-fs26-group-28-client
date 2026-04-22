@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user";
 import { Button, Form, Input } from "antd";
 import styles from "@/styles/auth.module.css";
@@ -16,7 +17,8 @@ const Registration: React.FC = () => {
 	const router = useRouter();
 	const apiService = useApi();
 	const [form] = Form.useForm();
-	const { set: setToken } = useSessionStorage<string>("token", "");
+	const { set: setSessionToken } = useSessionStorage<string>("token", "");
+	const { set: setToken } = useLocalStorage<string>("token", "")
 	const { set: setUsername } = useSessionStorage<string>("username", "");
 
 	const handleRegistration = async (values: RegistrationFormProps) => {
@@ -28,12 +30,14 @@ const Registration: React.FC = () => {
 
 			const response = await apiService.post<User>("/users", payload);
 
-			if (response.token) {
-				setToken(response.token);
-			}
+			if (response.token){
+      			setSessionToken(response.token);
+      			setToken(response.token);
+      		}
+
 			if (response.username) {
-				setUsername(response.username);
-			}
+        		setUsername(response.username);
+     		}
 
 			router.push("/index");
 			
