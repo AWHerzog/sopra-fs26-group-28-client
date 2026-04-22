@@ -19,6 +19,9 @@ export default function Home() {
       <Button type="primary" onClick={() => router.push("/login")}>
         Go to Login
       </Button>
+      <Button type="primary" onClick={() => router.push("/register")}>
+        Go to Register
+      </Button>
     </div>
   );
 }
