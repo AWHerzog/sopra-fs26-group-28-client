@@ -21,7 +21,7 @@ interface GameStageViewProps {
   primaryActionHref: string;
   secondaryActionLabel?: string;
   secondaryActionHref?: string;
-  onAnswerSubmit?: (text: string) => Promise<void>;
+  onAnswerSubmit?: (text: string) => Promise<Boolean>;
   onVoteSubmit?: (answerId: string) => Promise<void>;
   onAdvance?: () => Promise<void>;
   playerList?: string[];
@@ -71,6 +71,7 @@ export default function GameStageView({
   const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>([]);
   const shuffledForStage = useRef<string | null>(null);
   const { game } = useGameState();
+  const [error, setError] = useState(false);
 
   // Shuffle once per stage (not on every answers update)
   useEffect(() => {
@@ -156,14 +157,33 @@ export default function GameStageView({
                   />
                 </div>
 
+                {error && (
+                    <div
+                      style={{
+                        marginTop: "10px",
+                        padding: "10px 12px",
+                        borderRadius: "8px",
+                        background: "#fef2f2",
+                        border: "1px solid #fecaca",
+                        color: "#991b1b",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Too close to the correct answer. Try something less obvious.
+                    </div>
+                  )}
+                
+
                 <div className={styles.actions}>
                   <Button
                     type="primary"
                     disabled={!answerText.trim()}
                     onClick={async () => {
                       try {
-                        if (onAnswerSubmit) await onAnswerSubmit(answerText);
-                        handlePrimaryAction();
+                        if (onAnswerSubmit) {
+                        const success = await onAnswerSubmit(answerText);
+                        if (success) handlePrimaryAction(), setError(false); else setError(true)
+                        }
                       } catch (err) {
                         alert(`Failed to submit answer: ${err instanceof Error ? err.message : String(err)}`);
                       }

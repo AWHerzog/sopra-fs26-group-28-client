@@ -23,9 +23,14 @@ export default function AnswerPage() {
   const answers: GameAnswer[] =
     game?.answers?.map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
 
-  const handleAnswerSubmit = async (text: string) => {
-    console.log("[answer] submitting for gameCode:", gameCode, "username:", username);
-    await apiService.post(`/games/${gameCode}/answers`, { answerText: text }, { Authorization: token });
+  const handleAnswerSubmit = async (text: string) : Promise<Boolean> => {
+    try{
+      console.log("[answer] submitting for gameCode:", gameCode, "username:", username);
+      await apiService.post(`/games/${gameCode}/answers`, { answerText: text }, { Authorization: token });
+      return true
+    }catch{
+      return false
+    }
   };
 
   return (
