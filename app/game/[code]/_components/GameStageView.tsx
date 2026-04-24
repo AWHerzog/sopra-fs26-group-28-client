@@ -21,7 +21,7 @@ interface GameStageViewProps {
   primaryActionHref: string;
   secondaryActionLabel?: string;
   secondaryActionHref?: string;
-  onAnswerSubmit?: (text: string) => Promise<Boolean>;
+  onAnswerSubmit?: (text: string) => Promise<boolean>;
   onVoteSubmit?: (answerId: string) => Promise<void>;
   onAdvance?: () => Promise<void>;
   playerList?: string[];
