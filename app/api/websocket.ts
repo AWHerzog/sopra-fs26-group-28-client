@@ -3,11 +3,12 @@
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { Game } from "@/types/game";
+import { getApiDomain } from "@/utils/domain";
 
 let stompClient: Client | null = null;
 
 export const connectToGame = (gameCode: string, onUpdate: (game: Game) => void) => {
-  const socket = new SockJS("http://localhost:8080/ws"); 
+  const socket = new SockJS(`${getApiDomain()}/ws`);
 
   stompClient = new Client({
     webSocketFactory: () => socket,
