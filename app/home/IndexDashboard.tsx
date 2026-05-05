@@ -32,6 +32,17 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
+  
+  //check for someone closing browser
+  useEffect(() => {
+  const handleUnload = () => disconnectFromGame();
+  window.addEventListener("beforeunload", handleUnload);
+
+  return () => {
+    window.removeEventListener("beforeunload", handleUnload);
+  };
+}, []);
+
 
   // Navigate when game starts (WebSocket update)
   useEffect(() => {
@@ -51,12 +62,7 @@ const Dashboard: React.FC = () => {
       const tok = rawToken ? JSON.parse(rawToken) : "";
       if (!tok) return;
       try {
-        const res = await fetch(`${getApiDomain()}/games/${gameCode}/state`, {
-          method: "GET",
-          headers: { Authorization: tok, "Content-Type": "application/json" },
-        });
-        if (!res.ok) { console.error("Poll failed:", res.status); return; }
-        const state: Game = await res.json();
+        const state: Game = await apiService.get<Game>(`/games/${game?.code}/state`, { Authorization: token ?? "" });
         console.log("Poll state:", state.status);
         setGame(state);
         if (state.status === "ANSWERING") {
