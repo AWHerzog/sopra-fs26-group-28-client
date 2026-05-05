@@ -15,6 +15,7 @@ const FriendsPage: React.FC = () => {
   const { value: token } = useSessionStorage<string>("token", "");
   const [data, setData] = useState<FriendsData | null>(null);
   const [loading, setLoading] = useState(false);
+  const [actionLoadingIds, setActionLoadingIds] = useState<Set<string>>(new Set());
 
   const loadFriends = async () => {
     if (!token) return;
@@ -31,32 +32,103 @@ const FriendsPage: React.FC = () => {
     }
   };
 
+  const setActionLoading = (id: string, active: boolean) => {
+    setActionLoadingIds((prev) => {
+      const next = new Set(prev);
+      if (active) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  };
+
+  const handleAccept = async (requestId: string) => {
+    if (!token) return;
+    setActionLoading(requestId, true);
+    try {
+      await apiService.post<void>(`/users/friends/requests/${requestId}/accept`, {}, {
+        Authorization: token,
+      });
+      await loadFriends();
+    } catch (error) {
+      console.error("Accept failed:", error);
+    } finally {
+      setActionLoading(requestId, false);
+    }
+  };
+
+  const handleDecline = async (requestId: string) => {
+    if (!token) return;
+    setActionLoading(requestId, true);
+    try {
+      await apiService.post<void>(`/users/friends/requests/${requestId}/decline`, {}, {
+        Authorization: token,
+      });
+      await loadFriends();
+    } catch (error) {
+      console.error("Decline failed:", error);
+    } finally {
+      setActionLoading(requestId, false);
+    }
+  };
+
+  const handleRemove = async (friendId: string) => {
+    if (!token) return;
+    setActionLoading(friendId, true);
+    try {
+      await apiService.delete<void>(`/users/friends/${friendId}`, {
+        Authorization: token,
+      });
+      await loadFriends();
+    } catch (error) {
+      console.error("Remove failed:", error);
+    } finally {
+      setActionLoading(friendId, false);
+    }
+  };
+
   useEffect(() => {
     loadFriends();
   }, [token]);
 
   const renderFriendRow = (friend: Friend) => {
+    const busy = actionLoadingIds.has(friend.id);
     return (
       <div className={styles.listItem} key={friend.id}>
         <div className={styles.listItemContent}>
           <span className={styles.username}>{friend.username}</span>
           <span className={styles.statusText}>Status: {friend.status}</span>
         </div>
-        <span className={`${styles.badge} ${friend.status === "ONLINE" ? styles.badgeOnline : styles.badgeOffline}`}>
-          {friend.status}
-        </span>
+        <div className={styles.listItemActions}>
+          <span className={`${styles.badge} ${friend.status === "ONLINE" ? styles.badgeOnline : styles.badgeOffline}`}>
+            {friend.status}
+          </span>
+          <Button type="default" danger onClick={() => handleRemove(friend.id)} loading={busy}>
+            Remove
+          </Button>
+        </div>
       </div>
     );
   };
 
   const renderRequestRow = (request: FriendRequest) => {
+    const busy = actionLoadingIds.has(request.id);
     return (
       <div className={styles.listItem} key={request.id}>
         <div className={styles.listItemContent}>
           <span className={styles.username}>{request.senderUsername}</span>
           <span className={styles.statusText}>Requested on {new Date(request.createdAt).toLocaleDateString()}</span>
         </div>
-        <span className={`${styles.badge} ${styles.badgePending}`}>Pending</span>
+        <div className={styles.listItemActions}>
+          <span className={`${styles.badge} ${styles.badgePending}`}>Pending</span>
+          <Space>
+            <Button type="primary" onClick={() => handleAccept(request.id)} loading={busy}>
+              Accept
+            </Button>
+            <Button danger onClick={() => handleDecline(request.id)} loading={busy}>
+              Decline
+            </Button>
+          </Space>
+        </div>
       </div>
     );
   };

@@ -58,6 +58,12 @@
   gap: 4px;
 }
 
+.listItemActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .username {
   font-weight: 600;
   font-size: 1rem;
