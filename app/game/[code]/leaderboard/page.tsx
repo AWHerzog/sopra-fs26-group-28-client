@@ -3,14 +3,13 @@
 import { useApi } from "@/hooks/useApi";
 import { useGameState } from "@/hooks/useGameState";
 import type { GameQuestion, LeaderboardEntry } from "../_data";
-import { demoLeaderboard, demoQuestion } from "../_data";
 import GameStageView from "../_components/GameStageView";
 
 export default function LeaderboardPage() {
   const { game, gameCode, token } = useGameState();
   const apiService = useApi();
 
-  const question: GameQuestion = game?.question
+  const question: GameQuestion | null = game?.question
     ? {
         code: game.code ?? "",
         category: game.question.category,
@@ -18,7 +17,7 @@ export default function LeaderboardPage() {
         prompt: game.question.text,
         subtitle: "",
       }
-    : demoQuestion;
+    : null;
 
   const previousScores: { [username: string]: number } = typeof window !== "undefined"
     ? JSON.parse(sessionStorage.getItem("previousScores") ?? "{}")
@@ -33,7 +32,7 @@ export default function LeaderboardPage() {
           score,
           roundGain: score - (previousScores[name] ?? 0),
         }))
-    : demoLeaderboard;
+    : [];
 
   const isLastRound =
     game?.currentRound != null && game.maxRounds != null && game.currentRound >= game.maxRounds;
@@ -46,7 +45,7 @@ export default function LeaderboardPage() {
   return (
     <GameStageView
       stage="leaderboard"
-      question={question}
+      question={question ?? undefined}
       answers={[]}
       leaderboard={leaderboard}
       primaryActionLabel={isLastRound ? "See final results" : "Next round"}

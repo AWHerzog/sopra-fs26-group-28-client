@@ -33,6 +33,7 @@ const Dashboard: React.FC = () => {
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
 
+  
   // Navigate when game starts (WebSocket update)
   useEffect(() => {
     if (game?.status === "ANSWERING" && game.code) {
