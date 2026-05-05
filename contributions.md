@@ -78,8 +78,11 @@ reason).
 
 ## Contributions Week 4 - [Begin Date] to [End Date]
 
-_Continue with the same table format as above._
 
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[Ruven3344]** | [05.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/698f862d3a91631cfad46d86f489228fab513d74)] | [implement frontend pages for tutorial, styling and bugfixing (5 hours), help button] | [Important step for new player] |
+|                    | [05.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6f64394593b5961824a87c1d9c039ad21721f49b)] | [Implement backend for tutorial, setup hooks and services, safe tutorial state and completion (still some autostart bugs) (4 hours)] | [Important for correct tutorial functions, handles tutorial debending on first or repeated login] |
 ---
 
 ## Contributions Week 5 - [Begin Date] to [End Date]
