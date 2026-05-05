@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { App as AntdApp, ConfigProvider, theme } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import TutorialProvider from "@/components/tutorial/TutorialProvider";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
@@ -62,7 +63,9 @@ export default function RootLayout({
             }}
           >
             <AntdApp>
-              <div className="app-shell">{children}</div>
+              <TutorialProvider>
+                <div className="app-shell">{children}</div>
+              </TutorialProvider>
             </AntdApp>
           </ConfigProvider>
         </AntdRegistry>

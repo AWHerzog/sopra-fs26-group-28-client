@@ -1,0 +1,36 @@
+.tutorialButton {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 9999 !important;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #2f74b5;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tutorialButton:hover {
+  background-color: #1e5a9c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tutorialButton:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .tutorialButton {
+    bottom: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}
