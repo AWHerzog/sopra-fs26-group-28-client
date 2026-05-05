@@ -71,13 +71,12 @@ const Login: React.FC = () => {
           >
             <Input placeholder="Enter username" className={styles.inputField} />
           </Form.Item>
-          
           <Form.Item
             name="password"
             label="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password placeholder="Enter Password" className={styles.inputField} />
+            <Input placeholder="Enter Password" className={styles.inputField} />
           </Form.Item>
           <Form.Item className={styles.submitRow}>
             <Button
