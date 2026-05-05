@@ -76,21 +76,43 @@ reason).
 
 ---
 
-## Contributions Week 4 - [Begin Date] to [End Date]
-
+## Contributions Week 4 - [29.04.26] to [06.04.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[EneasKe]** | [04.05.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/7d7eebbd93c05805d5a17701e55782c769ceefc9) & https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ff0b394469ae563b06d2bf2006b59c199394fdb0] | [Started working on replicating the bugs and fixing them, added bugs tasks to project, 5h] | [Ensuring there are no unforseen bugs destroying user experience] |
+|                    | [05.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/031175a3e35645e76cffdb345889e33909596f13 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/626a31a27739d3d0029142436b799087621612d6 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/f71bcd836456ae218f61f66197afd9d0f248fa3f] | [Had to revert changes, test website extensively and fix bugs. Most time spent trying to replicate bugs and then finding these small issues. 6h] | [Making sure website works how we intended it to work] |
 | **[Ruven3344]** | [05.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/698f862d3a91631cfad46d86f489228fab513d74)] | [implement frontend pages for tutorial, styling and bugfixing (5 hours), help button] | [Important step for new player] |
 |                    | [05.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6f64394593b5961824a87c1d9c039ad21721f49b)] | [Implement backend for tutorial, setup hooks and services, safe tutorial state and completion (still some autostart bugs) (4 hours)] | [Important for correct tutorial functions, handles tutorial debending on first or repeated login] |
----
+| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 
 ## Contributions Week 5 - [Begin Date] to [End Date]
 
-_Continue with the same table format as above._
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[@githubUser1]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 
 ---
 
 ## Contributions Week 6 - [Begin Date] to [End Date]
 
-_Continue with the same table format as above._
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[@githubUser1]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
