@@ -22,6 +22,7 @@ const Login: React.FC = () => {
   const { set: setSessionToken } = useSessionStorage<string>("token", "");
   const { set: setToken } = useLocalStorage<string>("token", "")
   const { set: setUsername } = useSessionStorage<string>("username", "");
+  const { set: setUserId } = useSessionStorage<string>("userId", "");
 
   const handleLogin = async (values: FormFieldProps) => {
     try {
@@ -33,6 +34,9 @@ const Login: React.FC = () => {
       }
       if (response.username) {
         setUsername(response.username);
+      }
+      if (response.id) {
+        setUserId(response.id.toString());
       }
 
       // Navigate to the user overview
