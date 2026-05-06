@@ -81,15 +81,13 @@ reason).
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[EneasKe]** | [04.05.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/7d7eebbd93c05805d5a17701e55782c769ceefc9) & https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ff0b394469ae563b06d2bf2006b59c199394fdb0] | [Started working on replicating the bugs and fixing them, added bugs tasks to project, 5h] | [Ensuring there are no unforseen bugs destroying user experience] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-
----
+|                    | [05.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/031175a3e35645e76cffdb345889e33909596f13 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/626a31a27739d3d0029142436b799087621612d6 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/f71bcd836456ae218f61f66197afd9d0f248fa3f] | [Had to revert changes, test website extensively and fix bugs. Most time spent trying to replicate bugs and then finding these small issues. 6h] | [Making sure website works how we intended it to work] |
+| **[Ruven3344]** | [05.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/698f862d3a91631cfad46d86f489228fab513d74)] | [implement frontend pages for tutorial, styling and bugfixing (5 hours), help button] | [Important step for new player] |
+|                    | [05.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6f64394593b5961824a87c1d9c039ad21721f49b)] | [Implement backend for tutorial, setup hooks and services, safe tutorial state and completion (still some autostart bugs) (4 hours)] | [Important for correct tutorial functions, handles tutorial debending on first or repeated login] |
+| **[Luizcodes02]** | [04.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/7628a73)] | [feat(friends): add accept/decline/remove friend controls (5h)] | [Important to add/decline friend requests] |
+|                    | [05.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/a7b400b)] | [feat(profile): add profile edit page and form sections (5h)] | [important to edit profile] |
+| **[@AWHerzog]** | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/9b42154dd3b3af3d6eb8f8c186345f6a66396c9d] | [Created the backend implementation for leaderboard implementation] | [So we can call the api in the frontend to implement Leaderboards as per our goal] |
+|                    | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/98d471749483d22dbcbe5c63f138a24efe137765] | [Changed and improved mechanics according to feedback] | [Right now rounds do not autoadvance and the host can continue, implemented a timer and a unanimous voting system for round advances] |
 
 ## Contributions Week 5 - [Begin Date] to [End Date]
 
