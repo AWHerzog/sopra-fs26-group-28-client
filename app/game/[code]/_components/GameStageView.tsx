@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Progress, Tag, Typography } from "antd";
 import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
-import { demoPlayerList, demoWaitingProgress} from "../_data";
 import styles from "../game.module.css";
 import { useGameState } from "@/hooks/useGameState";
 
@@ -13,7 +12,7 @@ type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "fin
 // This component is designed as a shared view shell for the answer, waiting, voting, and solution pages. Each page route renders the same layout but with different active blocks and data to keep the flow consistent while wiring in the backend logic later.
 interface GameStageViewProps {
   stage: Stage;
-  question: GameQuestion;
+  question?: GameQuestion;
   answers: GameAnswer[];
   waitingProgress?: WaitingProgress;
   leaderboard?: LeaderboardEntry[];
@@ -110,13 +109,13 @@ export default function GameStageView({
     <div className={styles.page}>
       <div className={styles.shell}>
         <section className={styles.hero}>
-          <span className={styles.eyebrow}>{question.roundLabel} · {question.category}</span>
+          <span className={styles.eyebrow}>{question?.roundLabel} · {question?.category}</span>
           <Typography.Title level={1} className={styles.title}>
-            {question.prompt}
+            {question?.prompt}
           </Typography.Title>
-          <p className={styles.subtitle}>{question.subtitle}</p>
+          <p className={styles.subtitle}>{question?.subtitle}</p>
           <div className={styles.metaRow}>
-            <Tag color="blue">Game code: {question.code}</Tag>
+            <Tag color="blue">Game code: {question?.code}</Tag>
             {stage === "solution" ? <Tag color="green">Reveal complete</Tag> : null}
           </div>
         </section>
@@ -217,7 +216,7 @@ export default function GameStageView({
                 </div>
 
                 <div className={styles.list}>
-                  {(playerList ?? demoPlayerList).map((player) => {
+                  {(playerList ?? []).map((player) => {
                     const ready = submittedUsernames.includes(player);
                     return (
                       <div key={player} className={styles.listItem}>
@@ -429,15 +428,15 @@ export default function GameStageView({
             <div className={styles.list}>
               <div className={styles.listItem}>
                 <span>Question</span>
-                <Tag color="blue">{question.roundLabel}</Tag>
+                <Tag color="blue">{question?.roundLabel}</Tag>
               </div>
               <div className={styles.listItem}>
                 <span>Game code</span>
-                <Tag color="geekblue">{question.code}</Tag>
+                <Tag color="geekblue">{question?.code}</Tag>
               </div>
               <div className={styles.listItem}>
                 <span>Players</span>
-                <Tag color="default">{game?.players ? Object.keys(game.players).length : demoWaitingProgress.total}</Tag>
+                <Tag color="default">{game?.players ? Object.keys(game.players).length : 0}</Tag>
               </div>
               <div className={styles.listItem}>
                 <span>Stage</span>

@@ -3,14 +3,13 @@
 import { useApi } from "@/hooks/useApi";
 import { useGameState } from "@/hooks/useGameState";
 import type { GameAnswer, GameQuestion } from "../_data";
-import { demoAnswers, demoQuestion } from "../_data";
 import GameStageView from "../_components/GameStageView";
 
 export default function AnswerPage() {
   const { game, username, gameCode, token } = useGameState();
   const apiService = useApi();
 
-  const question: GameQuestion = game?.question
+  const question: GameQuestion | null = game?.question
     ? {
         code: game.code ?? "",
         category: game.question.category,
@@ -18,10 +17,10 @@ export default function AnswerPage() {
         prompt: game.question.text,
         subtitle: "",
       }
-    : demoQuestion;
+    : null;
 
   const answers: GameAnswer[] =
-    game?.answers?.map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
+    game?.answers?.map((a) => ({ id: a.id, label: a.text })) ?? [];
 
   const handleAnswerSubmit = async (text: string): Promise<boolean> => {
     try{
@@ -36,7 +35,7 @@ export default function AnswerPage() {
   return (
     <GameStageView
       stage="answer"
-      question={question}
+      question={question ?? undefined}
       answers={answers}
       primaryActionLabel="Submit answer"
       primaryActionHref={`/game/${gameCode}/waiting`}
