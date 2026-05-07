@@ -1,0 +1,77 @@
+.tutorialContent {
+  padding: 20px 0;
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background-color: #e8e8e8;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #2f74b5, #1890ff);
+  transition: width 0.3s ease;
+}
+
+.stepCounter {
+  text-align: center;
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-bottom: 20px;
+}
+
+.contentArea {
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+.contentArea p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #2b2f35;
+}
+
+.contentArea ul {
+  margin-left: 20px;
+  margin-bottom: 12px;
+}
+
+.contentArea li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #2b2f35;
+}
+
+.contentArea strong {
+  color: #2f74b5;
+  font-weight: 600;
+}
+
+.contentArea h1,
+.contentArea h2,
+.contentArea h3,
+.contentArea h4,
+.contentArea h5,
+.contentArea h6 {
+  color: #2b2f35;
+}
+
+.stepsContainer {
+  margin-bottom: 24px;
+  padding: 0 8px;
+}
+
+.buttonContainer {
+  margin-bottom: 12px;
+}
+
+.skipButtonContainer {
+  text-align: center;
+}

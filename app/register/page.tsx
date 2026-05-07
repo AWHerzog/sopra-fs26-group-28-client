@@ -20,6 +20,8 @@ const Registration: React.FC = () => {
 	const { set: setSessionToken } = useSessionStorage<string>("token", "");
 	const { set: setToken } = useLocalStorage<string>("token", "")
 	const { set: setUsername } = useSessionStorage<string>("username", "");
+	const { set: setUserId } = useSessionStorage<string>("userId", "");
+	const { set: setPersistentUserId } = useLocalStorage<string>("userId", "");
 
 	const handleRegistration = async (values: RegistrationFormProps) => {
 		try {
@@ -39,7 +41,22 @@ const Registration: React.FC = () => {
         		setUsername(response.username);
      		}
 
-			router.push("/home");
+			if (response.id) {
+        		setUserId(response.id);
+				setPersistentUserId(response.id);
+     		}
+
+			// signal TutorialProvider to auto-open the tutorial on first navigation
+			if (typeof window !== "undefined") {
+				try {
+					localStorage.setItem("tutorial_open", "true");
+				} catch (e) {
+					// ignore storage errors
+				}
+			}
+
+			// navigate after flag is set to ensure the provider can read it
+			await router.push("/home");
 			
 		} catch (error) {
 			if (error instanceof Error) {

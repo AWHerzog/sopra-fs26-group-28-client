@@ -1,0 +1,200 @@
+.gamePreview {
+  padding: 12px 0;
+}
+
+.previewHeader {
+  margin-bottom: 20px;
+}
+
+.previewBadge {
+  display: inline-block;
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.previewTitle {
+  margin: 12px 0 8px 0 !important;
+  color: #2b2f35;
+  font-size: 18px !important;
+}
+
+.previewSubtitle {
+  color: #666;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+}
+
+.answerInputSection {
+  margin-bottom: 20px;
+}
+
+.answerInput {
+  margin: 12px 0;
+  border-radius: 8px;
+  border-color: #b2c6db;
+  font-size: 14px;
+}
+
+.answerInput:focus,
+.answerInput:focus-within {
+  border-color: #2f74b5;
+  box-shadow: 0 0 0 2px rgba(47, 116, 181, 0.18);
+}
+
+.submitBtn {
+  margin-top: 12px;
+  height: 40px;
+  border-radius: 8px;
+  background: #2f74b5;
+}
+
+.answerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 600px) {
+  .answerGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.answerCard {
+  padding: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.answerCard:hover {
+  border-color: #b2c6db;
+  background: #f5f9fc;
+}
+
+.answerCardCorrect {
+  border-color: #52c41a;
+  background: #f6ffed;
+}
+
+.answerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.answerLabel {
+  font-weight: 600;
+  color: #2b2f35;
+  font-size: 15px;
+  word-wrap: break-word;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.voterChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.voterChip {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #e8f2fd;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #2f74b5;
+  font-weight: 500;
+}
+
+.leaderboardList {
+  margin: 16px 0;
+}
+
+.leaderboardRow {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.leaderboardRow:last-child {
+  border-bottom: none;
+}
+
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.rankNumber {
+  display: inline-block;
+  width: 30px;
+  color: #8c8c8c;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.playerName {
+  flex: 1;
+  color: #2b2f35;
+  font-weight: 500;
+}
+
+.scores {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: right;
+}
+
+.roundGain {
+  color: #52c41a;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.totalScore {
+  color: #2b2f35;
+  font-weight: 600;
+  min-width: 60px;
+}
+
+.explanationBox {
+  margin-top: 20px;
+  padding: 14px 12px;
+  background: #f0f5fb;
+  border-left: 4px solid #2f74b5;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.explanationBox p {
+  margin: 0;
+}
+
+.explanationBox strong {
+  color: #2f74b5;
+  font-weight: 600;
+}
+
+.explanationBox em {
+  font-style: italic;
+  color: #2f74b5;
+}
