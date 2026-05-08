@@ -119,9 +119,9 @@ const Dashboard: React.FC = () => {
 
   const leaveGame = async (): Promise<void> => {
     try {
+      disconnectFromGame();
       await apiService.post(`/games/${game?.code}/leave`, {}, { Authorization: token ?? "" });
       setGame(null);
-      disconnectFromGame();
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
     }
