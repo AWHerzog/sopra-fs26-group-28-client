@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -32,11 +32,24 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
+  const isInternalNavigation = useRef(false);
 
-  
+  useEffect(() => {
+  const handleBeforeUnload = () => {
+  if (isInternalNavigation.current) return;
+  if (!game?.code || !token) return;
+  apiService.beacon(`/games/${game.code}/leave/dirty?token=${token}`);
+  };
+
+  window.addEventListener("beforeunload", handleBeforeUnload);
+  return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+}, [game, token]);
+
+
   // Navigate when game starts (WebSocket update)
   useEffect(() => {
     if (game?.status === "ANSWERING" && game.code) {
+      isInternalNavigation.current = true;
       window.location.href = `/game/${game.code}/answer`;
     }
   }, [game?.status, game?.code]);
@@ -62,6 +75,7 @@ const Dashboard: React.FC = () => {
         setGame(state);
         if (state.status === "ANSWERING") {
           clearInterval(intervalId);
+          isInternalNavigation.current = true;
           window.location.href = `/game/${gameCode}/answer`;
         }
       } catch (e) {
@@ -111,6 +125,7 @@ const Dashboard: React.FC = () => {
 
   const startGame = async (): Promise<void> => {
     try {
+       isInternalNavigation.current = true;
       await apiService.post(`/games/${game?.code}/start`, {"maxRounds": 5, "stageDurationSeconds": 100}, { Authorization: token ?? "" }); //have default 5 rounds 100 secs
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
