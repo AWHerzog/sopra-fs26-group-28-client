@@ -89,11 +89,11 @@ reason).
 | **[@AWHerzog]** | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/9b42154dd3b3af3d6eb8f8c186345f6a66396c9d] | [Created the backend implementation for leaderboard implementation] | [So we can call the api in the frontend to implement Leaderboards as per our goal] |
 |                    | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/98d471749483d22dbcbe5c63f138a24efe137765] | [Changed and improved mechanics according to feedback] | [Right now rounds do not autoadvance and the host can continue, implemented a timer and a unanimous voting system for round advances] |
 
-## Contributions Week 5 - [Begin Date] to [End Date]
+## Contributions Week 5 - [06.05.26] to [13.06.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[@githubUser1]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [08.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a7643d470e2d6fffcde77405f7f7a01a2be23b50 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f] | [Worked on backend for friend system 8h] | [Allows Users to add each other as friends] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
@@ -104,7 +104,7 @@ reason).
 
 ---
 
-## Contributions Week 6 - [Begin Date] to [End Date]
+## Contributions Week 6 - [13.06.26] to [20.06.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
