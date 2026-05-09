@@ -6,6 +6,7 @@ import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useSessionStorage from "@/hooks/useSessionStorage";
 import { Game } from "@/types/game";
+import { User } from "@/types/user";
 import { connectToGame, disconnectFromGame } from "@/api/websocket";
 import { getApiDomain } from "@/utils/domain";
 import {
@@ -29,6 +30,8 @@ const Dashboard: React.FC = () => {
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [topPlayers, setTopPlayers] = useState<User[]>([]);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(true);
   const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
@@ -40,6 +43,29 @@ const Dashboard: React.FC = () => {
       window.location.href = `/game/${game.code}/answer`;
     }
   }, [game?.status, game?.code]);
+
+  useEffect(() => {
+    const fetchTopPlayers = async (): Promise<void> => {
+      try {
+        const users = await apiService.get<User[]>("/users");
+        const rankedUsers = [...users]
+          .sort((left, right) => {
+            const rightPoints = right.points ?? 0;
+            const leftPoints = left.points ?? 0;
+            if (rightPoints !== leftPoints) return rightPoints - leftPoints;
+            return (left.username ?? "").localeCompare(right.username ?? "");
+          })
+          .slice(0, 10);
+        setTopPlayers(rankedUsers);
+      } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
+      } finally {
+        setLeaderboardLoading(false);
+      }
+    };
+
+    fetchTopPlayers();
+  }, [apiService]);
 
   // Polling fallback: check state every 2s while waiting in lobby
   useEffect(() => {
@@ -304,6 +330,39 @@ const Dashboard: React.FC = () => {
 
         <div style={s.hint}>
           Host a game to create a private room or join an existing game to play with others
+        </div>
+
+        <div style={s.leaderboardCard}>
+          <div style={s.leaderboardHeader}>
+            <span style={s.leaderboardTitle}>Top 10 Players</span>
+            <span style={s.leaderboardSubtitle}>Ranked by total points</span>
+          </div>
+          {leaderboardLoading ? (
+            <div style={s.leaderboardEmpty}>Loading leaderboard...</div>
+          ) : topPlayers.length > 0 ? (
+            <div style={s.leaderboardList}>
+              {topPlayers.map((player, index) => {
+                const isYou = player.username === currentUsername;
+                return (
+                  <div key={player.id ?? player.username ?? `${index}`} style={s.leaderboardRow}>
+                    <div style={s.rankBadge}>{index + 1}</div>
+                    <div style={{ ...s.avatar, background: avatarColors[index % avatarColors.length] }}>
+                      <span style={s.avatarText}>{(player.username ?? "?").charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div style={s.leaderboardInfo}>
+                      <span style={s.leaderboardName}>
+                        {player.username ?? "Unknown player"}
+                        {isYou ? " (You)" : ""}
+                      </span>
+                      <span style={s.leaderboardMeta}>{player.points ?? 0} points</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={s.leaderboardEmpty}>No scores yet. Be the first to play.</div>
+          )}
         </div>
       </div>
     </div>
@@ -577,6 +636,89 @@ const s = {
     color: "#5a7a99",
     fontSize: "0.95rem",
     textAlign: "center" as const,
+  } as React.CSSProperties,
+
+  leaderboardCard: {
+    background: "#fff",
+    borderRadius: 18,
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    padding: "1.25rem 1.5rem",
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.9rem",
+  } as React.CSSProperties,
+
+  leaderboardHeader: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.2rem",
+  } as React.CSSProperties,
+
+  leaderboardTitle: {
+    fontSize: "1.05rem",
+    fontWeight: 700,
+    color: "#1a2a3a",
+  } as React.CSSProperties,
+
+  leaderboardSubtitle: {
+    fontSize: "0.9rem",
+    color: "#5a7a99",
+  } as React.CSSProperties,
+
+  leaderboardList: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.5rem",
+  } as React.CSSProperties,
+
+  leaderboardRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.85rem",
+    background: "#f4f8fd",
+    borderRadius: 14,
+    padding: "0.75rem 1rem",
+    border: "1px solid #dce9f5",
+  } as React.CSSProperties,
+
+  rankBadge: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    background: "#1a2a3a",
+    color: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "0.9rem",
+    fontWeight: 700,
+    flexShrink: 0,
+  } as React.CSSProperties,
+
+  leaderboardInfo: {
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: "0.1rem",
+    flex: 1,
+  } as React.CSSProperties,
+
+  leaderboardName: {
+    fontSize: "0.95rem",
+    fontWeight: 600,
+    color: "#1a2a3a",
+  } as React.CSSProperties,
+
+  leaderboardMeta: {
+    fontSize: "0.85rem",
+    color: "#2f74b5",
+    fontWeight: 500,
+  } as React.CSSProperties,
+
+  leaderboardEmpty: {
+    color: "#5a7a99",
+    fontSize: "0.95rem",
+    textAlign: "center" as const,
+    padding: "0.5rem 0",
   } as React.CSSProperties,
 };
 
