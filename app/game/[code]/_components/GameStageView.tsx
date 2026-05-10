@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Input, Progress, Tag, Typography } from "antd";
+import { Button, Input, Progress, Select, Tag, Typography } from "antd";
 import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from "../_data";
 import styles from "../game.module.css";
+import { useApi } from "@/hooks/useApi";
 import { useGameState } from "@/hooks/useGameState";
 
 type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
@@ -66,11 +67,13 @@ export default function GameStageView({
   const router = useRouter();
   const [answerText, setAnswerText] = useState("");
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
-  // Start with empty array to avoid SSR/client hydration mismatch, shuffle on mount
   const [orderedAnswers, setOrderedAnswers] = useState<GameAnswer[]>([]);
   const shuffledForStage = useRef<string | null>(null);
-  const { game } = useGameState();
+  const { game, gameCode, token } = useGameState();
+  const apiService = useApi();
   const [error, setError] = useState(false);
+  const [translatedPrompt, setTranslatedPrompt] = useState<string | null>(null);
+  const [translating, setTranslating] = useState(false);
 
   // Shuffle once per stage (not on every answers update)
   useEffect(() => {
@@ -92,6 +95,25 @@ export default function GameStageView({
   }, [answers, stage]);
 
 
+  useEffect(() => {
+    setTranslatedPrompt(null);
+  }, [stage]);
+
+  const handleTranslate = async (lang: string) => {
+    setTranslating(true);
+    try {
+      const result = await apiService.get<{ translatedText: string }>(
+        `/games/${gameCode}/question/translate?lang=${lang}`,
+        { Authorization: token }
+      );
+      setTranslatedPrompt(result.translatedText);
+    } catch {
+      // leave original text if translation fails
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   const handlePrimaryAction = (): void => {
     router.push(primaryActionHref);
   };
@@ -111,12 +133,34 @@ export default function GameStageView({
         <section className={styles.hero}>
           <span className={styles.eyebrow}>{question?.roundLabel} · {question?.category}</span>
           <Typography.Title level={1} className={styles.title}>
-            {question?.prompt}
+            {translatedPrompt ?? question?.prompt}
           </Typography.Title>
           <p className={styles.subtitle}>{question?.subtitle}</p>
           <div className={styles.metaRow}>
             <Tag color="blue">Game code: {question?.code}</Tag>
             {stage === "solution" ? <Tag color="green">Reveal complete</Tag> : null}
+            {(stage === "answer" || stage === "voting") && (
+              <Select
+                placeholder="Translate"
+                size="small"
+                loading={translating}
+                onChange={handleTranslate}
+                style={{ width: 130 }}
+                options={[
+                  { value: "DE", label: "German" },
+                  { value: "FR", label: "French" },
+                  { value: "ES", label: "Spanish" },
+                  { value: "IT", label: "Italian" },
+                  { value: "PT-BR", label: "Portuguese" },
+                  { value: "NL", label: "Dutch" },
+                  { value: "PL", label: "Polish" },
+                  { value: "RU", label: "Russian" },
+                  { value: "JA", label: "Japanese" },
+                  { value: "ZH", label: "Chinese" },
+                  { value: "AR", label: "Arabic" },
+                ]}
+              />
+            )}
           </div>
         </section>
 
