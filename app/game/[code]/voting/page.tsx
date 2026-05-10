@@ -10,7 +10,7 @@ export default function VotingPage() {
   const { game, username, gameCode, token } = useGameState();
   const apiService = useApi();
 
-  const question: GameQuestion = game?.question
+  const question: GameQuestion | null = game?.question
     ? {
         code: game.code ?? "",
         category: game.question.category,
@@ -18,13 +18,13 @@ export default function VotingPage() {
         prompt: game.question.text,
         subtitle: "",
       }
-    : demoQuestion;
+    : null;
 
   // Filter out the current player's own answer — backend rejects self-votes
   const answers: GameAnswer[] =
     game?.answers
       ?.filter((a) => a.authorUsername !== username)
-      .map((a) => ({ id: a.id, label: a.text })) ?? demoAnswers;
+      .map((a) => ({ id: a.id, label: a.text })) ?? [];
 
   const handleVoteSubmit = async (answerId: string) => {
     await apiService.post(`/games/${gameCode}/votes`, { answerId: Number(answerId) }, { Authorization: token });
@@ -33,7 +33,7 @@ export default function VotingPage() {
   return (
     <GameStageView
       stage="voting"
-      question={question}
+      question={question ?? undefined}
       answers={answers}
       primaryActionLabel="Submit vote"
       primaryActionHref={`/game/${gameCode}/waiting`}

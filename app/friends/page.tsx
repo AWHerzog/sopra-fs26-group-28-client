@@ -95,7 +95,7 @@ const FriendsPage: React.FC = () => {
     return (
       <div className={styles.listItem} key={friend.id}>
         <div className={styles.listItemContent}>
-          <span className={styles.username}>{friend.username}</span>
+          <span className={styles.username}>{friend.receiverUsername}</span>
           <span className={styles.statusText}>Status: {friend.status}</span>
         </div>
         <div className={styles.listItemActions}>

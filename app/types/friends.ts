@@ -1,6 +1,7 @@
 export interface Friend {
   id: string;
-  username: string;
+  senderUsername: string; //this will always be the current User
+  receiverUsername: string; //this is his friend
   status: string;
   lastSeen?: string;
 }

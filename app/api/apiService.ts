@@ -130,4 +130,15 @@ export class ApiService {
       "An error occurred while deleting the data.\n",
     );
   }
+
+  /**
+   * beacon request.
+   * @param endpoint - The API endpoint (e.g. "/users/123").
+   * @returns bool
+   */
+  public beacon(endpoint: string, data?: unknown): boolean {
+  const url = `${this.baseURL}${endpoint}`;
+  const blob = new Blob([JSON.stringify(data ?? {})], { type: "text/plain" });
+  return navigator.sendBeacon(url, blob);
+  }
 }

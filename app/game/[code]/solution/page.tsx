@@ -8,7 +8,7 @@ import GameStageView from "../_components/GameStageView";
 export default function SolutionPage() {
   const { game, gameCode } = useGameState();
 
-  const question: GameQuestion = game?.question
+  const question: GameQuestion | null = game?.question
     ? {
         code: game.code ?? "",
         category: game.question.category,
@@ -16,7 +16,7 @@ export default function SolutionPage() {
         prompt: game.question.text,
         subtitle: "",
       }
-    : demoQuestion;
+    : null;
 
   const answers: GameAnswer[] =
     game?.answers?.map((a) => ({
@@ -24,12 +24,12 @@ export default function SolutionPage() {
       label: a.text,
       voters: a.voters ?? [],
       isCorrect: a.isCorrect ?? false,
-    })) ?? demoAnswers;
+    })) ?? [];
 
   return (
     <GameStageView
       stage="solution"
-      question={question}
+      question={question ?? undefined}
       answers={answers}
       primaryActionLabel="See leaderboard"
       primaryActionHref={`/game/${gameCode}/leaderboard`}
