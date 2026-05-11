@@ -19,6 +19,7 @@ import {
   CaretRightOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Tooltip } from "antd";
+import { useFriendPresence } from "@/hooks/useFriendPresence";
 
 const avatarColors = ["#c7d9f0", "#f0c7c7", "#c7f0d4", "#f0e6c7", "#e0c7f0"];
 
@@ -32,6 +33,7 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
+  const { onlineFriends } = useFriendPresence(token);
   const isInternalNavigation = useRef(false);
 
   useEffect(() => {
@@ -182,6 +184,25 @@ const Dashboard: React.FC = () => {
               </Tooltip>
             </div>
           </div>
+
+          {/* Online friends quick-invite */}
+          {onlineFriends.length > 0 && (
+            <div style={s.codeCard}>
+              <p style={s.codeLabel}>Invite online friends</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
+                {onlineFriends.map((friend) => (
+                  <div key={friend.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontWeight: 600, color: "#1a2a3a" }}>{friend.receiverUsername}</span>
+                    <Tooltip title="Code copied!" trigger="click">
+                      <Button size="small" onClick={() => navigator.clipboard.writeText(game?.code ?? "")}>
+                        Copy code
+                      </Button>
+                    </Tooltip>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Players card */}
           <div style={s.playersCard}>
