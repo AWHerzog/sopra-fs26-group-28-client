@@ -74,6 +74,8 @@ export default function GameStageView({
   const [error, setError] = useState(false);
   const [translatedPrompt, setTranslatedPrompt] = useState<string | null>(null);
   const [translating, setTranslating] = useState(false);
+  const [translateLang, setTranslateLang] = useState<string | null>(null);
+  const [translateError, setTranslateError] = useState(false);
 
   // Shuffle once per stage (not on every answers update)
   useEffect(() => {
@@ -97,10 +99,14 @@ export default function GameStageView({
 
   useEffect(() => {
     setTranslatedPrompt(null);
+    setTranslateLang(null);
+    setTranslateError(false);
   }, [stage]);
 
   const handleTranslate = async (lang: string) => {
+    setTranslateLang(lang);
     setTranslating(true);
+    setTranslateError(false);
     try {
       const result = await apiService.get<{ translatedText: string }>(
         `/games/${gameCode}/question/translate?lang=${lang}`,
@@ -108,7 +114,8 @@ export default function GameStageView({
       );
       setTranslatedPrompt(result.translatedText);
     } catch {
-      // leave original text if translation fails
+      setTranslateError(true);
+      setTranslateLang(null);
     } finally {
       setTranslating(false);
     }
@@ -140,26 +147,30 @@ export default function GameStageView({
             <Tag color="blue">Game code: {question?.code}</Tag>
             {stage === "solution" ? <Tag color="green">Reveal complete</Tag> : null}
             {(stage === "answer" || stage === "voting") && (
-              <Select
-                placeholder="Translate"
-                size="small"
-                loading={translating}
-                onChange={handleTranslate}
-                style={{ width: 130 }}
-                options={[
-                  { value: "DE", label: "German" },
-                  { value: "FR", label: "French" },
-                  { value: "ES", label: "Spanish" },
-                  { value: "IT", label: "Italian" },
-                  { value: "PT-BR", label: "Portuguese" },
-                  { value: "NL", label: "Dutch" },
-                  { value: "PL", label: "Polish" },
-                  { value: "RU", label: "Russian" },
-                  { value: "JA", label: "Japanese" },
-                  { value: "ZH", label: "Chinese" },
-                  { value: "AR", label: "Arabic" },
-                ]}
-              />
+              <>
+                <Select
+                  placeholder="Translate"
+                  size="small"
+                  loading={translating}
+                  value={translateLang}
+                  onChange={handleTranslate}
+                  style={{ width: 130 }}
+                  options={[
+                    { value: "DE", label: "German" },
+                    { value: "FR", label: "French" },
+                    { value: "ES", label: "Spanish" },
+                    { value: "IT", label: "Italian" },
+                    { value: "PT-BR", label: "Portuguese" },
+                    { value: "NL", label: "Dutch" },
+                    { value: "PL", label: "Polish" },
+                    { value: "RU", label: "Russian" },
+                    { value: "JA", label: "Japanese" },
+                    { value: "ZH", label: "Chinese" },
+                    { value: "AR", label: "Arabic" },
+                  ]}
+                />
+                {translateError && <Tag color="red">Translation unavailable</Tag>}
+              </>
             )}
           </div>
         </section>
