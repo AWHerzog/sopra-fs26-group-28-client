@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useSessionStorage from "@/hooks/useSessionStorage";
 import { useFriendPresence } from "@/hooks/useFriendPresence";
-import { Button, Space, Spin } from "antd";
-import { TeamOutlined, ArrowLeftOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Spin, message } from "antd";
+import { TeamOutlined, ArrowLeftOutlined, ReloadOutlined, UserAddOutlined } from "@ant-design/icons";
 import { Friend, FriendRequest, FriendsData } from "@/types/friends";
 import styles from "./friends.module.css";
 
@@ -18,6 +18,8 @@ const FriendsPage: React.FC = () => {
   const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const [actionLoadingIds, setActionLoadingIds] = useState<Set<string>>(new Set());
+  const [sendUsername, setSendUsername] = useState("");
+  const [sending, setSending] = useState(false);
 
   const loadRequests = async () => {
     if (!token) return;
@@ -70,6 +72,24 @@ const FriendsPage: React.FC = () => {
       console.error("Decline failed:", error);
     } finally {
       setActionLoading(requestId, false);
+    }
+  };
+
+  const handleSendFriendRequest = async () => {
+    if (!token || !sendUsername.trim()) return;
+    setSending(true);
+    try {
+      await apiService.post<void>("/users/friends/requests", { username: sendUsername.trim() }, {
+        Authorization: token,
+      });
+      setSendUsername("");
+      message.success(`Friend request sent to ${sendUsername.trim()}!`);
+      await loadRequests();
+    } catch (error) {
+      console.error("Send friend request failed:", error);
+      message.error("Could not send friend request.");
+    } finally {
+      setSending(false);
     }
   };
 
@@ -136,6 +156,27 @@ const FriendsPage: React.FC = () => {
 
   return (
     <div className={styles.friendsPage}>
+      <div className={styles.sectionCard}>
+        <div className={styles.sectionHeader}>
+          <div>
+            <h2>Add Friend</h2>
+            <p className={styles.sectionDescription}>Send a friend request by username.</p>
+          </div>
+          <UserAddOutlined style={{ fontSize: 24, color: "#2f74b5" }} />
+        </div>
+        <Space.Compact style={{ width: "100%" }}>
+          <Input
+            placeholder="Enter username"
+            value={sendUsername}
+            onChange={(e) => setSendUsername(e.target.value)}
+            onPressEnter={handleSendFriendRequest}
+          />
+          <Button type="primary" onClick={handleSendFriendRequest} loading={sending}>
+            Send
+          </Button>
+        </Space.Compact>
+      </div>
+
       <div className={styles.sectionCard}>
         <div className={styles.sectionHeader}>
           <div>
