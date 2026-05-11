@@ -93,8 +93,8 @@ reason).
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[EneasKe]** | [08.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a7643d470e2d6fffcde77405f7f7a01a2be23b50 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f] | [Worked on backend for friend system 8h] | [Allows Users to add each other as friends] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [08.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a7643d470e2d6fffcde77405f7f7a01a2be23b50] | [Worked on backend for friend system 6h] | [Allows Users to add each other as friends] |
+|                    | [08.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f)] | [Frontend for friend system and removing demo data, minor bug fixing 4h] | [Allow users to add others as friends and quality of life for website] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
