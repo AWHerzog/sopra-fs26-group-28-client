@@ -4,153 +4,167 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user";
-import { Button, Card, Form, Input, message } from "antd";
+import { App, Button, Form, Input } from "antd";
 import styles from "@/styles/auth.module.css";
 
-interface ProfileFormData {
-  username: string;
-  name?: string;
+const AVATAR_STYLES = [
+  { key: "pixel-art", label: "Pixel Art" },
+  { key: "adventurer", label: "Adventurer" },
+  { key: "bottts", label: "Bottts" },
+] as const;
+
+type AvatarStyle = (typeof AVATAR_STYLES)[number]["key"];
+
+function dicebearUrl(seed: string, style: AvatarStyle) {
+  return `https://api.dicebear.com/9.x/${style}/svg?seed=${encodeURIComponent(seed || "default")}`;
 }
 
-const ProfileEdit: React.FC = () => {
+const Settings: React.FC = () => {
   const router = useRouter();
   const apiService = useApi();
   const [form] = Form.useForm();
-  const { value: token } = useSessionStorage<string>("token", "");
-  const { value: storedUsername } = useSessionStorage<string>("username", "");
-  const { value: userId } = useSessionStorage<string>("userId", "");
+  const { message } = App.useApp();
 
-  const [user, setUser] = useState<User | null>(null);
+  const { set: setStoredUsername } = useSessionStorage<string>("username", "");
+  const { value: avatarStyle, set: setAvatarStyle } = useLocalStorage<AvatarStyle>("avatarStyle", "pixel-art");
+
   const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [previewSeed, setPreviewSeed] = useState("default");
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
 
-  // Load current user data
   useEffect(() => {
-    const loadUser = async () => {
-      if (!userId) {
-        message.error("User ID not found. Please login again.");
-        router.push("/login");
-        return;
-      }
+    const rawToken = sessionStorage.getItem("token");
+    const rawUserId = sessionStorage.getItem("userId");
+    const tok = rawToken ? JSON.parse(rawToken) : "";
+    const uid = rawUserId ? JSON.parse(rawUserId) : "";
 
-      try {
-        const userData = await apiService.get<User>(`/users/${userId}`, {
-          Authorization: `Bearer ${token}`,
-        });
-        setUser(userData);
-        form.setFieldsValue({
-          username: userData.username,
-          name: userData.name,
-        });
-      } catch (error) {
-        console.error("Failed to load user data:", error);
-        message.error("Failed to load profile data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (token && userId) {
-      loadUser();
-    } else if (!token) {
+    if (!tok || !uid) {
       router.push("/login");
+      return;
     }
-  }, [token, userId, apiService, form, router]);
 
-  const handleUpdateProfile = async (values: ProfileFormData) => {
-    if (!user?.id) return;
+    setToken(tok);
+    setUserId(uid);
 
-    setUpdating(true);
+    apiService
+      .get<User>(`/users/${uid}`, { Authorization: tok })
+      .then((data) => {
+        form.setFieldsValue({ username: data.username });
+        setPreviewSeed(data.username ?? "default");
+      })
+      .catch(() => message.error("Failed to load profile"))
+      .finally(() => setLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSave = async (values: { username: string }) => {
+    if (!userId) return;
+    setSaving(true);
     try {
-      const updatedUser = await apiService.put<User>(`/users/${user.id}`, values, {
-        Authorization: `Bearer ${token}`,
-      });
-
-      // Update stored username if it changed
-      if (updatedUser.username !== storedUsername) {
-        // Note: We would need to update session storage here
-        // But useSessionStorage doesn't provide a direct way, we'd need a custom hook
+      const updated = await apiService.put<User>(
+        `/users/${userId}`,
+        { username: values.username },
+        { Authorization: token },
+      );
+      if (updated.username) {
+        setStoredUsername(updated.username);
       }
-
-      message.success("Profile updated successfully");
-      setUser(updatedUser);
+      router.push("/home");
     } catch (error) {
-      console.error("Failed to update profile:", error);
-      message.error("Failed to update profile");
-    } finally {
-      setUpdating(false);
+      message.error(error instanceof Error ? error.message : "Failed to save profile");
+      setSaving(false);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!user) {
-    return <div>User not found</div>;
-  }
-
   return (
     <div className={styles.pageBackground}>
-      <div className={styles.authCard}>
+      <div className={styles.authCard} style={{ maxWidth: 480 }}>
         <div className={styles.brandBlock}>
-          <h1 className={styles.title}>Edit Profile</h1>
-          <p className={styles.subtitle}>Update your profile information</p>
+          <h1 className={styles.title}>Settings</h1>
+          <p className={styles.subtitle}>Manage your profile</p>
         </div>
 
-        <Card title="Profile Information" style={{ width: "100%" }}>
-          <Form
-            form={form}
-            name="profile"
-            size="large"
-            variant="outlined"
-            onFinish={handleUpdateProfile}
-            layout="vertical"
+        {/* Avatar preview */}
+        <div className={styles.avatarSection}>
+          <img
+            src={dicebearUrl(previewSeed, avatarStyle)}
+            alt="Avatar preview"
+            className={styles.avatarPreview}
+          />
+          <div className={styles.styleGrid}>
+            {AVATAR_STYLES.map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                className={`${styles.styleBtn} ${avatarStyle === s.key ? styles.styleBtnActive : ""}`}
+                onClick={() => setAvatarStyle(s.key)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Profile form — always rendered so form instance stays connected */}
+        <Form
+          form={form}
+          name="settings"
+          size="large"
+          variant="outlined"
+          layout="vertical"
+          className={styles.form}
+          onFinish={handleSave}
+          onValuesChange={(changed) => {
+            if (changed.username !== undefined) {
+              setPreviewSeed(changed.username || "default");
+            }
+          }}
+        >
+          <Form.Item
+            name="username"
+            label="Username"
+            rules={[
+              { required: true, message: "Username is required" },
+              { max: 30, message: "At most 30 characters" },
+              {
+                pattern: /^[a-zA-Z0-9_]+$/,
+                message: "Only letters, numbers and underscores allowed",
+              },
+            ]}
           >
-            <Form.Item
-              name="username"
-              label="Username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-                { min: 3, message: "Username must be at least 3 characters" },
-              ]}
-            >
-              <Input placeholder="Enter username" className={styles.inputField} />
-            </Form.Item>
+            <Input
+              placeholder="Your username"
+              className={styles.inputField}
+              disabled={loading}
+            />
+          </Form.Item>
 
-            <Form.Item
-              name="name"
-              label="Display Name"
-              rules={[
-                { required: false },
-              ]}
+          <Form.Item className={styles.submitRow}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={saving}
+              disabled={loading}
+              className={styles.primaryButton}
             >
-              <Input placeholder="Enter display name" className={styles.inputField} />
-            </Form.Item>
-
-            <Form.Item className={styles.submitRow}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={updating}
-                className={styles.primaryButton}
-              >
-                Update Profile
-              </Button>
-              <Button
-                type="default"
-                onClick={() => router.back()}
-                style={{ marginLeft: 8 }}
-              >
-                Cancel
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
+              Save Changes
+            </Button>
+            <Button
+              type="default"
+              onClick={() => router.push("/home")}
+              style={{ marginLeft: 8 }}
+            >
+              Back
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );
 };
 
-export default ProfileEdit;
+export default Settings;

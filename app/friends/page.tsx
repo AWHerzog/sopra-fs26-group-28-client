@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useSessionStorage from "@/hooks/useSessionStorage";
+import { useFriendPresence } from "@/hooks/useFriendPresence";
 import { Button, Input, Space, Spin, message } from "antd";
 import { TeamOutlined, ArrowLeftOutlined, ReloadOutlined, UserAddOutlined } from "@ant-design/icons";
 import { Friend, FriendRequest, FriendsData } from "@/types/friends";
@@ -13,22 +14,23 @@ const FriendsPage: React.FC = () => {
   const router = useRouter();
   const apiService = useApi();
   const { value: token } = useSessionStorage<string>("token", "");
-  const [data, setData] = useState<FriendsData | null>(null);
+  const { friends } = useFriendPresence(token);
+  const [requests, setRequests] = useState<FriendRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const [actionLoadingIds, setActionLoadingIds] = useState<Set<string>>(new Set());
   const [sendUsername, setSendUsername] = useState("");
   const [sending, setSending] = useState(false);
 
-  const loadFriends = async () => {
+  const loadRequests = async () => {
     if (!token) return;
     setLoading(true);
     try {
       const payload = await apiService.get<FriendsData>("/users/friends", {
         Authorization: token,
       });
-      setData(payload);
+      setRequests(payload.incomingRequests);
     } catch (error) {
-      console.error("Failed to fetch friends:", error);
+      console.error("Failed to fetch requests:", error);
     } finally {
       setLoading(false);
     }
@@ -50,7 +52,7 @@ const FriendsPage: React.FC = () => {
       await apiService.post<void>(`/users/friends/requests/${requestId}/accept`, {}, {
         Authorization: token,
       });
-      await loadFriends();
+      await loadRequests();
     } catch (error) {
       console.error("Accept failed:", error);
     } finally {
@@ -65,7 +67,7 @@ const FriendsPage: React.FC = () => {
       await apiService.post<void>(`/users/friends/requests/${requestId}/decline`, {}, {
         Authorization: token,
       });
-      await loadFriends();
+      await loadRequests();
     } catch (error) {
       console.error("Decline failed:", error);
     } finally {
@@ -82,7 +84,7 @@ const FriendsPage: React.FC = () => {
       });
       setSendUsername("");
       message.success(`Friend request sent to ${sendUsername.trim()}!`);
-      await loadFriends();
+      await loadRequests();
     } catch (error) {
       console.error("Send friend request failed:", error);
       message.error("Could not send friend request.");
@@ -98,7 +100,6 @@ const FriendsPage: React.FC = () => {
       await apiService.delete<void>(`/users/friends/${friendId}`, {
         Authorization: token,
       });
-      await loadFriends();
     } catch (error) {
       console.error("Remove failed:", error);
     } finally {
@@ -107,7 +108,7 @@ const FriendsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    loadFriends();
+    loadRequests();
   }, [token]);
 
   const renderFriendRow = (friend: Friend) => {
@@ -180,33 +181,27 @@ const FriendsPage: React.FC = () => {
         <div className={styles.sectionHeader}>
           <div>
             <h2>Friends</h2>
-            <p className={styles.sectionDescription}>Your current friends list. Refresh to get the latest state from the server.</p>
+            <p className={styles.sectionDescription}>Status updates automatically every 10 seconds.</p>
           </div>
           <Space>
             <Button icon={<ArrowLeftOutlined />} onClick={() => router.back()}>
               Back
             </Button>
-            <Button icon={<ReloadOutlined />} type="primary" onClick={loadFriends} loading={loading}>
+            <Button icon={<ReloadOutlined />} type="primary" onClick={loadRequests} loading={loading}>
               Refresh
             </Button>
           </Space>
         </div>
 
-        {loading && (
-          <div className={styles.emptyState}>
-            <Spin tip="Loading friends..." />
-          </div>
-        )}
-
-        {!loading && (!data || data.friends.length === 0) && (
+        {friends.length === 0 && (
           <div className={styles.emptyState}>
             <p>No friends yet.</p>
           </div>
         )}
 
-        {!loading && data?.friends && data.friends.length > 0 && (
+        {friends.length > 0 && (
           <div className={styles.friendList}>
-            {data.friends.map((friend) => renderFriendRow(friend))}
+            {friends.map((friend) => renderFriendRow(friend))}
           </div>
         )}
       </div>
@@ -220,15 +215,21 @@ const FriendsPage: React.FC = () => {
           <TeamOutlined style={{ fontSize: 24, color: "#2f74b5" }} />
         </div>
 
-        {!loading && (!data || data.incomingRequests.length === 0) && (
+        {loading && (
+          <div className={styles.emptyState}>
+            <Spin tip="Loading..." />
+          </div>
+        )}
+
+        {!loading && requests.length === 0 && (
           <div className={styles.emptyState}>
             <p>No pending requests.</p>
           </div>
         )}
 
-        {!loading && data?.incomingRequests && data.incomingRequests.length > 0 && (
+        {!loading && requests.length > 0 && (
           <div className={styles.requestList}>
-            {data.incomingRequests.map((request) => renderRequestRow(request))}
+            {requests.map((request) => renderRequestRow(request))}
           </div>
         )}
       </div>
