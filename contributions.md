@@ -95,8 +95,8 @@ reason).
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[EneasKe]** | [08.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a7643d470e2d6fffcde77405f7f7a01a2be23b50] | [Worked on backend for friend system 6h] | [Allows Users to add each other as friends] |
 |                    | [08.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f)] | [Frontend for friend system and removing demo data, minor bug fixing 4h] | [Allow users to add others as friends and quality of life for website] |
-| **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [07.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/db79564e947bd5bf7a6e8cac7c3d7bfd15bc6114] | [Implementation of Frontend Leader Board, shows global scoreboard over multiple games] | [Part of Necessary User stories, gives User opportunity to see own progress] |
+|                    | [12.05.2026]   | [Link to Commit 2] | [Adding Controller test gameflow level (leaving, submitting answer etc. and extend tests on logout/login flow) & Adding Servie Layer tests for login/logout flow, ] | [Adds test coverage] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
