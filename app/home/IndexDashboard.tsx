@@ -17,11 +17,11 @@ import {
   LogoutOutlined,
   CopyOutlined,
   CaretRightOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Tooltip } from "antd";
 import { useFriendPresence } from "@/hooks/useFriendPresence";
 
-const avatarColors = ["#c7d9f0", "#f0c7c7", "#c7f0d4", "#f0e6c7", "#e0c7f0"];
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
@@ -33,6 +33,7 @@ const Dashboard: React.FC = () => {
   const { value: token, clear: clearToken } = useSessionStorage<string>("token", "");
   const { value: currentUsername } = useSessionStorage<string>("username", "");
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
+  const { value: avatarStyle } = useLocalStorage<string>("avatarStyle", "pixel-art");
   const { onlineFriends } = useFriendPresence(token);
   const isInternalNavigation = useRef(false);
 
@@ -166,7 +167,10 @@ const Dashboard: React.FC = () => {
               <p style={s.subtitle}>Waiting for players…</p>
             </div>
             <div style={s.iconRow}>
-              <button style={s.iconBtn} title="Settings">
+              <button style={s.iconBtn} onClick={() => router.push("/friends")} title="Friends">
+                <UsergroupAddOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+              </button>
+              <button style={s.iconBtn} onClick={() => router.push("/profile/edit")} title="Settings">
                 <SettingOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
               </button>
             </div>
@@ -216,8 +220,12 @@ const Dashboard: React.FC = () => {
                 const isYou = username === currentUsername;
                 return (
                   <div key={username} style={s.playerRow}>
-                    <div style={{ ...s.avatar, background: avatarColors[index % avatarColors.length] }}>
-                      <span style={s.avatarText}>{username.charAt(0).toUpperCase()}</span>
+                    <div style={s.avatar}>
+                      <img
+                        src={`https://api.dicebear.com/9.x/${isYou ? avatarStyle : "pixel-art"}/svg?seed=${encodeURIComponent(username)}`}
+                        alt={username}
+                        style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+                      />
                     </div>
                     <div style={s.playerInfo}>
                       <span style={s.playerName}>{username}{isYou ? " (You)" : ""}</span>
@@ -266,7 +274,10 @@ const Dashboard: React.FC = () => {
               <button style={s.iconBtn} onClick={() => router.push("/users")} title="Profile">
                 <UserOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
               </button>
-              <button style={s.iconBtn} title="Settings">
+              <button style={s.iconBtn} onClick={() => router.push("/friends")} title="Friends">
+                <UsergroupAddOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+              </button>
+              <button style={s.iconBtn} onClick={() => router.push("/profile/edit")} title="Settings">
                 <SettingOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
               </button>
               <button style={s.iconBtn} onClick={handleLogout} title="Logout">
@@ -307,7 +318,10 @@ const Dashboard: React.FC = () => {
             <button style={s.iconBtn} onClick={() => router.push("/users")} title="Profile">
               <UserOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
             </button>
-            <button style={s.iconBtn} title="Settings">
+            <button style={s.iconBtn} onClick={() => router.push("/friends")} title="Friends">
+              <UsergroupAddOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
+            </button>
+            <button style={s.iconBtn} onClick={() => router.push("/profile/edit")} title="Settings">
               <SettingOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
             </button>
             <button style={s.iconBtn} onClick={handleLogout} title="Logout">

@@ -117,6 +117,52 @@
   height: auto;
 }
 
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.avatarPreview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #e8f2fd;
+  border: 3px solid #b2c6db;
+  padding: 6px;
+}
+
+.styleGrid {
+  display: flex;
+  gap: 8px;
+}
+
+.styleBtn {
+  padding: 5px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #b2c6db;
+  background: #f4f8fd;
+  color: #365777;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.styleBtn:hover {
+  border-color: #2f74b5;
+  color: #2f74b5;
+}
+
+.styleBtnActive {
+  border-color: #2f74b5;
+  background: #e4f0fb;
+  color: #2f74b5;
+  font-weight: 700;
+}
+
 @media (max-width: 520px) {
   .authCard {
     border-radius: 16px;
