@@ -7,16 +7,12 @@ import styles from "./TutorialButton.module.css";
 
 interface TutorialButtonProps {
   onClick: () => void;
-  isCompleted: boolean;
 }
 
 export default function TutorialButton({
   onClick,
-  isCompleted,
 }: TutorialButtonProps) {
-  const tooltipText = isCompleted
-    ? "Replay Tutorial"
-    : "Start Tutorial";
+  const tooltipText = "Replay Tutorial";
 
   return (
     <Tooltip title={tooltipText}>

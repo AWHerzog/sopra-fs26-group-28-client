@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import useSessionStorage from "@/hooks/useSessionStorage";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { requestTutorialAfterRegistration } from "@/components/tutorial/tutorialRequest";
 import { User } from "@/types/user";
 import { Button, Form, Input } from "antd";
 import styles from "@/styles/auth.module.css";
@@ -46,16 +47,9 @@ const Registration: React.FC = () => {
 				setPersistentUserId(response.id);
      		}
 
-			// signal TutorialProvider to auto-open the tutorial on first navigation
-			if (typeof window !== "undefined") {
-				try {
-					localStorage.setItem("tutorial_open", "true");
-				} catch (e) {
-					// ignore storage errors
-				}
-			}
+			requestTutorialAfterRegistration();
 
-			// navigate after flag is set to ensure the provider can read it
+			// navigate after the request is set so the provider can open the tutorial
 			await router.push("/home");
 			
 		} catch (error) {

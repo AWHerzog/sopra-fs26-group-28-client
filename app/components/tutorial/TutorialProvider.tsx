@@ -4,9 +4,9 @@ import React, { ReactNode, useEffect, useState } from "react";
 import useTutorial from "@/hooks/useTutorial";
 import useSessionStorage from "@/hooks/useSessionStorage";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { useApi } from "@/hooks/useApi";
 import TutorialModal from "./TutorialModal";
 import TutorialButton from "./TutorialButton";
+import { consumeTutorialAfterRegistration } from "./tutorialRequest";
 
 interface TutorialProviderProps {
   children: ReactNode;
@@ -14,7 +14,6 @@ interface TutorialProviderProps {
 
 export default function TutorialProvider({ children }: TutorialProviderProps) {
   const tutorial = useTutorial();
-  const apiService = useApi();
   const { value: userId } = useSessionStorage<string>("userId", "");
   const { value: token } = useSessionStorage<string>("token", "");
   const { value: storedUserId } = useLocalStorage<string>("userId", "");
@@ -59,48 +58,42 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
     }
   }, [token, userId, storedToken, storedUserId, isHydrated]);
 
-  // Open tutorial automatically if authenticated and it's first login
+  // Open tutorial automatically after a successful registration request
   useEffect(() => {
-    if (isAuthenticated && !tutorial.isCompleted) {
-      // If tutorial hook considers this the first login, open it.
-      if (tutorial.isFirstLogin) {
+    if (isAuthenticated) {
+      const consumed = consumeTutorialAfterRegistration();
+      if (consumed) {
         tutorial.openTutorial();
-      }
-
-      // Also support a one-time localStorage flag that pages can set
-      // (e.g. right after registration) to request the tutorial to open.
-      try {
-        if (typeof window !== "undefined") {
-          const flag = localStorage.getItem("tutorial_open");
-          if (flag === "true") {
-            tutorial.openTutorial();
-            localStorage.removeItem("tutorial_open");
-          }
-        }
-      } catch (e) {
-        // ignore storage errors
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, tutorial.isFirstLogin, tutorial.isCompleted]);
+  }, [isAuthenticated]);
+
+  // Listen for explicit tutorial request events (dispatched from registration)
+  useEffect(() => {
+    function onRequested() {
+      if (isAuthenticated) {
+        const consumed = consumeTutorialAfterRegistration();
+        if (consumed) {
+          tutorial.openTutorial();
+        }
+      }
+    }
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("tutorialRequested", onRequested as EventListener);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("tutorialRequested", onRequested as EventListener);
+      }
+    };
+    // isAuthenticated intentionally in dependency list so handler sees latest value
+  }, [isAuthenticated, tutorial]);
 
   const handleComplete = async () => {
-    try {
-      // First mark as completed locally
-      tutorial.completeTutorial();
-
-      // Then sync with backend if userId and token are available
-      if (userId && token) {
-        await apiService.put(
-          `/users/${userId}/onboarding`,
-          { onboardingCompleted: true },
-          { Authorization: token }
-        );
-      }
-    } catch (error) {
-      console.error("Failed to update onboarding status on server:", error);
-      // Still mark as completed locally even if server call fails
-    }
+    tutorial.closeTutorial();
   };
 
   // Only show tutorial if user is authenticated
@@ -111,7 +104,7 @@ export default function TutorialProvider({ children }: TutorialProviderProps) {
   return (
     <>
       {children}
-      <TutorialButton onClick={tutorial.openTutorial} isCompleted={tutorial.isCompleted} />
+      <TutorialButton onClick={tutorial.openTutorial} />
       <TutorialModal
         isOpen={tutorial.isModalOpen}
         currentStep={tutorial.currentStep}
