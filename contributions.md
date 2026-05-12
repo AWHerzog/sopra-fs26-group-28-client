@@ -99,8 +99,8 @@ reason).
 |                    | [12.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/281ed4c4a05a2af2b4717486f9bc14628d48a2e1)] | [Adding Controller test gameflow level (leaving, submitting answer etc. and extend tests on logout/login flow) & Adding Servie Layer tests for login/logout flow, ] | [Adds test coverage] |
 | **[Luizcodes02]** | [10.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/a7274bc2c56f32cba52642aebd0fe57edf85577d)] | [Frontend friends page, add, accept, decline, refresh..] | [Friends can be added and therefore no need to send inviation code] |
 |                    | [12.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/c6d1a374e9827cdb8fc826b8859173246ab183df)] | [Merge settings and profile page, add username based avatars via dicebear, add buttons] | [Visual feature to have an own avatar you can change] |
-| **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWhHerzog]** | [10.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9a1da657f8c7d46518dfc7dee46848a88f08dcfb] [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/fb0cc252774c96bbe1e361eaed32942bf99292dd] | [Frontend API integration] | [Users can choose which language to switch to] |
+|                    | [11/10.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/2f0287dc06e3794df0cc45213a7b3d27bca6914d] [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/4af8e1071ee2f57968151a07d5bd1db9534e5cad] [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/5e946f312c3a5c93d627bc2957bdf7efae658518]  | [DEEPL API integration in Backend and move to next Round Bug fix] | [Translation API integrated and fix to next round bug] |
 
 ---
 
