@@ -97,8 +97,8 @@ reason).
 |                    | [08.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f)] | [Frontend for friend system and removing demo data, minor bug fixing 4h] | [Allow users to add others as friends and quality of life for website] |
 | **[Ruven3344]** | [07.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/db79564e947bd5bf7a6e8cac7c3d7bfd15bc6114] | [Implementation of Frontend Leader Board, shows global scoreboard over multiple games] | [Part of Necessary User stories, gives User opportunity to see own progress] |
 |                    | [12.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/281ed4c4a05a2af2b4717486f9bc14628d48a2e1)] | [Adding Controller test gameflow level (leaving, submitting answer etc. and extend tests on logout/login flow) & Adding Servie Layer tests for login/logout flow, ] | [Adds test coverage] |
-| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | [10.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/a7274bc2c56f32cba52642aebd0fe57edf85577d)] | [Frontend friends page, add, accept, decline, refresh..] | [Friends can be added and therefore no need to send inviation code] |
+|                    | [12.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/c6d1a374e9827cdb8fc826b8859173246ab183df)] | [Merge settings and profile page, add username based avatars via dicebear, add buttons] | [Visual feature to have an own avatar you can change] |
 | **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 
