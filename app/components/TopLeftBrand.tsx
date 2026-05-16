@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function TopLeftBrand(): JSX.Element | null {
+export default function TopLeftBrand(): React.ReactElement | null {
   const pathname = usePathname() ?? "/";
 
   // hide on any in-game routes
