@@ -4,6 +4,7 @@ import { App as AntdApp, ConfigProvider, theme } from "antd";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import TutorialProvider from "@/components/tutorial/TutorialProvider";
 import "@/styles/globals.css";
+import TopLeftBrand from "@/components/TopLeftBrand";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
           >
             <AntdApp>
               <TutorialProvider>
+                <TopLeftBrand />
                 <div className="app-shell">{children}</div>
               </TutorialProvider>
             </AntdApp>
