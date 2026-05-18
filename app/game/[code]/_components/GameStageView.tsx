@@ -76,6 +76,20 @@ export default function GameStageView({
   const [translating, setTranslating] = useState(false);
   const [translateLang, setTranslateLang] = useState<string | null>(null);
   const [translateError, setTranslateError] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
+
+  useEffect(() => {
+    const deadline = game?.stageDeadline;
+    if (!deadline) { setSecondsLeft(null); return; }
+
+    const tick = () => {
+      const remaining = Math.max(0, Math.floor((new Date(deadline).getTime() - Date.now()) / 1000));
+      setSecondsLeft(remaining);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [game?.stageDeadline]);
 
   // Shuffle once per stage (not on every answers update)
   useEffect(() => {
@@ -151,6 +165,11 @@ export default function GameStageView({
           <p className={styles.subtitle}>{question?.subtitle}</p>
           <div className={styles.metaRow}>
             <Tag color="blue">Game code: {question?.code}</Tag>
+            {secondsLeft !== null && stage !== "final" && stage !== "solution" ? (
+              <Tag color={secondsLeft <= 10 ? "red" : "orange"}>
+                {secondsLeft}s
+              </Tag>
+            ) : null}
             {stage === "solution" ? <Tag color="green">Reveal complete</Tag> : null}
             {(stage === "answer" || stage === "voting") && (
               <>
@@ -162,7 +181,7 @@ export default function GameStageView({
                   onChange={handleTranslate}
                   style={{ width: 130 }}
                   options={[
-                    { value: "__original__", label: "Original (English)" },
+                    { value: "__original__", label: "English" },
                     { value: "DE", label: "German" },
                     { value: "FR", label: "French" },
                     { value: "ES", label: "Spanish" },
