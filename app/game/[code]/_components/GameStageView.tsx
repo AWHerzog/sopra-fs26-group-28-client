@@ -104,6 +104,12 @@ export default function GameStageView({
   }, [stage]);
 
   const handleTranslate = async (lang: string) => {
+    if (lang === "__original__") {
+      setTranslatedPrompt(null);
+      setTranslateLang(null);
+      setTranslateError(false);
+      return;
+    }
     setTranslateLang(lang);
     setTranslating(true);
     setTranslateError(false);
@@ -156,6 +162,7 @@ export default function GameStageView({
                   onChange={handleTranslate}
                   style={{ width: 130 }}
                   options={[
+                    { value: "__original__", label: "Original (English)" },
                     { value: "DE", label: "German" },
                     { value: "FR", label: "French" },
                     { value: "ES", label: "Spanish" },
