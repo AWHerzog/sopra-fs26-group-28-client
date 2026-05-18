@@ -76,7 +76,7 @@ reason).
 
 ---
 
-## Contributions Week 4 - [29.04.26] to [06.04.26]
+## Contributions Week 4 - [27.04.26] to [06.04.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
@@ -104,11 +104,11 @@ reason).
 
 ---
 
-## Contributions Week 6 - [13.06.26] to [20.06.26]
+## Contributions Week 6 - [13.05.26] to [22.05.26]
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[@githubUser1]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Eneaske]** | [18.05.26]   | [Link to Commit 1]https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
