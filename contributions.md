@@ -110,9 +110,13 @@ reason).
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[Eneaske]** | [18.05.26]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea)] | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
 |                    | [17.05.26]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 7h] | [Makes sure that friendship system keeps working, would raise errors if not] |
-| **[@AWHerzog]** | [17.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/fcdf12075a2cb8ebbd990d372f7468c48d3ad455] | [Created New Questions] | [Have more engaging questions for the completed game. 1h] |
-|                    | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/e46f7fb4605e3c47eebe9a7fbcc32f6f9a813ab4] | [Redid API integration] | [Previous API Key method did not work] |
-| **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWHerzog]** | [17.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/fcdf12075a2cb8ebbd990d372f7468c48d3ad455] | [Created New Questions 1h] | [Have more engaging questions for the completed game. 1h] |
+|                    | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/e46f7fb4605e3c47eebe9a7fbcc32f6f9a813ab4] | [Redid API integration 1h] | [Previous API Key method did not work] |
+|   | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/84c377b5e9f63c1cf81e7ba1724b2a0223f9a7dc] | [Changed it so all players always are required to advance round 4h] | [Coherent game flow] |
+|   | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/cf37ddf2bd7aff1d12e06a857dd14613ba1655a0] | [Added English as translation option 5 min] | [You can switch back to the original language after translating] |
+|   | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/07a5e11b91edf8edd66fc3f77c153dc9f5c416b1] | [Frontend uninamous advance integration 1h] | [Coherent game flow] |
+|   | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/854db4d00b21b27008ed777eb685449f44ef663f] | [Fixed some bugs, added a countdown timer 1h] | [Create more pressure during a game and to be aware of a countdown ticking] |
+|   | [11.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/aa87488ca18028909107388fbb383da3158ce0b4] | [Fixed the countdown timer 2min] | [Did not work before] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser4]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
