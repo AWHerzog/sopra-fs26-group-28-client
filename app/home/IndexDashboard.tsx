@@ -13,7 +13,6 @@ import {
   TeamOutlined,
   PlusCircleOutlined,
   ArrowRightOutlined,
-  UserOutlined,
   SettingOutlined,
   LogoutOutlined,
   CopyOutlined,
@@ -297,9 +296,6 @@ const Dashboard: React.FC = () => {
               <p style={s.subtitle}>Enter the game code to join</p>
             </div>
             <div style={s.iconRow}>
-              <button style={s.iconBtn} onClick={() => router.push("/users")} title="Profile">
-                <UserOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
-              </button>
               <button style={s.iconBtn} onClick={() => router.push("/friends")} title="Friends">
                 <UsergroupAddOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
               </button>
@@ -341,9 +337,6 @@ const Dashboard: React.FC = () => {
             <p style={s.subtitle}>How do you want to play?</p>
           </div>
           <div style={s.iconRow}>
-            <button style={s.iconBtn} onClick={() => router.push("/users")} title="Profile">
-              <UserOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
-            </button>
             <button style={s.iconBtn} onClick={() => router.push("/friends")} title="Friends">
               <UsergroupAddOutlined style={{ fontSize: 18, color: "#2f74b5" }} />
             </button>
