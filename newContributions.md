@@ -85,7 +85,7 @@ reason).
 | **[AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[EneasKe]** | [21.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/1850b1651e8a3c7b6178d627b6d3ca90abe143e8 + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/5cb79fa6adc61f7907b59194b7af495b1cfd9f5d] | [Fixed Bugs especially showing waiting correct, hosting more than one game, leaving etc. clean up frontend 4h] | [Make Sure game does not break easily, clean up frontend to make game appear finished] |
-|                    | [22.04.26 & 23.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9c430f8e59348f0f044889edb24cdc380405253a & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/84acb4a6f15b1c7e71e3fe8afd013fb7d34bc779 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/10169e9a060f1643d4de750d2cb139f66d897479] | [More Bug fixing, focus on localStorageSession and displaying clean error message. Also make sure domain is correct one] | [Ensures game runs smoothly and everything works in production with connection of backend and frontend] |
+|                    | [22.04.26 & 23.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9c430f8e59348f0f044889edb24cdc380405253a & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/84acb4a6f15b1c7e71e3fe8afd013fb7d34bc779 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/10169e9a060f1643d4de750d2cb139f66d897479] | [More Bug fixing, focus on localStorageSession and displaying clean error message. Also make sure domain is correct one 4h] | [Ensures game runs smoothly and everything works in production with connection of backend and frontend] |
 | **[Luizcodes02]** | [20.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/7487cabb8ec76f46915098ecb83d8ae9220d6b9d] | [Fix race condition with pessimistic lock, add correct answer as voting option] | [race condition fix and correct answer gets shown] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
@@ -133,8 +133,8 @@ reason).
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[Eneaske]** | [17.05.26]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 7h] | [Makes sure that friendship system keeps working, would raise errors if not] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Eneaske]** | [date]   | [[Link to Commit] | [Worked ahead last week] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [worked ahead last week] | [Why this contribution is relevant] |
 | **[Ruven3344]** | [12.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/281ed4c4a05a2af2b4717486f9bc14628d48a2e1)] | [Adding Controller test gameflow level (leaving, submitting answer etc. and extend tests on logout/login flow) & Adding Servie Layer tests for login/logout flow, ] | [Adds test coverage] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[Luizcodes02]** | [12.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/c6d1a374e9827cdb8fc826b8859173246ab183df)] | [Merge settings and profile page, add username based avatars via dicebear, add buttons] | [Visual feature to have an own avatar you can change] |
@@ -148,8 +148,8 @@ reason).
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[Eneaske]** | [18.05.26]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea)] | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Eneaske]** | [18.05.26]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea)] | [Added Invite in the backend so users can directly invite friends into a game lobby, 4h] | [Allows users to directly invite friends to a game] |
+|                    | [17 & 18.05.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 5h] | [Makes sure that friendship system keeps working, would raise errors if not] |
 | **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[Luizcodes02]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
