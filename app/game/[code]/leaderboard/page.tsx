@@ -37,9 +37,12 @@ export default function LeaderboardPage() {
   const isLastRound =
     game?.currentRound != null && game.maxRounds != null && game.currentRound >= game.maxRounds;
 
+  const totalPlayers = game?.players ? Object.keys(game.players).length : 0;
+  const readyCount = game?.readyCount ?? 0;
+
   const handleAdvance = async () => {
-    await apiService.post(`/games/${gameCode}/advance`, {}, { Authorization: token });
-    // Navigation to next round or final is handled by useGameState WebSocket update
+    await apiService.post(`/games/${gameCode}/ready`, {}, { Authorization: token });
+    // Navigation is handled by useGameState WebSocket update when all players are ready
   };
 
   return (
@@ -48,7 +51,7 @@ export default function LeaderboardPage() {
       question={question ?? undefined}
       answers={[]}
       leaderboard={leaderboard}
-      primaryActionLabel={isLastRound ? "See final results" : "Next round"}
+      primaryActionLabel={isLastRound ? "See final results" : `Next round (${readyCount}/${totalPlayers} ready)`}
       primaryActionHref=""
       onAdvance={game ? handleAdvance : undefined}
     />
