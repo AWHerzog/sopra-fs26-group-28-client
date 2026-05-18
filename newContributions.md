@@ -52,7 +52,7 @@ reason).
 | **[@AWHerzog]** | [31.3.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/65] | Created backend rest implenetation to get/edit user by their assigned id | So Users/id can be parsed |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[EneasKe]** | [05.04.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/3b5f3183343229b739a6e41385bd4e7299624f51)] | [Finished WebSocket setup and setting up a Lobby 8h] | [WebSockets allow us to "subscribe" to a certain topic and then get information everytime something changes to all subscribed players, very important for a game relying on real time inputs] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [05.04.26]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/c9a000469e9e5b2471c465fe32622445ad52a4f5)] | [Finished websocket setup for frontend, 6h] | [WebSockets allow us to "subscribe" to a certain topic and then get information everytime something changes to all subscribed players, very important for a game relying on real time inputs] |
 
 ---
 
