@@ -27,4 +27,5 @@ export interface Game {
   stageDeadline: string | null;
   answers: GameStateAnswer[] | null;
   submittedUsernames: string[] | null;
+  readyCount?: number;
 }
