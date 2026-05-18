@@ -1,0 +1,158 @@
+# Contributions
+
+Every member has to complete at least 2 meaningful tasks per week, where a
+single development task should have a granularity of 0.5-1 day. The completed
+tasks have to be shown in the weekly TA meetings. You have one "Joker" to miss
+one weekly TA meeting and another "Joker" to once skip continuous progress over 
+the remaining weeks of the course. Please note that you cannot make up for
+"missed" continuous progress, but you can "work ahead" by completing twice the
+amount of work in one week to skip progress on a subsequent week without using
+your "Joker". Please communicate your planning **ahead of time**.
+
+Note: If a team member fails to show continuous progress after using their
+Joker, they will individually fail the overall course (unless there is a valid
+reason).
+
+**You MUST**:
+
+- Have two meaningful contributions per week.
+
+**You CAN**:
+
+- Have more than one commit per contribution.
+- Have more than two contributions per week.
+- Link issues to contributions descriptions for better traceability.
+
+**You CANNOT**:
+
+- Link the same commit more than once.
+- Use a commit authored by another GitHub user.
+
+---
+
+## Contributions Week 1 - [23.03.26] to [29.03.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+|  **[EneasKe]** | 28.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ed23750563cfc7be9c1d2464e964936a79fd67f1] | [#17, #18 Implemented User entity and changed Tests to work with this new Entity (REST, etc.) made sure backend runs (4h)] | [User Entity is important because we will Use this entity for a lot of things like login, points etc.] |
+|                    | 28.03.26 & 29.03.26  | [https://github.com/AWHerzog/sopra-fs26-group-28-server/issues/1] | [Multiple commits, commit #19, #20, #21 and User Story 1 completed. Implemented endpoints for login and registration and created helper function for password hashing, also made sure frontend created by Ruven and backend work together (Additionally made sure token logic works) 6h] | [This is necessary for the client to create an account and login] |
+| **[Ruven3344**] | 29.03.2026   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/45daf654e5ddb1c0e2252420c12eab6f0e27e423] | [2 Contributions in 1 commit: Implementation of Login and Registration Frontend (3h), conntected to API (0.5 h), global and local .css file for styling (4h)] | [global and local styling files allow for less code dublication and fewer inconsistencies, frontend pages allow user to interact with the application] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWHerzog]** | [27/29.3.26]   | - | Redid the entire Scrum setup, created new tasks and managed the old ones. 5/6 hours | So we could begin working and have a better overview of how we wanted to approach this project |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+
+---
+
+## Contributions Week 2 - [30.03.26] to [05.04.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[Luizcodes02]** | 31.03.26   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/20/changes/b93e25ac78b68d7375247f291ef7872b1c2f0aa7] | [Create main overview page with create session button] | [central entry point] |
+|                    | [31.03.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/21/changes/e1c0c9bcb1e2b08bee8afeb75e5725aa2bac60c6)] | [add logout button] | [logout functionality for switching accounts] |
+| **[@AWHerzog]** | [31.3.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/pull/65] | Created backend rest implenetation to get/edit user by their assigned id | So Users/id can be parsed |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [05.04.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/3b5f3183343229b739a6e41385bd4e7299624f51)] | [Finished WebSocket setup and setting up a Lobby 8h] | [WebSockets allow us to "subscribe" to a certain topic and then get information everytime something changes to all subscribed players, very important for a game relying on real time inputs] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+
+---
+
+*(Holiday gap: 06.04.26 – 12.04.26)*
+
+---
+
+## Contributions Week 3 - [13.04.26] to [19.04.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[EneasKe]** | [13.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/eee4ff79e6ddcdd24e6bbf1d6f30ad81e75228bd + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/63758317ad5b65e57b0259d8919e0fc952205892] | [Implemented frontend and backend auth guard, currently session taken based, with localStorage and Authorization header sent in REST calls 4h] | [Makes sure users cannot access content they are not supposed to] |
+|                    | [16.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/7915e16a90c9b6a9608bb71d64d6dc3af7f7a304 + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9242e6ef919fd8d7b97bb05a0c115403b3e14b27] | [Exposed REST endpoints for gameflow and started working on the flow itself 5h] | [The game is the core of our app, important that it works] |
+| **[AWHerzog]** | [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/2e2d0b0792549e8c0b6808d8cc7a70a38f1adb02] | [Created the core logic of the game in the backend] | [Important so the frontend can implement the design aspect of the game. Otherwise quite self explanatory] |
+|                    | [15.4.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6ae809b152e203ff14e72db5305a45bb356175ca] | [Created a Json file with questions and handler] | [To display questions and avoid duplicates in a game] |
+| **[Ruven3344]** | [13.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/faa708b29ab56917a9adc613d4c0097e6bbdcf41)] | [sync current state of project with specifications, plan steps for implementation of game logic (3 hours)] | [Planning for Game Set up] |
+|                    | [13.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/f3a4a1e05214536c6f6fe4b2ebe7ee2c7e66a249)] | [Created Frontend pages for pages inside a game round (enter, wait, vote, solution), score not implemented! Currently with demo data/placeholders for connection with backend later, loclahost:3000/game contains overview menu to navigate easily between created pages, still produces some minor bugs, will come back to this as soon as connected to backend. (6 hours)] | [Creates base for all needed needed services/endpoints of backend, sets structure of game flows] |
+|                    | [16.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a1165bbbe83d8da757c8d8e5dc6106b7a7cac1bb)] | [create all files. add short comment with purpose and implementation parts (2 hours)] | [Base for Game Implementation] |
+|                    | [18.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/f05e73598d4ba0b8f6c9d990da4b592e92eafc8d)] | [Implemented game state model, added round level persistance in repositories, DTOs and Mapper updates, preparation ready for game logic implementation in service layer (4 hours)] | [First Part of Game Implementation] |
+| **[Luizcodes02]** | [13.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/36/changes/97510eee0f0cc77f5ae1de0e4baff6425e6ad7e6)] | [Redesigned /index with a clean "Choose Game Mode" UI (Join/Host, action icons, hint bar).] | [Central hub after login for hosting or joining games which improves usability and sets UI standard. Also fixed Vercel deployment by resolving TypeScript lint issues.] |
+|                    | [14.04.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/pull/36/changes/984ade0c5cd5e3f17100db691b0f3ede6cc2349e)] | [Redesigned the in-game lobby with prominent game code + copy, player list with avatars and status, and Start (host) / Leave actions.] | [First shared multiplayer screen showing players and readiness which is essential for game flow. Designed to plug directly into WebSocket state with mininal backend work.] |
+|                    | [19.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6a5802d9ee5b806f16007c215850ba152a556921] | [Fix QuestionService import, add question/answers to game state, add advance endpoint] | [Game state receives questions/answers from backend] |
+
+---
+
+## Contributions Week 4 - [20.04.26] to [26.04.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [21.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/1850b1651e8a3c7b6178d627b6d3ca90abe143e8 + https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/5cb79fa6adc61f7907b59194b7af495b1cfd9f5d] | [Fixed Bugs especially showing waiting correct, hosting more than one game, leaving etc. clean up frontend 4h] | [Make Sure game does not break easily, clean up frontend to make game appear finished] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | [20.04.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/7487cabb8ec76f46915098ecb83d8ae9220d6b9d] | [Fix race condition with pessimistic lock, add correct answer as voting option] | [race condition fix and correct answer gets shown] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+
+---
+
+## Contributions Week 5 - [27.04.26] to [03.05.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+
+---
+
+## Contributions Week 6 - [04.05.26] to [10.05.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[EneasKe]** | [04.05.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/7d7eebbd93c05805d5a17701e55782c769ceefc9) & https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/ff0b394469ae563b06d2bf2006b59c199394fdb0] | [Started working on replicating the bugs and fixing them, added bugs tasks to project, 5h] | [Ensuring there are no unforseen bugs destroying user experience] |
+|                    | [05.05.26]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/031175a3e35645e76cffdb345889e33909596f13 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/626a31a27739d3d0029142436b799087621612d6 & https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/f71bcd836456ae218f61f66197afd9d0f248fa3f] | [Had to revert changes, test website extensively and fix bugs. Most time spent trying to replicate bugs and then finding these small issues. 6h] | [Making sure website works how we intended it to work] |
+|                    | [08.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/a7643d470e2d6fffcde77405f7f7a01a2be23b50] | [Worked on backend for friend system 6h] | [Allows Users to add each other as friends] |
+|                    | [08.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/76334f9eb79eacf9c8e79b0975dbbf7530b1df1f)] | [Frontend for friend system and removing demo data, minor bug fixing 4h] | [Allow users to add others as friends and quality of life for website] |
+| **[Ruven3344]** | [05.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/698f862d3a91631cfad46d86f489228fab513d74)] | [implement frontend pages for tutorial, styling and bugfixing (5 hours), help button] | [Important step for new player] |
+|                    | [05.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/6f64394593b5961824a87c1d9c039ad21721f49b)] | [Implement backend for tutorial, setup hooks and services, safe tutorial state and completion (still some autostart bugs) (4 hours)] | [Important for correct tutorial functions, handles tutorial debending on first or repeated login] |
+|                    | [07.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/db79564e947bd5bf7a6e8cac7c3d7bfd15bc6114] | [Implementation of Frontend Leader Board, shows global scoreboard over multiple games] | [Part of Necessary User stories, gives User opportunity to see own progress] |
+| **[Luizcodes02]** | [04.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/7628a73)] | [feat(friends): add accept/decline/remove friend controls (5h)] | [Important to add/decline friend requests] |
+|                    | [05.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/a7b400b)] | [feat(profile): add profile edit page and form sections (5h)] | [important to edit profile] |
+|                    | [10.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/a7274bc2c56f32cba52642aebd0fe57edf85577d)] | [Frontend friends page, add, accept, decline, refresh..] | [Friends can be added and therefore no need to send inviation code] |
+| **[@AWHerzog]** | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/9b42154dd3b3af3d6eb8f8c186345f6a66396c9d] | [Created the backend implementation for leaderboard implementation] | [So we can call the api in the frontend to implement Leaderboards as per our goal] |
+|                    | [05.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/98d471749483d22dbcbe5c63f138a24efe137765] | [Changed and improved mechanics according to feedback] | [Right now rounds do not autoadvance and the host can continue, implemented a timer and a unanimous voting system for round advances] |
+|                    | [10.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/9a1da657f8c7d46518dfc7dee46848a88f08dcfb] [https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/fb0cc252774c96bbe1e361eaed32942bf99292dd] | [Frontend API integration] | [Users can choose which language to switch to] |
+|                    | [10.05.2026]   | [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/2f0287dc06e3794df0cc45213a7b3d27bca6914d] [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/4af8e1071ee2f57968151a07d5bd1db9534e5cad] [https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/5e946f312c3a5c93d627bc2957bdf7efae658518]  | [DEEPL API integration in Backend and move to next Round Bug fix] | [Translation API integrated and fix to next round bug] |
+
+---
+
+## Contributions Week 7 - [11.05.26] to [17.05.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[Eneaske]** | [17.05.26]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 7h] | [Makes sure that friendship system keeps working, would raise errors if not] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [12.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/281ed4c4a05a2af2b4717486f9bc14628d48a2e1)] | [Adding Controller test gameflow level (leaving, submitting answer etc. and extend tests on logout/login flow) & Adding Servie Layer tests for login/logout flow, ] | [Adds test coverage] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | [12.05.2026]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/c6d1a374e9827cdb8fc826b8859173246ab183df)] | [Merge settings and profile page, add username based avatars via dicebear, add buttons] | [Visual feature to have an own avatar you can change] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+
+---
+
+## Contributions Week 8 - [18.05.26] to [24.05.26]
+
+| **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
+| ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
+| **[Eneaske]** | [18.05.26]   | [[Link to Commit](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea)] | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Luizcodes02]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[@AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
