@@ -83,7 +83,8 @@ export default function GameStageView({
     if (!deadline) { setSecondsLeft(null); return; }
 
     const tick = () => {
-      const remaining = Math.max(0, Math.floor((new Date(deadline).getTime() - Date.now()) / 1000));
+      const utc = deadline.endsWith("Z") ? deadline : deadline + "Z";
+      const remaining = Math.max(0, Math.floor((new Date(utc).getTime() - Date.now()) / 1000));
       setSecondsLeft(remaining);
     };
     tick();
