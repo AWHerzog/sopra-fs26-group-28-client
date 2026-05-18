@@ -108,8 +108,8 @@ reason).
 
 | **Student**        | **Date** | **Link to Commit** | **Description**                 | **Relevance**                       |
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
-| **[Eneaske]** | [18.05.26]   | [Link to Commit 1]https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[Eneaske]** | [18.05.26]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/43dbc436fa8e11e86be7b56afb7d0b7ddc2ebcea)] | [Added Invite in the backend so users can directly invite friends into a game lobby, 6h] | [Allows users to directly invite friends to a game] |
+|                    | [17.05.26]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 7h] | [Makes sure that friendship system keeps working, would raise errors if not] |
 | **[@githubUser2]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@githubUser3]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
