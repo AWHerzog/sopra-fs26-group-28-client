@@ -150,6 +150,8 @@ reason).
 |                    | [17 & 18.05.26]   | [(https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/df6f517304a7fb3fbd9d74300877d0b612212626)] | [Added tests for the friendship lifecycle, 5h] | [Makes sure that friendship system keeps working, would raise errors if not] |
 | **[Ruven3344]** | [15.05.2026]   | [[Link to Commit 1](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/8a6a7120383417468700a4c6927e899e95bc6528)] | [Fix tutorial pop-up behaviour] | [Before tutorial appeared sometimes during the game, disturbing the flow] |
 |                    | [16.05.2026]   | [[Link to Commit 2](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/1c20f87bc25f351f4bec4113ef39f98a3c414966)] | [Fix Bug communication error between server end client] | [Fixes System error] |
+|                    | [18.05.2026]   | [[Link to Commit 3](https://github.com/AWHerzog/sopra-fs26-group-28-client/commit/37719913754aec97e713ff6c6552de19a0d3fd66)] | [Improve styling of index login/registration landingpage] | [Improves visual user experience] |
+|                    | [18.05.2026]   | [[Link to Commit 4](https://github.com/AWHerzog/sopra-fs26-group-28-server/commit/e0c355a95bb5447612cb01a6869583556cd82ab7)] | [update tests: Quexstionservice, GameTImerService, TranslationsService] | [Improves test coverage] |
 | **[Luizcodes02]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[@AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
