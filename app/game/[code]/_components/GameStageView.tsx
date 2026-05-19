@@ -7,6 +7,8 @@ import type { GameAnswer, GameQuestion, LeaderboardEntry, WaitingProgress } from
 import styles from "../game.module.css";
 import { useApi } from "@/hooks/useApi";
 import { useGameState } from "@/hooks/useGameState";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import useSessionStorage from "@/hooks/useSessionStorage";
 
 type Stage = "answer" | "waiting" | "voting" | "solution" | "leaderboard" | "final"; // The main stages of a game round, used to control which blocks are active and which data is shown on the page.
 
@@ -71,6 +73,8 @@ export default function GameStageView({
   const shuffledForStage = useRef<string | null>(null);
   const { game, gameCode, token } = useGameState();
   const apiService = useApi();
+  const { value: currentUsername } = useSessionStorage<string>("username", "");
+  const { value: avatarStyle } = useLocalStorage<string>("avatarStyle", "pixel-art");
   const [error, setError] = useState(false);
   const [translatedPrompt, setTranslatedPrompt] = useState<string | null>(null);
   const [translating, setTranslating] = useState(false);
@@ -406,6 +410,11 @@ export default function GameStageView({
                         <span className={`${styles.rankBadge} ${isTop3 ? medalColor : ""}`}>
                           {entry.rank}
                         </span>
+                        <img
+                          src={`https://api.dicebear.com/9.x/${entry.name === currentUsername ? avatarStyle : "pixel-art"}/svg?seed=${encodeURIComponent(entry.name)}`}
+                          alt={entry.name}
+                          className={styles.leaderboardAvatar}
+                        />
                         <span className={styles.leaderboardName}>{entry.name}</span>
                         <div className={styles.leaderboardScores}>
                           {entry.roundGain > 0 ? (
