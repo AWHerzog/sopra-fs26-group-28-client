@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
   const sendInvite = async (friendUsername: string): Promise<void> => {
     setInviteLoadingIds((prev) => { const next = new Set(prev); next.add(friendUsername); return next; });
     try {
-      await apiService.post("/invite", { receiverUsername: friendUsername, gameCode: game?.code }, { Authorization: token ?? "" });
+      await apiService.post("/friends/invite", { username: friendUsername, gameCode: game?.code }, { Authorization: token ?? "" });
       setInvitedFriends((prev) => new Set(prev).add(friendUsername));
     } catch (error) {
       if (error instanceof Error) alert(`Failed to invite: ${error.message}`);
@@ -196,8 +196,8 @@ const Dashboard: React.FC = () => {
 
   const handleAcceptInvite = async (invite: GameInvite): Promise<void> => {
     try {
-      await apiService.post(`/invite/${invite.id}/accept`, {}, { Authorization: token ?? "" });
-      const joinedGame: Game = await apiService.post<Game>("/games/join", { code: invite.gameCode }, { Authorization: token ?? "" });
+      const gameCode = await apiService.post<string>("/friends/invite/accept", { inviteId: invite.id }, { Authorization: token ?? "" });
+      const joinedGame: Game = await apiService.post<Game>("/games/join", { code: gameCode }, { Authorization: token ?? "" });
       setGame(joinedGame);
       if (joinedGame.code) {
         setGameCode(joinedGame.code);
@@ -210,7 +210,7 @@ const Dashboard: React.FC = () => {
 
   const handleDeclineInvite = async (inviteId: number): Promise<void> => {
     try {
-      await apiService.post(`/invite/${inviteId}/decline`, {}, { Authorization: token ?? "" });
+      await apiService.delete<void>("/friends/invite/decline", { Authorization: token ?? "" }, { inviteId });
     } catch {
       // silently ignore
     }

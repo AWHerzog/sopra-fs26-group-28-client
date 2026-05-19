@@ -16,10 +16,10 @@ export function useGameInvites(token: string, enabled: boolean = true) {
 
     const fetchInvites = async () => {
       try {
-        const data = await apiRef.current.get<GameInvite[]>("/invite/get", {
+        const data = await apiRef.current.post<{ invites: GameInvite[] }>("/friends/invite/get", {}, {
           Authorization: token,
         });
-        setInvites(data.filter((i) => i.status === "PENDING"));
+        setInvites((data.invites ?? []).filter((i) => i.status === "PENDING"));
       } catch {
         // silently ignore — stale data is fine
       }
