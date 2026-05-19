@@ -96,7 +96,9 @@ export default function GameStageView({
   useEffect(() => {
     const key = stage;
     if (shuffledForStage.current !== key) {
-      shuffledForStage.current = key;
+      if (answers.length > 0) {
+        shuffledForStage.current = key;
+      }
       setOrderedAnswers(shuffleAnswers(answers));
       setSelectedAnswerId(null);
     } else {
