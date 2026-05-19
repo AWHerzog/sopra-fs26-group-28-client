@@ -19,8 +19,10 @@ import {
   CaretRightOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Tooltip } from "antd";
+import { Button, Input, Space, Tooltip } from "antd";
 import { useFriendPresence } from "@/hooks/useFriendPresence";
+import { useGameInvites } from "@/hooks/useGameInvites";
+import { GameInvite } from "@/types/invite";
 
 
 const Dashboard: React.FC = () => {
@@ -37,6 +39,9 @@ const Dashboard: React.FC = () => {
   const { set: setGameCode } = useLocalStorage<string>("gameCode", "");
   const { value: avatarStyle } = useLocalStorage<string>("avatarStyle", "pixel-art");
   const { onlineFriends } = useFriendPresence(token);
+  const { invites } = useGameInvites(token, !game);
+  const [invitedFriends, setInvitedFriends] = useState<Set<string>>(new Set());
+  const [inviteLoadingIds, setInviteLoadingIds] = useState<Set<string>>(new Set());
   const isInternalNavigation = useRef(false);
 
   useEffect(() => {
@@ -176,6 +181,40 @@ const Dashboard: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const sendInvite = async (friendUsername: string): Promise<void> => {
+    setInviteLoadingIds((prev) => { const next = new Set(prev); next.add(friendUsername); return next; });
+    try {
+      await apiService.post("/friends/invite", { username: friendUsername, gameCode: game?.code }, { Authorization: token ?? "" });
+      setInvitedFriends((prev) => new Set(prev).add(friendUsername));
+    } catch (error) {
+      if (error instanceof Error) alert(`Failed to invite: ${error.message}`);
+    } finally {
+      setInviteLoadingIds((prev) => { const next = new Set(prev); next.delete(friendUsername); return next; });
+    }
+  };
+
+  const handleAcceptInvite = async (invite: GameInvite): Promise<void> => {
+    try {
+      const gameCode = await apiService.post<string>("/friends/invite/accept", { inviteId: invite.id }, { Authorization: token ?? "" });
+      const joinedGame: Game = await apiService.post<Game>("/games/join", { code: gameCode }, { Authorization: token ?? "" });
+      setGame(joinedGame);
+      if (joinedGame.code) {
+        setGameCode(joinedGame.code);
+        connectToGame(joinedGame.code, (update) => setGame(update));
+      }
+    } catch (error) {
+      if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
+    }
+  };
+
+  const handleDeclineInvite = async (inviteId: number): Promise<void> => {
+    try {
+      await apiService.delete<void>("/friends/invite/decline", { Authorization: token ?? "" }, { inviteId });
+    } catch {
+      // silently ignore
+    }
+  };
+
   // ── Lobby view ───────────────────────────────────────────────────────────────
   if (game) {
     const players = game.players ? Object.entries(game.players) : [];
@@ -222,11 +261,15 @@ const Dashboard: React.FC = () => {
                 {onlineFriends.map((friend) => (
                   <div key={friend.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontWeight: 600, color: "#1a2a3a" }}>{friend.receiverUsername}</span>
-                    <Tooltip title="Code copied!" trigger="click">
-                      <Button size="small" onClick={() => navigator.clipboard.writeText(game?.code ?? "")}>
-                        Copy code
-                      </Button>
-                    </Tooltip>
+                    <Button
+                      size="small"
+                      type="primary"
+                      loading={inviteLoadingIds.has(friend.receiverUsername)}
+                      disabled={invitedFriends.has(friend.receiverUsername)}
+                      onClick={() => sendInvite(friend.receiverUsername)}
+                    >
+                      {invitedFriends.has(friend.receiverUsername) ? "Invited ✓" : "Invite"}
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -308,6 +351,23 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
+          {invites.length > 0 && (
+            <div style={s.codeCard}>
+              <p style={s.codeLabel}>Game Invites</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
+                {invites.map((invite) => (
+                  <div key={invite.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontWeight: 600, color: "#1a2a3a" }}>{invite.senderUsername} invited you</span>
+                    <Space>
+                      <Button size="small" type="primary" onClick={() => handleAcceptInvite(invite)}>Accept</Button>
+                      <Button size="small" danger onClick={() => handleDeclineInvite(invite.id)}>Decline</Button>
+                    </Space>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={{ ...s.codeCard, alignItems: "flex-start" }}>
             <Input
               size="large"
@@ -348,6 +408,23 @@ const Dashboard: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {invites.length > 0 && (
+          <div style={s.codeCard}>
+            <p style={s.codeLabel}>Game Invites</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
+              {invites.map((invite) => (
+                <div key={invite.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontWeight: 600, color: "#1a2a3a" }}>{invite.senderUsername} invited you</span>
+                  <Space>
+                    <Button size="small" type="primary" onClick={() => handleAcceptInvite(invite)}>Accept</Button>
+                    <Button size="small" danger onClick={() => handleDeclineInvite(invite.id)}>Decline</Button>
+                  </Space>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <button style={s.card} onClick={() => setJoinMode(true)}>
           <div style={s.cardIcon("#2f74b5")}>

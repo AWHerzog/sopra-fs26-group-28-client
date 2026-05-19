@@ -28,7 +28,7 @@ const FriendsPage: React.FC = () => {
       const payload = await apiService.get<FriendsData>("/users/friends", {
         Authorization: token,
       });
-      setRequests(payload.incomingRequests);
+      setRequests(payload.incomingRequests.filter((r) => r.status === "PENDING"));
     } catch (error) {
       console.error("Failed to fetch requests:", error);
     } finally {
@@ -85,9 +85,9 @@ const FriendsPage: React.FC = () => {
       setSendUsername("");
       message.success(`Friend request sent to ${sendUsername.trim()}!`);
       await loadRequests();
-    } catch (error) {
-      console.error("Send friend request failed:", error);
-      message.error("Could not send friend request.");
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "Could not send friend request.";
+      message.error(msg);
     } finally {
       setSending(false);
     }
