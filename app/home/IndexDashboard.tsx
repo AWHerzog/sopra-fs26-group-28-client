@@ -195,7 +195,7 @@ const Dashboard: React.FC = () => {
 
   const handleAcceptInvite = async (invite: GameInvite): Promise<void> => {
     try {
-      const gameCode = await apiService.post<string>("/friends/invite/accept", { inviteId: invite.id }, { Authorization: token ?? "" });
+      const { gameCode } = await apiService.post<{ gameCode: string }>("/friends/invite/accept", { inviteId: invite.id }, { Authorization: token ?? "" });
       const joinedGame: Game = await apiService.post<Game>("/games/join", { code: gameCode }, { Authorization: token ?? "" });
       setGame(joinedGame);
       if (joinedGame.code) {
