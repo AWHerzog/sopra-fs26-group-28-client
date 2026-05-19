@@ -466,8 +466,12 @@ const Dashboard: React.FC = () => {
                 return (
                   <div key={player.id ?? player.username ?? `${index}`} style={s.leaderboardRow}>
                     <div style={s.rankBadge}>{index + 1}</div>
-                    <div style={{ ...s.avatar, background: avatarColors[index % avatarColors.length] }}>
-                      <span style={s.avatarText}>{(player.username ?? "?").charAt(0).toUpperCase()}</span>
+                    <div style={s.avatar}>
+                      <img
+                        src={`https://api.dicebear.com/9.x/${isYou ? avatarStyle : "pixel-art"}/svg?seed=${encodeURIComponent(player.username ?? "")}`}
+                        alt={player.username ?? ""}
+                        style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+                      />
                     </div>
                     <div style={s.leaderboardInfo}>
                       <span style={s.leaderboardName}>
@@ -489,10 +493,6 @@ const Dashboard: React.FC = () => {
   );
 };
 
-const avatarColors = [
-  "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8",
-  "#F7DC6F", "#BB8FCE", "#85C1E2", "#F8B88B", "#B19CD9",
-];
 
 // ── Styles ────────────────────────────────────────────────────────────────────
 const s = {
