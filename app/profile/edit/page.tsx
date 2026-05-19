@@ -11,8 +11,6 @@ import styles from "@/styles/auth.module.css";
 
 const AVATAR_STYLES = [
   { key: "pixel-art", label: "Pixel Art" },
-  { key: "adventurer", label: "Adventurer" },
-  { key: "bottts", label: "Bottts" },
 ] as const;
 
 type AvatarStyle = (typeof AVATAR_STYLES)[number]["key"];
