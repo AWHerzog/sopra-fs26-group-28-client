@@ -31,6 +31,7 @@ const Dashboard: React.FC = () => {
   const [game, setGame] = useState<Game | null>(null);
   const [code, setCode] = useState<string>("");
   const [joinMode, setJoinMode] = useState(false);
+  const [maxRounds, setMaxRounds] = useState(5);
   const [copied, setCopied] = useState(false);
   const [topPlayers, setTopPlayers] = useState<User[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(true);
@@ -159,7 +160,7 @@ const Dashboard: React.FC = () => {
   const startGame = async (): Promise<void> => {
     try {
        isInternalNavigation.current = true;
-      await apiService.post(`/games/${game?.code}/start`, {"maxRounds": 5, "stageDurationSeconds": 100}, { Authorization: token ?? "" }); //have default 5 rounds 100 secs
+      await apiService.post(`/games/${game?.code}/start`, {"maxRounds": maxRounds, "stageDurationSeconds": 100}, { Authorization: token ?? "" });
     } catch (error) {
       if (error instanceof Error) alert(`Something went wrong:\n${error.message}`);
     }
@@ -310,12 +311,28 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Start Game button (host only) */}
+          {/* Round selector + Start Game (host only) */}
           {game.hostname === currentUsername && (
-            <button style={s.startBtn} onClick={startGame}>
-              <CaretRightOutlined style={{ fontSize: 18 }} />
-              Start Game
-            </button>
+            <>
+              <div style={s.roundsCard}>
+                <span style={s.roundsLabel}>Rounds</span>
+                <div style={s.roundsToggle}>
+                  {[3, 5].map((n) => (
+                    <button
+                      key={n}
+                      style={maxRounds === n ? s.roundsPillActive : s.roundsPill}
+                      onClick={() => setMaxRounds(n)}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button style={s.startBtn} onClick={startGame}>
+                <CaretRightOutlined style={{ fontSize: 18 }} />
+                Start Game
+              </button>
+            </>
           )}
 
           {/* Leave Lobby button */}
@@ -844,6 +861,51 @@ const s = {
     fontSize: "0.95rem",
     textAlign: "center" as const,
     padding: "0.5rem 0",
+  } as React.CSSProperties,
+
+  roundsCard: {
+    background: "#fff",
+    borderRadius: 18,
+    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+    padding: "1rem 1.5rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  } as React.CSSProperties,
+
+  roundsLabel: {
+    fontSize: "1rem",
+    fontWeight: 700,
+    color: "#1a2a3a",
+  } as React.CSSProperties,
+
+  roundsToggle: {
+    display: "flex",
+    gap: "0.5rem",
+  } as React.CSSProperties,
+
+  roundsPill: {
+    width: 52,
+    height: 36,
+    borderRadius: 10,
+    border: "1.5px solid #dce9f5",
+    background: "#f4f8fd",
+    color: "#1a2a3a",
+    fontSize: "1rem",
+    fontWeight: 600,
+    cursor: "pointer",
+  } as React.CSSProperties,
+
+  roundsPillActive: {
+    width: 52,
+    height: 36,
+    borderRadius: 10,
+    border: "none",
+    background: "#2f74b5",
+    color: "#fff",
+    fontSize: "1rem",
+    fontWeight: 700,
+    cursor: "pointer",
   } as React.CSSProperties,
 };
 
