@@ -97,8 +97,8 @@ reason).
 | ------------------ | -------- | ------------------ | ------------------------------- | ----------------------------------- |
 | **[AWHerzog]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
-| **[EneasKe]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
-|                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
+| **[EneasKe]** | [date]   | [Link to Commit 1] | [Joker] | [Why this contribution is relevant] |
+|                    | [date]   | [Link to Commit 2] | [Joker] | [Why this contribution is relevant] |
 | **[Luizcodes02]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
 |                    | [date]   | [Link to Commit 2] | [Brief description of the task] | [Why this contribution is relevant] |
 | **[Ruven3344]** | [date]   | [Link to Commit 1] | [Brief description of the task] | [Why this contribution is relevant] |
